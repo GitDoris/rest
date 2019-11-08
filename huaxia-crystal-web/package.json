@@ -1,0 +1,49 @@
+{
+  "name": "cystal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "sit": "vue-cli-service build --mode sit",
+    "uat": "vue-cli-service build --mode uat",
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "element-ui": "^2.6.1",
+    "register-service-worker": "^1.6.2",
+    "sass": "^1.17.2",
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-pwa": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "axios": "^0.18.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "file-saver": "^2.0.1",
+    "js-cookie": "^2.2.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "lodash.clonedeep": "^4.5.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "script-loader": "^0.7.2",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "vue-template-compiler": "^2.5.21",
+    "xlsx": "^0.14.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "huaxia-hxtable-template-v3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "sit": "vue-cli-service build --mode sit",
+    "uat": "vue-cli-service build --mode uat",
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "element-ui": "^2.12.0",
+    "register-service-worker": "^1.6.2",
+    "sass": "^1.17.2",
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "xlsx": "^0.14.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.5.0",
+    "axios": "^0.18.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "compression-webpack-plugin": "^3.0.0",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-vuefix": "^0.2.1",
+    "file-saver": "^2.0.1",
+    "js-cookie": "^2.2.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "lodash.clonedeep": "^4.5.0",
+    "node-sass": "^4.11.0",
+    "preview": "^0.1.3",
+    "sass-loader": "^7.1.0",
+    "script-ext-html-webpack-plugin": "^2.1.4",
+    "script-loader": "^0.7.2",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "vue-template-compiler": "^2.5.21",
+    "webpack-bundle-analyzer": "^3.4.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
