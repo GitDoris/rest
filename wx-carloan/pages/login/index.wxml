@@ -1,0 +1,13 @@
+<!--pages/login/index.wxml-->
+ <div class="loginBig">
+    <div class="loginImage"></div>
+  </div>
+<view class='contentBox'>
+  <input placeholder="请输入您的登录账号" value="{{uName}}"  class='certificationInput' maxlength="16" placeholder-class="placlass" auto-focus  bindinput="setUname"/>
+  <input placeholder="请设置您的登录密码" value="{{newPwd}}" password='{{ newpwdtype }}' class='certificationInput' maxlength="16" placeholder-class="placlass" bindinput="checkNewPWD"  />
+  <span class="toggleEye Newpwd {{eye2== true ?'openeye':'closeeye'}}" bindtap="toggleEyeNew" ></span>
+  <view>
+    <button  class='eval_btn'  bindtap="getToken"  > 立即登录 </button>
+    <button  class='NonelinkBtn'  bindtap="forgetPwd"  > 忘记密码 </button>  
+  </view>
+</view>

@@ -1,0 +1,27 @@
+/* pages/certification/index.wxss */
+
+.placlass{
+  font-size: 29rpx;
+  color: #bbb;
+}
+.certificationInput{
+  height: 100rpx;
+  border-bottom: 1rpx #ececec solid;
+}
+.searchBtn{
+  margin-top: 60rpx;
+  border-radius: 60rpx;
+}
+.errorCode{
+  font-size: 20rpx;
+  color: #ff0000;
+}
+.CertificationList{
+  position: relative;
+  margin-top: 20px;
+  float: right;
+  width: 140rpx;
+  font-size: 27rpx;
+  color: #587CF6;
+ /* border-bottom: 1rpx #bbb solid; */
+}

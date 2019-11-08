@@ -1,0 +1,134 @@
+<!--pages/category.wxml-->
+<view>
+  <view class='setion-search'>
+    <view class='search-left'>
+      <span class='search' bindtap="searchData"><image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/index_pic6.png'></image></span>
+      <view class='search-input'>
+        <input placeholder="输入借款人姓名或订单编号" focus="{{focus}}" value="{{condition}}" bindinput="setContidion"/>
+      </view>
+    </view>
+      <span class='cancel' bindtap="searchCancel">取消</span>
+  </view>
+  <view class='rest'></view>
+  <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">全部</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">草稿箱</view>
+      <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">补件</view>
+      <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">待处理</view>
+      <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">已处理</view>
+  </scroll-view>
+  <view class='tab-title'>
+    <view wx:if="{{!showCondition}}" class='no-data'>
+      <image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/ACstate2.png'></image>
+      <view class='no-data-detail'>暂无相关订单</view>
+    </view>
+    <swiper  class="tab-content" current="{{currentTab}}" duration="300" wx:if="{{showCondition}}">
+      <swiper-item class="tab-swipter-item">
+        <view class='tab-wrap'  wx:for="{{testData}}" wx:key="index">
+          <view class="top">
+            <span class="left-icon" wx:if="{{item.orderPhase==5}}"></span>
+            <span class="left-icon leftIcon2" wx:elif="{{item.orderPhase==3}}"></span>
+            <span class="left-icon leftIcon3" wx:elif="{{item.orderPhase==4}}"></span>
+            <span class="left-icon leftIcon4" wx:else></span>
+        
+            <span class="title" wx:if="{{item.orderPhase==5}}">草稿箱</span>
+            <span class="title" wx:if="{{item.orderPhase==3}}">补件</span>
+            <span class="title" wx:if="{{item.orderPhase==4}}">待处理</span>
+            <span class="title" wx:if="{{item.orderPhase==1}}">已完成</span>
+            <span class="cancel" wx:if="{{item.orderPhase==5}}"  bindtap="cgxCancel">取消</span>
+            <span class="continue continue2" wx:if="{{item.orderPhase==5}}">继续申请</span>
+            <span class="continue continue3" wx:if="{{item.orderPhase==3}}">订单补件</span>
+          </view>
+          <view class="bottom">
+            <view class="mark-top p-test"><span class="left">姓名</span><span class="right-detail">{{item.customerName}}</span></view>
+            <view class='p-test'><span class="left">身份证号</span><span class="right-detail">{{item.certNo}}</span></view>
+
+            <view class='p-test' wx:if="{{item.orderPhase == 1 || item.orderPhase == 4}}"><span class="left">订单编号</span><span class="right-detail">{{item.businessNo}}</span></view> 
+            <view class='p-test' wx:if="{{item.orderPhase == 1 || item.orderPhase == 4}}"><span class="left">进件时间</span><span class="right-detail">{{item.businessTime}}</span></view> 
+            <view class='p-test' wx:if="{{item.orderPhase == 1 || item.orderPhase == 4}}"><span class="left">订单状态</span><span class="right-detail">{{item.orderStatus}}</span></view>            
+
+            <view class='p-test' wx:if="{{item.orderPhase == 3 || item.orderPhase == 5}}"><span class="left">产品名称</span><span class="right-detail">{{item.productName}}</span></view>
+            <view class='p-test' wx:if="{{item.orderPhase == 3 || item.orderPhase == 5}}"><span class="left">申请时间</span><span class="right-detail">{{item.businessTime}}</span></view>
+            <view class='p-test' wx:if="{{item.orderPhase == 3 || item.orderPhase == 5}}"><span class="left">手机号码</span><span class="right-detail">{{item.mobileNum}}</span></view>   
+            <!-- <view class="mark-bottom p-test">
+              <span class="left">车型</span>
+              <span class="right-detail">111111111你还年后那就男男女女女女女女女女女1111</span>
+            </view>  -->
+          </view>
+        </view>
+      </swiper-item>
+
+
+      <swiper-item class="tab-swipter-item">
+        <view class='tab-wrap'  wx:for="{{testData}}" wx:key="index">
+          <view class="top">
+            <span class="left-icon"></span>
+            <span class="title">草稿箱</span>
+            <span class="cancel">取消</span>
+            <span class="continue continue2">继续申请</span>
+          </view>
+          <view class="bottom">
+            <view class="mark-top p-test"><span class="left">姓名</span><span class="right-detail">{{item.customerName}}</span></view>
+            <view class='p-test'><span class="left">身份证号</span><span class="right-detail">{{item.certNo}}</span></view>           
+            <view class='p-test'><span class="left">产品名称</span><span class="right-detail">{{item.productName}}</span></view>
+            <view class='p-test'><span class="left">申请时间</span><span class="right-detail">{{item.businessTime}}</span></view>
+            <view class='p-test'><span class="left">手机号码</span><span class="right-detail">{{item.mobileNum}}</span></view>   
+          </view>
+        </view>
+      </swiper-item>
+
+
+      <swiper-item class="tab-swipter-item">
+        <view class='tab-wrap'  wx:for="{{testData}}" wx:key="index">
+          <view class="top">
+            <span class="left-icon leftIcon2"></span>
+            <span class="title">补件</span>
+            <span class="continue continue3">订单补件</span>
+          </view>
+          <view class="bottom">
+            <view class="mark-top p-test"><span class="left">姓名</span><span class="right-detail">{{item.customerName}}</span></view>
+            <view class='p-test'><span class="left">身份证号</span><span class="right-detail">{{item.certNo}}</span></view>           
+            <view class='p-test'><span class="left">产品名称</span><span class="right-detail">{{item.productName}}</span></view>
+            <view class='p-test'><span class="left">申请时间</span><span class="right-detail">{{item.businessTime}}</span></view>
+            <view class='p-test'><span class="left">手机号码</span><span class="right-detail">{{item.mobileNum}}</span></view>   
+          </view>
+        </view>
+      </swiper-item>
+
+
+      <swiper-item class="tab-swipter-item">
+        <view class='tab-wrap'  wx:for="{{testData}}" wx:key="index">
+          <view class="top">
+            <span class="left-icon leftIcon3"></span>
+            <span class="title">待处理</span>
+          </view>
+          <view class="bottom">
+            <view class="mark-top p-test"><span class="left">姓名</span><span class="right-detail">{{item.customerName}}</span></view>
+            <view class='p-test'><span class="left">身份证号</span><span class="right-detail">{{item.certNo}}</span></view>           
+             <view class='p-test'><span class="left">订单编号</span><span class="right-detail">{{item.businessNo}}</span></view> 
+            <view class='p-test'><span class="left">进件时间</span><span class="right-detail">{{item.businessTime}}</span></view> 
+            <view class='p-test'><span class="left">订单状态</span><span class="right-detail">{{item.orderStatus}}</span></view> 
+          </view>
+        </view>
+      </swiper-item>
+
+
+      <swiper-item class="tab-swipter-item">
+        <view class='tab-wrap'  wx:for="{{testData}}" wx:key="index">
+          <view class="top">
+            <span class="left-icon leftIcon4"></span>
+            <span class="title">已完成</span>
+          </view>
+          <view class="bottom">
+            <view class="mark-top p-test"><span class="left">姓名</span><span class="right-detail">{{item.customerName}}</span></view>
+            <view class='p-test'><span class="left">身份证号</span><span class="right-detail">{{item.certNo}}</span></view>           
+             <view class='p-test'><span class="left">订单编号</span><span class="right-detail">{{item.businessNo}}</span></view> 
+            <view class='p-test'><span class="left">进件时间</span><span class="right-detail">{{item.businessTime}}</span></view> 
+            <view class='p-test'><span class="left">订单状态</span><span class="right-detail">{{item.orderStatus}}</span></view> 
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+  </view>
+</view>

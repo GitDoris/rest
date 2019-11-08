@@ -1,0 +1,10 @@
+<!--pages/videoTitle/index.wxml-->
+<template name="newCreatTitle">
+  <view>
+    <view class='headerTitle'>
+      <view class='itemOne'>{{arrow}}</view>
+      <view class='itemSecond'>{{title}}</view>
+      <view class='itemThird'>提交</view>
+    </view>
+  </view>
+</template>

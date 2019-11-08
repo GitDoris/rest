@@ -1,0 +1,240 @@
+/* pages/category.wxss */
+.setion-search{
+  width: 670rpx;
+  height: 72rpx;
+  font-size: 26rpx;  
+  position: fixed;
+  left: 40rpx;
+  top: 0;
+  z-index: 999;
+  background: #fff;
+}
+.rest{
+  width: 670rpx;
+  height: 18rpx;
+  background: #fff;
+  position: fixed;
+  left: 40rpx;
+  top: 72rpx;
+  z-index: 999;  
+}
+.setion-search .search-left{
+  width: 576rpx;
+  height: 100%;
+  border-radius: 36rpx;
+  background:rgba(241,243,247,1);
+  float: left;
+  position: relative;
+  
+}
+.setion-search .search{
+  display: block;
+  float: left;
+  width: 72rpx;
+  height: 72rpx;
+  overflow: hidden;
+}
+.setion-search .search image{
+  display: block;
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  margin-top: 18rpx;
+}
+/* .setion-search .search input{
+  display: block;
+  font-size: 26rpx;
+  height: 36rpx;
+  width: 500rpx;
+  margin-top: 18rpx;
+} */
+.setion-search .cancel{
+  display: block;
+  line-height: 72rpx;
+  float: right;
+}
+.setion-search .search-left .search-input{
+  position: absolute;
+  top: 10rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 480rpx;
+  left: 72rpx;
+  overflow: hidden;
+}
+.tab-h{
+  background: #fff;z-index: 999; height: 80rpx;width: 100%; box-sizing: border-box;overflow: hidden;line-height: 80rpx;background: #fff; font-size: 30rpx; white-space: nowrap;box-shadow:0px 3rpx 5rpx rgba(218,219,228,0.7);position: fixed;left: 0;top: 90rpx;}
+.tab-item{margin:0 36rpx;display: inline-block;}
+.tab-item.active{position: relative;font-weight: bolder;}
+.tab-item.active:after{ content: "";display: block;height: 6rpx;width: 52rpx; background:rgba(247,88,88,1);position: absolute; bottom: 0;left: 5rpx;border-radius: 16rpx;}
+.tab-content{
+  width: 100%;
+  height: 980rpx;  
+}
+.tab-title{
+  width: 100%;
+  min-height: 900rpx; 
+  position: absolute;
+  left: 0;
+  top: 170rpx;
+}
+.scoll-h{height: 100%;}
+.tab-content .tab-swipter-item{
+  overflow-y: auto;
+}
+.tab-content .tab-swipter-item .tab-wrap{
+  width: 670rpx;
+}
+.tab-wrap{
+  width:670rpx;
+  min-height: 440rpx;
+  margin:0 auto;
+  background:rgba(255,255,255,1);
+  border-radius:10rpx;
+  box-shadow:0px 0px 12rpx rgba(218,219,228,0.7);
+  margin-top: 30rpx;
+}
+.tab-wrap .top{
+  width:670rpx;
+  height:110rpx;
+  border-bottom:1px solid #eee;
+  position: relative;
+}
+.tab-wrap .top span{
+  display: block;
+  position:absolute;
+}
+.tab-wrap .top .left-icon{
+    background: url("https://github.com/zhoupeihuang/markdownPic/blob/master/images/index_pic2.png?raw=true") no-repeat center;
+    width:62rpx;
+    background-size: 100% 100%; 
+    height:62rpx;
+    top:24rpx;
+    left:30rpx;
+  }
+.tab-wrap .top .leftIcon2{
+    background: url("https://github.com/zhoupeihuang/markdownPic/blob/master/images/index_pic1.png?raw=true") no-repeat center;  
+     width:62rpx;
+    background-size: 100% 100%; 
+    height:62rpx;
+    top:24rpx;
+    left:30rpx;
+}
+.tab-wrap .top .leftIcon3{
+    background: url("https://github.com/zhoupeihuang/markdownPic/blob/master/images/index_pic3.png?raw=true") no-repeat center;  
+     width:62rpx;
+    background-size: 100% 100%; 
+    height:62rpx;
+    top:24rpx;
+    left:30rpx;
+}
+.tab-wrap .top .leftIcon4{
+    background: url("https://github.com/zhoupeihuang/markdownPic/blob/master/images/index_pic5.png?raw=true") no-repeat center;  
+     width:62rpx;
+    background-size: 100% 100%; 
+    height:62rpx;
+    top:24rpx;
+    left:30rpx;
+}
+.tab-wrap .top .title{
+  font-size: 28rpx;
+  line-height:62rpx;
+  font-weight:bolder;
+  top:24rpx;
+  left:110rpx;
+}
+.tab-wrap .top .cancel{
+    font-size: 26rpx;
+    width:120rpx;
+    height:56rpx;
+    line-height:56rpx;
+    text-align:center;
+    color:rgba(102,102,102,1);
+    border:1px solid rgba(217,217,217,1);
+    border-radius:28rpx; 
+    top:28rpx; 
+    left:350rpx; 
+  }
+.tab-wrap .top .continue{
+  font-size: 26rpx;
+  top:28rpx;
+  right:30rpx;  
+  width:150rpx;  
+  height:56rpx;
+  line-height:56rpx;
+  text-align:center;
+  color:rgba(255,255,255,1);   
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic8.png") no-repeat center; 
+  background-size: 100% 100%;
+}
+.tab-wrap .top .continue3{
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic9.png") no-repeat center; 
+}
+.tab-swipter-item:nth-child(3) .tab-wrap .top .continue{
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic9.png") no-repeat center; 
+  background-size: 100% 100%;
+}
+.tab-swipter-item:nth-child(3) .tab-wrap .top .left-icon{
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic1.png") no-repeat center;   
+  background-size: 100% 100%;
+}
+.tab-swipter-item:nth-child(4) .tab-wrap .top .left-icon{
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic3.png") no-repeat center;   
+  background-size: 100% 100%;
+}
+.tab-swipter-item:nth-child(5) .tab-wrap .top .left-icon{
+  background: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic5.png") no-repeat center;   
+  background-size: 100% 100%;
+}
+.bottom{
+  padding-bottom:1rpx;
+} 
+.bottom .mark-top{
+  margin-top: 40rpx;
+}
+.bottom .mark-bottom{
+  line-height:36rpx;
+  margin-bottom: 40rpx;
+}
+.bottom .p-test{
+  font-size:28rpx;
+  min-height:58rpx;
+  overflow:hidden;
+}
+.bottom .p-test span{
+  display:block;
+}
+.bottom .p-test .left{
+  width:180rpx;
+  text-indent:30rpx;
+  float:left;
+  color:rgba(102, 102, 102, 1)
+}
+.bottom .p-test .right-detail{
+  color:black;
+  float:left;
+  width: 480rpx;
+}
+
+/* ::-webkit-scrollbar{
+  width: 1px;
+} */
+
+.no-data{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.no-data image{
+  width:500rpx;
+  height:350rpx;
+  margin: 0 auto;
+  display: block;
+  margin-top:150rpx;
+}
+.no-data .no-data-detail{
+  font-size: 32rpx;
+  line-height: 44rpx;
+  text-align: center;
+  
+}

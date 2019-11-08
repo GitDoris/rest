@@ -1,0 +1,53 @@
+/* pages/personCenter/index.wxss */
+.personCenterBG{
+  height: 360rpx;
+  width: 750rpx;
+  display: inline-block;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 750rpx 360rpx;
+  background-image: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/login4.png");
+}
+.perCenterBox{
+  height: 360rpx;
+  position: relative;
+  /* border-bottom: 1rpx blue dashed; */
+}
+.personCenterBG .perCenterPic,.personCenterBG .perCenterName,.personCenterBG .perCenterPhoneNum{
+  position: absolute;
+}
+ 
+.perCenterPic{
+  height: 120rpx;
+  width: 120rpx;
+  border-radius: 70rpx;
+  bottom: 190rpx;
+  left: 0rpx;
+  
+}
+.perCenterPic image{
+  height: 120rpx;
+  width: 120rpx;
+  border-radius: 70rpx;
+  border: 1rpx #ececec solid;
+}
+.perCenterName{
+  width: 560rpx;
+  line-height: 54rpx;
+  height: 54rpx;
+  bottom: 90rpx;
+  left: 0rpx;
+  font-size: 50rpx;
+  color: #333;
+}
+.perCenterPhoneNum{
+  height: 30rpx;
+  line-height: 30rpx;
+  width: 210rpx;
+  bottom: 40rpx;
+  left: 0rpx;
+  font-size: 30rpx;
+  color: #999999;
+
+}

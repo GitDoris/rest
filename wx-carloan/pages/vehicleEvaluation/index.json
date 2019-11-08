@@ -1,0 +1,9 @@
+{
+"usingComponents": {
+    "i-toast": "../../dist/toast/index",
+    "i-steps": "../../dist/steps/index",
+    "i-step": "../../dist/step/index"
+},
+"navigationBarTitleText": "车辆预估"
+
+}

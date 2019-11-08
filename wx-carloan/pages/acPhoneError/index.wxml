@@ -1,0 +1,8 @@
+<!--pages/acPhoneError/index.wxml-->
+<view class='contentBox'>
+    <div class="ACstatePic">
+       <image style="width: 500rpx; height: 350rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/ACstate4.png'></image>
+    </div>
+    <text class='ACstatetitle'>{{ACstatetitle}}</text>
+      <button  class="AClinkBtn">跳过</button>
+</view>

@@ -1,0 +1,35 @@
+<!--pages/newCreat/index.wxml-->
+<view>
+  <import src="../newCreatTitle/index.wxml"/>
+  <template is="newCreatTitle" data="{{...newCreatInfo}}" />
+  <view class='textStyle'>
+    <text>录入进度</text>
+  </view>
+  <view class='progressView'>
+    <view class='imageView'>
+      <view style='display: none;'>
+        <image class="lineBgStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/fullLine.png"></image>
+      </view>
+      <view>
+        <image class="lineBgStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/imaginaryLine.png"></image>
+      </view> 
+    </view>
+    <view class='imageView' wx:for="{{items}}" wx:key="index" wx:for-item="item">
+      <view style='display: none;'>
+        <image class="lineBgStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/fullLine.png"></image>
+        <image class="isCompleteStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/doneArrows.png"></image>
+      </view>
+      <view>
+        <image class="lineBgStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/imaginaryLine.png"></image>
+        <image class="isCompleteStyle" src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/pending.png"></image>
+      </view> 
+    </view>
+    
+  </view>
+  <view class='infoView'>
+    <view class='infoViewItem' wx:for="{{infoItmes}}" wx:key="index">
+      <image id="{{index}}" class='infoImage' style="" src='{{item.imgUrl}}' bindtap='pageTurn'></image>
+      <text class='infoTitle'>{{item.title}}</text>
+    </view>
+  </view>
+</view>

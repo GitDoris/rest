@@ -1,0 +1,343 @@
+<!--pages/list/index.wxml-->
+<view class='content'>
+  <view class="swiper-tab">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">个人信息</view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">职业信息</view>
+    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">联系人信息</view>
+  </view>
+  <swiper current="{{currentTab}}" duration="300" bindchange="swiperTab" class="swiper-content">
+    <swiper-item>
+      <scroll-view scroll-y="true" >
+        <view class="swipter-item-one">
+          <form bindsubmit="personFormSubmit" bindreset="formReset" >
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">手机号码1 <i class="titleFlag">*</i></span>  
+                        <input class="section-content" name="input" placeholder="请输入手机号码" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{education}}" range="{{educationList}}" range-key="{{'name'}}" data-num='0'>
+                      <view class="section">
+                          <span class="section-title">最高学历<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{education ==''}}">请选择最高学历</span>
+                          <span class="section-content" name="input" wx:else>{{educationList[education].name}}</span>     
+                      </view>
+                  </picker>
+                </view>
+                <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{marry}}" range="{{marriageList}}" range-key="{{'name'}}" data-num='1'>
+                    <view class="section">
+                        <span class="section-title">婚姻状况<i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input" wx:if="{{marry ==''}}">请选择婚姻状况</span>
+                        <span class="section-content" name="input" wx:else>{{marriageList[marry].name}}</span> 
+                    </view>
+                  </picker> 
+                </view> 
+                <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{children}}" range="{{childrenList}}" range-key="{{'name'}}" data-num='2'>
+                    <view class="section">
+                        <span class="section-title">子女数目<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{children ==''}}">请选择子女数目</span>
+                        <span class="section-content" name="input">{{childrenList[children].name}}</span>
+                    </view>
+                  </picker> 
+                </view>
+                <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{provide}}" range="{{provideList}}" range-key="{{'name'}}" data-num='3'>
+                    <view class="section">
+                        <span class="section-title">供养人数<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{provide ==''}}">请选择人数</span>
+                        <span class="section-content" name="input">{{provideList[provide].name}}</span> 
+                    </view>
+                  </picker> 
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">每月家庭支出 <i class="titleFlag">*</i></span>  
+                        <input class="section-content" name="input" placeholder="请输入金额" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+                    <view class="section">
+                        <span class="section-title">户口所在地<i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{region[0]}}-{{region[1]}}-{{region[2]}}</span> 
+                    </view>
+                  </picker> 
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">详细地址</span>  
+                        <input class="section-content"  name="input" placeholder="如道路，门牌号，单元室" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{placeAndRegister}}" range="{{placeAndRegisterList}}" range-key="{{'name'}}" data-num='4'>
+                    <view class="section">
+                        <span class="section-title addWidth">居住地与户籍地是否一致<i class="titleFlag">*</i></span>
+                        <span class="section-content" name="input" wx:if="{{placeAndRegister ==''}}">请选择是否一致</span> 
+                        <span class="section-content" name="input">{{placeAndRegisterList[placeAndRegister].name}}</span> 
+                    </view>
+                  </picker> 
+                </view>
+                <view class="swiperTabBox">
+                  <picker mode="region" bindchange="newBindRegionChange" value="{{newRegion}}" custom-item="{{customItem}}">
+                    <view class="section">
+                        <span class="section-title">现住宅地址<i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{newRegion[0]}}-{{newRegion[1]}}-{{newRegion[2]}}</span> 
+                    </view>
+                  </picker> 
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">详细地址</span>  
+                        <input class="section-content"  name="input" placeholder="如道路，门牌号，单元室" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                <picker mode="date" bindchange="bindTimeChange" value="{{newAddressTime}}" start="2000-01-01" end="2018-11-01" data-time='0'>
+                    <view class="section">
+                        <span class="section-title">现居住时间 <i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{newAddressTime}}</span> 
+                    </view>
+                    </picker> 
+                </view>
+                <view class="swiperTabBox">
+                <picker mode="date" bindchange="bindTimeChange" value="{{cityTime}}" start="2015-09-01" end="2017-09-01" data-time='1'>
+                    <view class="section">
+                        <span class="section-title">来本市时间 <i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{cityTime}}</span> 
+                    </view>
+                    </picker> 
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">手机号码2</span>  
+                        <input class="section-content"  name="input" placeholder="请输入手机号码" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">住宅电话</span>  
+                        <input class="section-content"  name="input" placeholder="请输入区号以及电话" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">芝麻信用分</span>  
+                        <input class="section-content"  name="input" placeholder="请输入芝麻信用分" />
+                    </view>
+                </view>
+                <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">支付宝账号</span>  
+                        <input class="section-content"  name="input" placeholder="请输入支付宝账号" />
+                    </view>
+                </view>
+                <view class="submitBtn">
+                  <button formType="submit">保存</button>
+                </view>
+            </form>
+          </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <!--logs.wxml-->
+      <scroll-view scroll-y="true">
+        <view class="swipter-item-two">
+            <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{hireType}}" range="{{hireTypeList}}" range-key="{{'name'}}" data-num='5'>
+                    <view class="section">
+                        <span class="section-title">雇佣类型<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{hireType ==''}}">请选择类型</span>
+                        <span class="section-content" name="input">{{hireTypeList[hireType].name}}</span> 
+                    </view> 
+                  </picker> 
+              </view>
+              <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">单位名称<i class="titleFlag">*</i></span>  
+                        <input class="section-content"  name="input" placeholder="请输入单位名称" />
+                    </view>
+              </view>
+              <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{unitNature}}" range="{{unitNatureList}}" range-key="{{'name'}}" data-num='6'>
+                    <view class="section">
+                        <span class="section-title">单位性质<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{unitNature ==''}}">请选择单位性质</span>
+                        <span class="section-content" name="input">{{unitNatureList[unitNature].name}}</span> 
+                    </view>
+                  </picker> 
+              </view>
+              <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{industry}}" range="{{industryList}}" range-key="{{'name'}}" data-num='7'>
+                    <view class="section">
+                        <span class="section-title">所属行业<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{industry ==''}}">请选择单位性质</span>
+                        <span class="section-content" name="input">{{industryList[industry].nem}}</span> 
+                    </view>
+                  </picker> 
+              </view>
+              <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">所属部门<i class="titleFlag">*</i></span>  
+                        <input class="section-content"  name="input" placeholder="请输入所属部门" />
+                    </view>
+              </view>
+              <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">职业名称<i class="titleFlag">*</i></span>  
+                        <input class="section-content"  name="input" placeholder="请输入职业名称" />
+                    </view>
+              </view>
+              <view class="swiperTabBox">
+                  <picker bindchange="bindPickerChange" value="{{security}}" range="{{securityList}}" range-key="{{'name'}}" data-num='8'>
+                    <view class="section">
+                        <span class="section-title">是否缴纳社保<i class="titleFlag">*</i></span> 
+                        <span class="section-content" name="input" wx:if="{{security ==''}}">请选择是否缴纳社保</span>
+                        <span class="section-content" name="input">{{securityList[security].name}}</span> 
+                    </view>
+                  </picker> 
+              </view>
+              <view class="swiperTabBox">
+                <picker mode="date" bindchange="bindTimeChange" value="{{entryTime}}" start="2015-09-01" end="2017-09-01" data-time='2'>
+                    <view class="section">
+                        <span class="section-title isAddTime">现单位入职时间 <i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{entryTime}}</span> 
+                    </view>
+                    </picker> 
+              </view>
+              <view class="swiperTabBox">
+                  <picker mode="region" bindchange="unitAddressRegionChange" value="{{unitAddress}}" custom-item="{{customItem}}">
+                    <view class="section">
+                        <span class="section-title">现单位地址<i class="titleFlag">*</i></span>  
+                        <span class="section-content" name="input">{{unitAddress[0]}}-{{unitAddress[1]}}-{{unitAddress[2]}}</span> 
+                    </view>
+                  </picker> 
+              </view>
+              <view class="swiperTabBox">
+                    <view class="section">
+                        <span class="section-title">详细地址</span>  
+                        <input class="section-content"  name="input" placeholder="如道路，门牌号，单元室" />
+                    </view>
+              </view>
+              <view class="submitBtn">
+                  <button formType="submit">保存</button>
+              </view>
+          </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <!--logs.wxml-->
+      <scroll-view scroll-y="true">
+            <view class="swiperTabBox">
+                <view class="item-three-title">配偶</view>
+                <view class="item-three-content">
+                  <view class="section">
+                      <span class="section-title">配偶姓名<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入配偶姓名" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">固定电话/手机<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入电话号码" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">配偶身份证号<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入身份证号" />
+                  </view>
+                  <picker bindchange="bindPickerChange" value="{{borrowMoney}}" range="{{borrowMoneyList}}" range-key="{{'name'}}" data-num='9'>
+                      <view class="section">
+                          <span class="section-title">是否知悉借款<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{borrowMoney==''}}">请选择是否知悉</span>
+                          <span class="section-content" name="input" wx:else>{{borrowMoneyList[borrowMoney].name}}</span>  
+                      </view>
+                  </picker> 
+                </view>
+                <view class="item-three-title">直系亲属</view>
+                <view class="item-three-content">
+                  <picker bindchange="bindPickerChange" value="{{kinsfolk}}" range="{{kinsfolkList}}" range-key="{{'name'}}" data-num='10'>
+                      <view class="section">
+                          <span class="section-title">直系亲属关系<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{kinsfolk==''}}">请选择亲属关系</span>
+                          <span class="section-content" name="input" wx:else>{{kinsfolkList[kinsfolk].name}}</span>  
+                      </view>
+                  </picker> 
+                  <view class="section">
+                      <span class="section-title">直系亲属姓名<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入电话号码" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">固定电话/手机<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入身份证号" />
+                  </view>
+                  <picker bindchange="bindPickerChange" value="{{borrowMoney1}}" range="{{borrowMoneyList1}}" range-key="{{'name'}}" data-num='11'>
+                      <view class="section">
+                          <span class="section-title">是否知悉借款<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{borrowMoney1==''}}">请选择是否知悉</span>
+                          <span class="section-content" name="input" wx:else>{{borrowMoneyList1[borrowMoney1].name}}</span>  
+                      </view>
+                  </picker> 
+                </view>
+                <view class="item-three-title">同事</view>
+                <view class="item-three-content">
+                  <picker bindchange="relationPickerChange" value="{{relation}}" range="{{relationArray}}">
+                      <view class="section">
+                          <span class="section-title">同事姓名<i class="titleFlag">*</i></span> 
+                          <input class="section-content"  name="input" placeholder="请输入姓名" /> 
+                      </view>
+                  </picker> 
+                  <view class="section">
+                      <span class="section-title">同事电话/手机<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入电话号码" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">部门<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入身份证号" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">职位<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入身份证号" />
+                  </view>
+                  <picker bindchange="bindPickerChange" value="{{borrowMoney2}}" range="{{borrowMoneyList2}}" range-key="{{'name'}}" data-num='12'>
+                      <view class="section">
+                          <span class="section-title">是否知悉借款<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{borrowMoney2==''}}">请选择是否知悉</span>
+                          <span class="section-content" name="input" wx:else>{{borrowMoneyList2[borrowMoney2].name}}</span>  
+                      </view>
+                  </picker> 
+                </view>
+                <view class="item-three-title">其他联系人</view>
+                <view class="item-three-content">
+                  <picker bindchange="bindPickerChange" value="{{otherRelation}}" range="{{otherRelationList}}" range-key="{{'name'}}" data-num='13'>
+                      <view class="section">
+                          <span class="section-title">联系人关系<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{otherRelation==''}}">请选择亲属关系</span>
+                          <span class="section-content" name="input" wx:else>{{otherRelationList[otherRelation].name}}</span>  
+                      </view>
+                  </picker> 
+                  <view class="section">
+                      <span class="section-title">联系人姓名<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入电话号码" />
+                  </view>
+                  <view class="section">
+                      <span class="section-title">固定电话/手机<i class="titleFlag">*</i></span>  
+                      <input class="section-content"  name="input" placeholder="请输入身份证号" />
+                  </view>
+                  <picker bindchange="bindPickerChange" value="{{borrowMoney3}}" range="{{borrowMoneyList3}}" range-key="{{'name'}}" data-num='14'>
+                      <view class="section">
+                          <span class="section-title">是否知悉借款<i class="titleFlag">*</i></span> 
+                          <span class="section-content" name="input" wx:if="{{borrowMoney3==''}}">请选择是否知悉</span>
+                          <span class="section-content" name="input" wx:else>{{borrowMoneyList3[borrowMoney3].name}}</span>  
+                      </view>
+                  </picker> 
+                </view>
+                <view class="submitBtn">
+                    <button formType="submit">保存</button>
+                </view>
+             </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  <!-- 地区遮罩层 -->
+</view>

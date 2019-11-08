@@ -1,0 +1,65 @@
+/* pages/newCreat/index.wxss */
+.headerTitle{
+  height: 70rpx;
+  line-height: 70rpx;
+  vertical-align: middle;
+  border-bottom: 6rpx solid #FAFAFB;
+  display: flex;
+}
+.itemOne,.itemSecond,.itemThird{
+  text-align: center;
+}
+.itemOne{
+  width: 15%;
+  font-size: 60rpx;
+}
+.itemSecond{
+  width: 70%;
+  font-weight: bold;
+}
+.itemThird{
+  width: 15%;
+  font-size: 30rpx;
+}
+.progressView, .infoView{
+  display: flex;
+}
+.imageView{
+  width: 20%;
+  position: relative;
+}
+.lineBgStyle{
+  height: 4rpx; 
+  width:100%;
+}
+.isCompleteStyle{
+  position: absolute;
+  left: -25rpx;
+  width: 50rpx;
+  height: 50rpx;
+  top: 14rpx;
+}
+.infoView{
+  margin: 30rpx 0;
+  padding: 0 20rpx;
+}
+.textStyle{
+  margin: 30rpx 40rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+.infoViewItem{
+  width: 25%;
+  position: relative;
+}
+.infoImage{
+  width: 100%;
+  height: 220rpx;
+}
+.infoTitle{
+  font-size: 30rpx;
+  color: white;
+  position: absolute;
+  top: 56rpx;
+  left: 17%;
+}

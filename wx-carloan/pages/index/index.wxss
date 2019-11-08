@@ -1,0 +1,391 @@
+/*---------------------------------begin---------------------------------*/
+
+.DateTimeInfo {
+  height: 60rpx;
+  width: 750rpx;
+  position: relative;
+  margin: 0rpx auto;
+  /* background-color: rgb(223, 234, 247); */
+  display: inline-block;
+}
+
+.DateTimeInfo span {
+  position: absolute;
+  font-family: '微软雅黑' Arial;
+  display: inline-block;
+}
+
+.dti1 {
+  width: 70rpx;
+  height: 55rpx;
+  top: 2rpx;
+  left: 40rpx;
+  font-size: 55rpx;
+  line-height: 55rpx;
+  font-family: DINAlternate-Bold;
+  font-weight: bold;
+}
+
+.dti2 {
+  width: 78rpx;
+  height: 25rpx;
+  top: 8rpx;
+  left: 127rpx;
+  font-size: 25rpx;
+  line-height: 25rpx;
+}
+
+.dti3 {
+  width: 100rpx;
+  height: 20rpx;
+  top: 37rpx;
+  left: 127rpx;
+  font-size: 20rpx;
+  line-height: 20rpx;
+}
+
+.dti4 {
+  width: 440rpx;
+  height: 33rpx;
+  top: 16rpx;
+  right: 40rpx;
+  font-size: 33rpx;
+  line-height: 33rpx;
+  text-align: right;
+}
+
+.swiperBox {
+  width: 670rpx;
+  height: 250rpx;
+  position: relative;
+  margin: 5rpx auto 30rpx auto;
+  box-shadow: 0rpx 10rpx 10rpx rgba(179, 177, 177, 0.9);
+}
+
+.swiperBox swiper {
+  width: 670rpx;
+  height: 250rpx;
+  box-shadow: 0rpx 10rpx 10rpx rgba(179, 177, 177, 0.9);
+}
+
+.swiperBox image {
+  border-radius: 10rpx;
+  width: 670rpx;
+  height: 250rpx;
+}
+
+.carAccessBox {
+  width: 670rpx;
+  height: 150rpx;
+  position: relative;
+  margin: 0 auto;
+}
+
+.carAccBtn {
+  width: 324rpx;
+  height: 140rpx;
+  line-height: 60px;
+  text-align: center;
+  float: left;
+  color: white;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.authBtn {
+  width: 324rpx;
+  height: 140rpx;
+  line-height: 60px;
+  text-align: center;
+  float: right;
+  color: white;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.noticeBox {
+  width: 670rpx;
+  height: 50rpx;
+  position: relative;
+  margin: 30rpx auto;
+  display: flex;
+  align-items: center;
+}
+
+.noticeBox text {
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 27rpx;
+  color: #333;
+  margin-left: 14rpx;
+}
+
+.createOrder {
+  width: 670rpx;
+  height: 218rpx;
+  position: relative;
+  margin: 40rpx auto 60rpx auto;
+  box-shadow: 0rpx 0rpx 10rpx rgba(179, 177, 177, 0.9);
+  border-radius: 10rpx;
+}
+
+.createOrder image {
+  top: 26rpx;
+  position: absolute;
+  left: 60rpx;
+}
+
+.createOrder .cotitle {
+  top: 44rpx;
+  position: absolute;
+  right: 126rpx;
+  width: 140rpx;
+  height: 28rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.createOrder .creOrderBtn {
+  top: 100rpx;
+  position: absolute;
+  right: 80rpx;
+  width: 210rpx;
+  height: 70rpx;
+  font-size: 29rpx;
+  text-align: center;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 50rpx;
+  border: none;
+  color: white;
+}
+
+.createOrder  button::after {
+  border: none;
+}
+
+.productList {
+  width: 670rpx;
+  min-height: 250rpx;
+  position: relative;
+  margin: 20rpx auto;
+}
+
+.swiper-tab {
+  width: 100%;
+  border-bottom: 2rpx solid #ececec;
+  text-align: center;
+  height: 56rpx;
+  line-height: 56rpx;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.swiper-tab-item {
+  width: 50%;
+  color: #434343;
+  font-size: 29rpx;
+}
+
+.swiper-tab-item:last-child::before {
+  content: " ";
+  height: 40rpx;
+  width: 1rpx;
+  background-color: #ececec;
+  left: 335rpx;
+  top: 10rpx;
+  position: absolute;
+}
+
+.active {
+  color: #333;
+  /* border-bottom: 4rpx #f65959 solid; */
+  text-align: center;
+}
+
+/*.active::after {
+  content: " ";
+  width: 50rpx;
+  height: 6rpx;
+  background-color: #f65959;
+   position: relative; 
+  margin-top: 22rpx;
+  margin-left: 58rpx;
+}*/
+
+swiper {
+  text-align: center;
+}
+
+/*产品列表*/
+
+.productList li {
+  height: 149rpx;
+  border-bottom: 1rpx #ececec solid;
+  width: 670rpx;
+  position: relative;
+  margin: 0rpx auto;
+  display: block;
+}
+
+.productList li .proTitle {
+  width: 192rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  font-size: 28rpx;
+  color: rgba(51, 51, 51, 1);
+  position: absolute;
+  top: 40rpx;
+  left: 0rpx;
+}
+
+.productList li .proText {
+  width: 324rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  font-size: 24rpx;
+  color: rgba(153, 153, 153, 1);
+  position: absolute;
+  top: 86rpx;
+  left: 0rpx;
+  text-align: left;
+}
+
+.productList li .proType {
+  width: 210rpx;
+  height: 34rpx;
+  position: absolute;
+  top: 26rpx;
+  right: 0rpx;
+}
+
+.productList li .proType span {
+  float: right;
+  position: relative;
+  margin-left: 12rpx;
+}
+
+.productList li .proType span:nth-child(2) {
+  width: 60rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  background: rgba(255, 239, 238, 1);
+  font-size: 22rpx;
+  color: rgba(255, 102, 102, 1);
+}
+
+.productList li .proType span:nth-child(1) {
+  width: 60rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  background: rgba(235, 242, 250, 1);
+  font-size: 22rpx;
+  color: rgba(88, 124, 246, 1);
+}
+.proSwiper{
+  min-height:600rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------------stop---------------------------------*/
+
+/**index.wxss**/
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 0rpx;
+}
+
+.ppline {
+  display: block;
+  border: 1rpx red solid;
+  width: 100%;
+}

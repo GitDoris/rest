@@ -1,0 +1,13 @@
+<!--pages/forgetPassword/index.wxml-->
+<view class='contentBox'>
+  <script src='//g.alicdn.com/sd/nvc/1.1.112/guide.js'></script>  
+  <input placeholder="请输入您的登录账号" value="{{uName}}"  class='certificationInput' maxlength="16" placeholder-class="placlass" auto-focus  bindinput="setUname"/>
+  <input placeholder="请设置您的登录密码" value="{{newPwd}}" password='{{ newpwdtype }}' class='certificationInput' maxlength="16" placeholder-class="placlass" bindinput="checkNewPWD"  />
+  <span class="toggleEye Newpwd {{eye2== true ?'openeye':'closeeye'}}" bindtap="toggleEyeNew" ></span>
+   <input placeholder="请输入您收到的短信验证码" value="{{smsCode}}" password='{{ newpwdtype }}' class='certificationInput' maxlength="16" placeholder-class="placlass" bindinput="checkNewPWD"  />
+   <span class="sendSMS" wx:if="{{!getCodeShow}}" bindtap="getauthCode" >获取验证码</span>
+   <span class="sendSMS" wx:if="{{getCodeShow}}">剩余 {{count}} s</span>
+  <view>
+    <button  class='AClinkBtn'  bindtap="forgetPwd"  > 提交 </button>
+  </view>
+</view>

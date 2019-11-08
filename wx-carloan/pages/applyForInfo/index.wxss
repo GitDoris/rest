@@ -1,0 +1,134 @@
+/* pages/list/index.wxss */
+
+.content{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.swiper-content{
+ display: flex;
+ height: 100%;
+ margin-top:80rpx;
+}
+swiper-item{
+ height: 100%;
+ overflow:scroll;
+ overflow-x:hidden;
+}
+scroll-view {
+  height: 100%;
+}
+.swiper-tab{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:999;
+  background: #fff;
+  line-height: 81rpx;
+
+}
+.swiper-tab-item{
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+  border-bottom: 1px solid #dddddd;
+  font-size: 31rpx;
+}
+.item-three-content{
+  padding:0 39rpx;
+}
+.item-three-title{
+  line-height:90rpx;
+  font-weight: bold;
+  padding:0 39rpx;
+  background:rgba(246,246,250,1);
+}
+
+.swiper-tab-item.active {
+  position: relative;
+  font-weight: bolder;
+  color: #333;
+  text-align: center;
+}
+.swiper-tab-item.active::after{
+  width: 50rpx;
+  content: "";
+  height:5rpx;
+  background: #f65959;
+  display: block;
+  position:absolute;
+  left: 100rpx;
+}
+.swiperTabBox{
+  font-size: 28rpx;
+  background:#fff;
+}
+.section{
+  width:100%;
+  height:100rpx;
+  line-height:100rpx;
+  border-bottom: 2rpx solid #ECECEC;
+}
+.section .section-title{
+  width:30%;
+  float: left;
+  color:#666666;
+}
+.section .section-title.addWidth{
+  width:50%;
+}
+.section .section-title.isAddTime{
+  width:35%;
+}
+.section .section-title .titleFlag{
+  color:#f65959;
+}
+.section-content{
+  color:#BBBBBB;
+  height:100rpx;
+  line-height:100rpx;
+  text-align: right;
+  float: right;
+}
+.section-textarea{
+  width: 70%;
+  float: right;
+  height: 148rpx;
+  display: block;
+}
+.section-picker{
+  width:75%;
+  display: inline-block;
+  height:100rpx;
+  line-height:100rpx;
+  text-align: right;
+  color:#BBBBBB;
+}
+.swipter-item-one,.swipter-item-two{
+  background: #fff;
+  padding:0 20px;
+}
+.submitBtn{
+  margin-top:60rpx
+}
+.submitBtn button {
+  width:600rpx;
+  height:80rpx;
+  line-height:80rx;
+  background:linear-gradient(-90deg,rgba(220,230,239,1),rgba(190,193,203,1),rgba(214,214,221,1)) !important;
+  box-shadow:0px 4rpx 10rpx 0px rgba(220,230,253,0.6);
+  border-radius:40rpx;
+  font-size:32rpx;
+  color:#fff;
+}
+.submitBtn input {
+  outline: none;
+  border: none;
+  list-style: none;
+}
+.submitBtn button::after {
+  border: none;
+}

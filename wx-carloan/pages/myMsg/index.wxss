@@ -1,0 +1,44 @@
+/* pages/myMsg/index.wxss */
+.msgBox{
+  position: relative;
+  width: 670rpx;
+  height: 160rpx;
+  box-shadow: 0rpx 0rpx 8rpx #dadbe4;
+  display: block;  
+  margin-top: 30rpx;
+  border-radius: 10rpx;
+}
+.msgBox span{
+  position: absolute;
+  /* border: 1rpx red solid; */
+  display: inline-block;
+}
+.msgBox .msgTitlle{
+  top: 40rpx;
+  left: 40rpx;
+  width: 370rpx;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 800;
+  height: 32rpx;
+  line-height: 26rpx;
+}
+.msgBox .msgTime{
+   top: 100rpx;
+  left: 40rpx;
+  width: 370rpx;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 0;
+  height: 32rpx;
+  line-height: 26rpx;
+}
+.msgBox .msgResult{
+  top: 68rpx;
+  right: 42rpx;
+  width: 120rpx;
+  font-size: 30rpx;
+  color: #333;
+  height: 32rpx;
+  line-height: 26rpx;
+}

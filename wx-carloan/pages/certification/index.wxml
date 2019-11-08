@@ -1,0 +1,14 @@
+<view class="contentBox">
+  <input placeholder="请输入借款人的真实姓名" value='{{RuleChinese}}' class='certificationInput' placeholder-class="placlass" auto-focus bindblur="checkChinese" />
+  <input placeholder="请输入借款人的身份证号" value='{{RuleIdcard}}' type='idcard' class='certificationInput' maxlength="18" placeholder-class="placlass" bindblur="checkIdcard" />
+  <input class='certificationInput' value='{{RuleNum}}' placeholder-class="placlass" maxlength="17" bindblur="checkCarCode" placeholder="请输入借款人17位车架号" />
+  <button    disabled="{{disabled}}" class='eval_btn' bindtap="searchAC"> 查询 </button>
+
+
+  <view class="errorCode">{{inputValue}}</view>
+  <view class='goCertificationList'>
+    <navigator url="/pages/certificationList/index" class="CertificationList" plain='true'>
+      认证列表 >
+    </navigator>
+  </view>
+</view>

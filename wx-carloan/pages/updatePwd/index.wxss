@@ -1,0 +1,26 @@
+/* pages/updatePwd/index.wxss */
+ .toggleEye{
+   position: absolute;
+   height: 60rpx;
+   width: 60rpx;
+   z-index: 999999;
+   background-position: center;
+   background-repeat: no-repeat;
+ }
+ .Oldpwd{
+   right: 40rpx;
+   top: 30rpx;
+   background-size: 40rpx 24rpx;
+ }
+ .Newpwd{
+   right: 40rpx;
+   top: 130rpx;  
+   background-size: 40rpx 24rpx;
+ }
+ .openeye{
+   background-image: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/indexpic9.png")
+ }
+ .closeeye{
+   background-image: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/indexpic10.png")
+ }
+ 

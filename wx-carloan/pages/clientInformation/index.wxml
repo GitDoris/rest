@@ -1,0 +1,586 @@
+<!--pages/list/index.wxml-->
+<view class='content'>
+  <view class="swiper-tab">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">个人信息</view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">职业信息</view>
+    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">联系人信息</view>
+  </view>
+  <swiper current="{{currentTab}}" duration="300" bindchange="swiperTab" class="swiper-content">
+    <swiper-item>
+      <scroll-view scroll-y="true">
+        <view class="swipter-item-one">
+          <form bindsubmit="personFormSubmit" bindreset="formReset">
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">
+                  手机号码1
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input type="number" class="section-content" name="phoneNumber" placeholder="请输入手机号码" placeholder-class='placeholder' value='{{personageInfoJson.phoneNo}}'/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <picker bindchange="bindPickerChange" name="education" value="{{personageInfoJson.educationCode}}" range="{{educationList}}" range-key="{{'name'}}" data-num='0'>
+                <view class="section">
+                  <span class="section-title">最高学历
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" wx:if="{{personageInfoJson.educationCode ==''}}">请选择最高学历</span>
+                  <span class="section-content" name="education" >{{educationList[personageInfoJson.educationCode].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <picker bindchange="bindPickerChange" name="marry" value="{{personageInfoJson.marriageCode}}" range="{{marriageList}}" range-key="{{'name'}}" data-num='1'>
+                <view class="section">
+                  <span class="section-title">
+                    婚姻状况
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.marriageCode ==''}}">请选择婚姻状况</span>
+                  <span class="section-content" name="input" wx:else>{{marriageList[personageInfoJson.marriageCode].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <picker bindchange="bindPickerChange" name="children" value="{{personageInfoJson.childrenCountCode}}" range="{{childrenList}}" range-key="{{'name'}}" data-num='2'>
+                <view class="section">
+                  <span class="section-title">
+                    子女数目
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.childrenCountCode ==''}}">请选择子女数目</span>
+                  <span class="section-content" name="input">{{childrenList[personageInfoJson.childrenCountCode].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <picker bindchange="bindPickerChange" name="provide" value="{{personageInfoJson.provideCountCode}}" range="{{provideList}}" range-key="{{'name'}}" data-num='3'>
+                <view class="section">
+                  <span class="section-title">
+                    供养人数
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.provideCountCode ==''}}">请选择人数</span>
+                  <span class="section-content" name="input">{{provideList[personageInfoJson.provideCountCode].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">
+                  每月家庭支出
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content section-text">元</span>
+                <input class="section-content" name="expenditure" placeholder="请输入金额" value="{{personageInfoJson.expenditure}}" placeholder-class='placeholder'/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+                <view class="section" id="household" bindtap="addressShowHandler">
+                  <span class="section-title">
+                    户口所在地
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content">{{proName}}省-{{region}}市</span>
+                </view>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">详细地址</span>
+                <input class="section-content" name="detailSite" placeholder="如道路，门牌号，单元室" value='{{personageInfoJson.detailSite}}' placeholder-class='placeholder'/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <picker bindchange="bindPickerChange" name="placeAndRegister" value="{{personageInfoJson.placeAndCensusCode}}" range="{{placeAndRegisterList}}" range-key="{{'name'}}" data-num='4'>
+                <view class="section">
+                  <span class="section-title addWidth">
+                    居住地与户籍地是否一致
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.placeAndCensusCode ==''}}">请选择是否一致</span>
+                  <span class="section-content" name="input">{{placeAndRegisterList[personageInfoJson.placeAndCensusCode].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+                <view class="section" id="nowPlace" bindtap="addressShowHandler">
+                  <span class="section-title">
+                    现住宅地址
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content">{{nowProName}}省-{{nowRegion}}市</span>
+                </view>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">详细地址</span>
+                <input class="section-content" placeholder="如道路，门牌号，单元室" placeholder-class='placeholder' value="{{personageInfoJson.nowDetailSite}}"/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <picker mode="date" bindchange="bindTimeChange" name="newAddressTime"  value="{{personageInfoJson.nowDwellDate}}" start="2000-01-01" end="2018-11-01" data-time='0'>
+                <view class="section">
+                  <span class="section-title">
+                    现居住时间
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.nowDwellDate ==''}}">请选择时间</span>
+                  <span class="section-content" name="input">{{personageInfoJson.nowDwellDate}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <picker mode="date" bindchange="bindTimeChange" name="cityTime" value="{{personageInfoJson.comeCityDate}}" start="2015-09-01" end="2017-09-01" data-time='1'>
+                <view class="section">
+                  <span class="section-title">
+                    来本市时间
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{personageInfoJson.comeCityDate ==''}}">请选择时间</span>
+                  <span class="section-content" name="input">{{personageInfoJson.comeCityDate}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">手机号码2</span>
+                <input type="number" class="section-content" placeholder="请输入手机号码" placeholder-class='placeholder' value="{{personageInfoJson.standbyPhoneNo}}"/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">住宅电话</span>
+                <input class="section-content" placeholder="请输入区号以及电话" placeholder-class='placeholder' value="{{personageInfoJson.residencePhone}}"/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">芝麻信用分</span>
+                <span class="section-content section-text">分</span>
+                <input class="section-content" placeholder="请输入芝麻信用分" placeholder-class='placeholder' value="{{personageInfoJson.sesameCredit}}"/>
+              </view>
+            </view>
+            <view class="swiperTabBox">
+              <view class="section">
+                <span class="section-title">支付宝账号</span>
+                <input class="section-content" placeholder="请输入支付宝账号" placeholder-class='placeholder' value="{{personageInfoJson.alipayAccount}}"/>
+              </view>
+            </view>
+            <view class="submitBtn">
+              <button formType="submit">保存</button>
+            </view>
+          </form>
+        </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <!--logs.wxml-->
+      <scroll-view scroll-y="true">
+        <view class="swipter-item-two">
+          <view class="swiperTabBox">
+            <picker bindchange="bindPickerChange" value="{{hireType}}" range="{{hireTypeList}}" range-key="{{'name'}}" data-num='5'>
+              <view class="section">
+                <span class="section-title">
+                  雇佣类型
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                <span class="section-content" name="input" wx:if="{{hireType ==''}}">请选择类型</span>
+                <span class="section-content" name="input">{{hireTypeList[hireType].name}}</span>
+              </view>
+            </picker>
+          </view>
+          <view class="swiperTabBox">
+            <view class="section">
+              <span class="section-title">
+                单位名称
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </span>
+              <input class="section-content" name="input" placeholder="请输入单位名称" placeholder-class='placeholder'/>
+            </view>
+          </view>
+          <view class="swiperTabBox">
+            <picker bindchange="bindPickerChange" value="{{unitNature}}" range="{{unitNatureList}}" range-key="{{'name'}}" data-num='6'>
+              <view class="section">
+                <span class="section-title">
+                  单位性质
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                <span class="section-content" name="input" wx:if="{{unitNature ==''}}">请选择单位性质</span>
+                <span class="section-content" name="input">{{unitNatureList[unitNature].name}}</span>
+              </view>
+            </picker>
+          </view>
+          <view class="swiperTabBox">
+            <picker bindchange="bindPickerChange" value="{{industry}}" range="{{industryList}}" range-key="{{'name'}}" data-num='7'>
+              <view class="section">
+                <span class="section-title">
+                  所属行业
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                <span class="section-content" name="input" wx:if="{{industry ==''}}">请选择单位性质</span>
+                <span class="section-content" name="input">{{industryList[industry].name}}</span>
+              </view>
+            </picker>
+          </view>
+          <view class="swiperTabBox">
+            <view class="section">
+              <span class="section-title">
+                所属部门
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </span>
+              <input class="section-content" name="input" placeholder="请输入所属部门" placeholder-class='placeholder'/>
+            </view>
+          </view>
+          <view class="swiperTabBox">
+            <view class="section">
+              <span class="section-title">
+                职业名称
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </span>
+              <input class="section-content" name="input" placeholder="请输入职业名称" placeholder-class='placeholder'/>
+            </view>
+          </view>
+          <view class="swiperTabBox">
+            <picker bindchange="bindPickerChange" value="{{security}}" range="{{securityList}}" range-key="{{'name'}}" data-num='8'>
+              <view class="section">
+                <span class="section-title">
+                  是否缴纳社保
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                <span class="section-content" name="input" wx:if="{{security ==''}}">请选择是否缴纳社保</span>
+                <span class="section-content" name="input">{{securityList[security].name}}</span>
+              </view>
+            </picker>
+          </view>
+          <view class="swiperTabBox">
+            <picker mode="date" bindchange="bindTimeChange" value="{{entryTime}}" start="2015-09-01" end="2017-09-01" data-time='2'>
+              <view class="section">
+                <span class="section-title isAddTime">
+                  现单位入职时间
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                </span>
+                <span class="section-content" name="input" wx:if="{{entryTime ==''}}">请选择时间</span>
+                <span class="section-content" name="input">{{entryTime}}</span>
+              </view>
+            </picker>
+          </view>
+          <view class="swiperTabBox">
+              <view class="section" id="workPlace" bindtap="addressShowHandler">
+                <span class="section-title">
+                  现单位地址
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                <span class="section-content">{{workPlaceProName}}省-{{workPlaceRegion}}市</span>
+              </view>
+          </view>
+          <view class="swiperTabBox">
+            <view class="section">
+              <span class="section-title">详细地址</span>
+              <input class="section-content" name="input" placeholder="如道路，门牌号，单元室" placeholder-class='placeholder'/>
+            </view>
+          </view>
+          <view class="submitBtn">
+            <button formType="submit">保存</button>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <!--logs.wxml-->
+      <scroll-view scroll-y="true">
+        <view class="swipter-item-three">
+          <view class="swiperTabBox">
+            <view class="item-three-title">配偶</view>
+            <view class="item-three-content">
+              <view class="section">
+                <span class="section-title">
+                  配偶姓名
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入配偶姓名" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  固定电话/手机
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入电话号码" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  配偶身份证号
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入身份证号" placeholder-class='placeholder'/>
+              </view>
+              <picker bindchange="bindPickerChange" value="{{borrowMoney}}" range="{{borrowMoneyList}}" range-key="{{'name'}}" data-num='9'>
+                <view class="section">
+                  <span class="section-title">
+                    是否知悉借款
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{borrowMoney==''}}">请选择是否知悉</span>
+                  <span class="section-content" name="input" wx:else>{{borrowMoneyList[borrowMoney].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="item-three-title">直系亲属</view>
+            <view class="item-three-content">
+              <picker bindchange="bindPickerChange" value="{{kinsfolk}}" range="{{kinsfolkList}}" range-key="{{'name'}}" data-num='10'>
+                <view class="section">
+                  <span class="section-title">
+                    直系亲属关系
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{kinsfolk==''}}">请选择亲属关系</span>
+                  <span class="section-content" name="input" wx:else>{{kinsfolkList[kinsfolk].name}}</span>
+                </view>
+              </picker>
+              <view class="section">
+                <span class="section-title">
+                  直系亲属姓名
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入电话号码" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  固定电话/手机
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入身份证号" placeholder-class='placeholder'/>
+              </view>
+              <picker bindchange="bindPickerChange" value="{{borrowMoney1}}" range="{{borrowMoneyList1}}" range-key="{{'name'}}" data-num='11'>
+                <view class="section">
+                  <span class="section-title">
+                    是否知悉借款
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{borrowMoney1==''}}">请选择是否知悉</span>
+                  <span class="section-content" name="input" wx:else>{{borrowMoneyList1[borrowMoney1].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="item-three-title">同事</view>
+            <view class="item-three-content">
+              <picker bindchange="relationPickerChange" value="{{relation}}" range="{{relationArray}}">
+                <view class="section">
+                  <span class="section-title">
+                    同事姓名
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <input class="section-content" name="input" placeholder="请输入姓名" placeholder-class='placeholder'/>
+                </view>
+              </picker>
+              <view class="section">
+                <span class="section-title">
+                  同事电话/手机
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入电话号码" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  部门
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入身份证号" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  职位
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入身份证号" placeholder-class='placeholder'/>
+              </view>
+              <picker bindchange="bindPickerChange" value="{{borrowMoney2}}" range="{{borrowMoneyList2}}" range-key="{{'name'}}" data-num='12'>
+                <view class="section">
+                  <span class="section-title">
+                    是否知悉借款
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{borrowMoney2==''}}">请选择是否知悉</span>
+                  <span class="section-content" name="input" wx:else>{{borrowMoneyList2[borrowMoney2].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="item-three-title">其他联系人</view>
+            <view class="item-three-content">
+              <picker bindchange="bindPickerChange" value="{{otherRelation}}" range="{{otherRelationList}}" range-key="{{'name'}}" data-num='13'>
+                <view class="section">
+                  <span class="section-title">
+                    联系人关系
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{otherRelation==''}}">请选择亲属关系</span>
+                  <span class="section-content" name="input" wx:else>{{otherRelationList[otherRelation].name}}</span>
+                </view>
+              </picker>
+              <view class="section">
+                <span class="section-title">
+                  联系人姓名
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入电话号码" placeholder-class='placeholder'/>
+              </view>
+              <view class="section">
+                <span class="section-title">
+                  固定电话/手机
+                  <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                </span>
+                <input class="section-content" name="input" placeholder="请输入身份证号" placeholder-class='placeholder'/>
+              </view>
+              <picker bindchange="bindPickerChange" value="{{borrowMoney3}}" range="{{borrowMoneyList3}}" range-key="{{'name'}}" data-num='14'>
+                <view class="section">
+                  <span class="section-title">
+                    是否知悉借款
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+                  </span>
+                  <span class="section-content">
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </span>
+                  <span class="section-content" name="input" wx:if="{{borrowMoney3==''}}">请选择是否知悉</span>
+                  <span class="section-content" name="input" wx:else>{{borrowMoneyList3[borrowMoney3].name}}</span>
+                </view>
+              </picker>
+            </view>
+            <view class="submitBtn">
+              <button formType="submit">保存</button>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  <!-- 地区遮罩层 -->
+  <!-- 地区弹出框 -->
+  <view class='modelNameCoverBG regionCoverBG' wx:if='{{addressShow}}'>
+    <view class='modelNameCover' animation="{{animationAddress}}">
+        <text>选择地区</text>
+        <view class='img' catchtap='addressHideHandler'><image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vel_close.png' ></image></view>
+        <view class='modelNameList' wx:if='{{proShow}}'>
+          <!-- 热门城市 -->
+          <view class='hot_model'>
+            <text>热门城市</text>
+
+            <!-- 热门城市列表 -->
+            <view class='hot_model_list'>
+              <view class='hot_model_item' wx:for='{{hotCityList}}' wx:key="{{index}}" bindtap='HotCityHandler' data-cityCode="{{item.cityCode}}" data-cityName="{{item.cityName}}"> 
+                <text class='fontSize28'>{{item.cityName}}</text>
+              </view>
+            </view>
+
+          </view>
+
+          <!-- 选择省份/地区 -->
+          <view class='choose_model'>
+            <text>选择省份/地区</text>
+
+            <!-- 选择省份/地区 -->
+            <scroll-view class='choose_model_list' scroll-y>
+                <view class='choose_model_item'  wx:for='{{allAddressList}}' wx:key="{{index}}"> 
+                  <text>{{item.titleName}}</text>
+                  <view>
+                    <view wx:for='{{item.provinceInfoList}}' wx:key='{{index}}' bindtap='allProHandler' data-index='{{index}}' data-provCode="{{item.provCode}}" data-provInitial='{{item.provInitial}}' data-provName='{{item.provName}}'>
+                      <text class='fontSize28'>{{item.provName}}</text>
+                    </view>
+                  </view>
+                </view>
+            </scroll-view>
+
+          </view>
+
+
+        </view>
+        <view class='chooseSeries' wx:if='{{cityShow}}'>
+          <!-- 步骤条  -->
+          <view class='step'>
+          <view class='line'>
+            <text></text>
+            <text></text>
+            <text></text>
+          </view>
+          <view class='title'>
+            <text>{{proName}}</text>
+            <text>请选择城市</text>
+          </view>
+          </view>
+          <view class='series'>
+            <text>选择城市</text>
+            <scroll-view class='carSeriesDivideList' scroll-y>
+              <view class='carSeriesDivideList_item' wx:for='{{cityList.cityInfoList}}' wx:key='item.cityCode'>
+                <text style='width:30rpx;'></text>
+                <!-- {{item.provInitial}} -->
+                <view>
+                  <view  bindtap='allCityHandler' data-index='{{index}}' data-cityCode='{{item.cityCode}}' data-cityName='{{item.cityName}}' >
+                  {{item.cityName}}
+                  </view>
+              </view>
+              </view>
+            </scroll-view>
+          </view>
+        </view>
+    </view>
+  </view>
+</view>

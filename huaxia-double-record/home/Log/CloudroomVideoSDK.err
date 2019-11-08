@@ -1,0 +1,1 @@
+[2019-05-21 17:15:28.565][ERR][Main:4368:225]mod:CR_VIDEO, cmd:REQOPENVIDEO, msg(OutgoingAsync.cpp:714: Ice::UnknownException:unknown exception:exceptions.KeyError: 0)

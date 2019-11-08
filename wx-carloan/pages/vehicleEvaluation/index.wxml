@@ -1,0 +1,366 @@
+<view class='content'>
+  <view class='head'>
+    <image class='head_bg' src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_head.png'></image>
+    <view class='txt'>
+      <text>车辆预估值（元）</text>
+      <text class='price'>{{ evalPrice }}</text>
+    </view>
+  </view>
+  <!-- input 列表 -->
+  <view class='inputList'>
+    <view>
+      <view class='left'>车架号 <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+      </view>
+      <view class='right'>
+        <view class='input'><input class="uppercase" placeholder="请输入借款人17位车架号" bindinput="vinHandler" value='{{vin}}'/></view>
+        <view class='btn'>
+          <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_btn.png'></image>
+          <text catchtap='matchCarBrand'>匹配</text>
+        </view>
+      </view>
+    </view> 
+    <view class='vehicleSeries' bindtap='modelShowHandler'>
+      <view class='left'>车型 <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+      </view>
+      <view class='right'>
+        <view class="input {{ wrap ? 'twoLine' : ''}} {{ modelCheck ? 'darkcolor' : '' }}">
+          {{modelName}}
+        </view>
+        <view class='arrow'>
+          <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+        </view>
+      </view>
+    </view> 
+    <view>
+      <view class='left'>上牌时间 <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+      </view>
+      <view class='right'>
+        <view class="input  {{ regDateCheck ? 'darkcolor' : '' }}" >
+         <picker mode="date" value="{{regDate}}" bindchange="bindDateChange">
+            <view class="picker">
+              {{regDate}}
+            </view>
+          </picker>
+          </view>
+        <view class='arrow'>
+          <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+        </view>
+      </view>
+    </view> 
+    <view>
+      <view class='left'>估价城市 <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+      </view>
+      <view class='right' bindtap="addressShowHandler">
+        <view class="input  {{ regionCheck ? 'darkcolor' : '' }}">
+        {{region}}
+         <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+            <view class="picker">
+              {{region[0]}}{{region[1]?',':''}}{{region[1]}}{{region[2]?',':''}}{{region[2]}}
+            </view>
+          </picker> -->
+          </view>
+        <view class='arrow'>
+          <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+        </view>
+      </view>
+    </view>
+    <view>
+      <view class='left'>表显里程 <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+      </view>
+      <view class='right'>
+        <view class='input'><input placeholder="请填写表显里程"  value='{{mile}}' bindinput="mileHandler" type='number'/></view>
+        <view class='meters'>
+          <text>万公里</text>
+        </view>
+      </view>
+    </view> 
+
+  </view>
+  <view class='error' wx:if='{{errorTip}}'><icon type="warn" size="15"/>{{errorTip}}</view>
+  <!-- 获取估价按钮 -->
+  <view class="eval_btn {{ disabled ? 'disabled' : '' }}" bindtap='evalHandler'>
+    获取估价
+  </view> 
+  <i-toast id="toast" />
+  <!-- 车型弹出框 -->
+ <view class='modelNameCoverBG' wx:if='{{modelShow}}'>
+    <!--  -->
+    <view class='modelNameCover' animation="{{animation}}">
+   
+      <text>选择车型</text>
+      <view class='img' catchtap='modelHideHandler'><image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vel_close.png' ></image></view>
+  
+
+    <view class='modelNameList' wx:if='{{brandsShow}}'>
+
+      <!-- 热门品牌 -->
+      <view class='hot_model'>
+        <text>热门品牌</text>
+
+        <!-- 热门品牌列表 -->
+        <view class='hot_model_list'>
+          <view class='hot_model_item' wx:for='{{hot_model_list}}' wx:key="{{item.bandId}}" bindtap='chooseHotBrandHandler' data-index='{{index}}'> 
+            <image src='{{item.bandUrl}}'></image>
+            <text>{{item.bandName}}</text>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- 选择品牌 -->
+      <view class='choose_model'>
+        <text>选择品牌</text>
+
+        <!-- 选择品牌列表 -->
+        <scroll-view class='choose_model_list' scroll-y>
+            <view class='choose_model_item'  wx:for='{{choose_model_list}}' wx:key="{{item.bandId}}"> 
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carInfoList}}' wx:key='{{index}}' bindtap='chooseBrandHandler' data-index='{{index}}' data-initial='{{item.initial}}'>
+                  <image src='{{item.bandUrl}}'></image>
+                  <text>{{item.bandName}}</text>
+                </view>
+              </view>
+            </view>
+        </scroll-view>
+
+      </view>
+
+
+    </view>
+
+
+    <block wx:if='{{hot}}'>
+      <view class='chooseSeries' wx:if='{{seriesShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+        <view class='line'>
+          <text></text>
+          <text></text>
+          <text></text>
+        </view>
+        <view class='title'>
+          <text>{{brandName}}</text>
+          <text>请选择车系</text>
+        </view>
+        </view>
+
+        <view class='series'>
+          <text>选择车系</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view wx:for='{{carSeriesDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carSeriesList}}' wx:key='{{item.seriesName}}' bindtap='chooseHotSeriesHandler' data-index='{{index}}' data-seriesGroupName='{{item.seriesGroupName}}' data-seriesName='{{item.seriesName}}'>
+                {{item.seriesName}}
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+        
+
+      </view>
+
+
+      <view class='chooseSeries chooseType' wx:if='{{typeShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+        <view class='line'>
+          <text></text>
+          <text class='line_line'></text>
+          <text></text>
+          <text class='line_line'></text>
+          <text></text>
+        </view>
+        <view class='title'>
+          <text>{{brandName}}</text>
+          <text>{{seriesName}}</text>
+          <text>请选择车型</text>
+        </view>
+        </view>
+
+        <view class='series'>
+          <text>选择车型</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view wx:for='{{carTypeDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carTypeList}}' wx:key='{{item.modelSeriesId}}' bindtap='chooseHotTypeHandler' data-modelName='{{item.modelName}}' data-modelId='{{item.modelId}}'>
+
+                {{item.modelName}}
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+        
+
+      </view>
+    </block>
+
+
+    <block wx:if='{{my_choose}}'>
+      <view class='chooseSeries' wx:if='{{my_seriesShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+        <view class='line'>
+          <text></text>
+          <text></text>
+          <text></text>
+        </view>
+        <view class='title'>
+          <text>{{my_brandName}}</text>
+          <text>请选择车系</text>
+        </view>
+        </view>
+
+        <view class='series'>
+          <text>选择车系</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view wx:for='{{my_carSeriesDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carSeriesList}}' wx:key='{{item.seriesName}}' bindtap='chooseSeriesHandler' data-index='{{index}}' data-seriesGroupName='{{item.seriesGroupName}}' data-seriesName='{{item.seriesName}}' >
+                {{item.seriesName}}
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+        
+
+      </view>
+
+
+      <view class='chooseSeries chooseType' wx:if='{{my_typeShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+        <view class='line'>
+          <text></text>
+          <text class='line_line'></text>
+          <text></text>
+          <text class='line_line'></text>
+          <text></text>
+        </view>
+        <view class='title'>
+          <text>{{my_brandName}}</text>
+          <text>{{my_seriesName}}</text>
+          <text>请选择车型</text>
+        </view>
+        </view>
+
+        <view class='series'>
+          <text>选择车型</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view wx:for='{{my_carTypeDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carTypeList}}' wx:key='{{item.modelSeriesId}}' bindtap='chooseTypeHandler' data-modelName='{{item.modelName}}' data-modelId='{{item.modelId}}'>
+
+                {{item.modelName}}
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+        
+
+      </view>
+    </block>
+
+  </view>
+ </view>
+
+
+   <!-- 地区弹出框 -->
+ <view class='modelNameCoverBG regionCoverBG' wx:if='{{addressShow}}'>
+ <!--  -->
+   <view class='modelNameCover' animation="{{animationAddress}}">
+   
+      <text>选择地区</text>
+      <view class='img' catchtap='addressHideHandler'><image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vel_close.png' ></image></view>
+  
+
+    <view class='modelNameList' wx:if='{{proShow}}'>
+
+      <!-- 热门城市 -->
+      <view class='hot_model'>
+        <text>热门城市</text>
+
+        <!-- 热门城市列表 -->
+        <view class='hot_model_list'>
+          <view class='hot_model_item' wx:for='{{hotCityList}}' wx:key="{{index}}" bindtap='HotCityHandler' data-cityCode="{{item.cityCode}}" data-cityName="{{item.cityName}}"> 
+            <text class='fontSize28'>{{item.cityName}}</text>
+          </view>
+        </view>
+
+      </view>
+
+      <!-- 选择省份/地区 -->
+      <view class='choose_model'>
+        <text>选择省份/地区</text>
+
+        <!-- 选择省份/地区 -->
+        <scroll-view class='choose_model_list' scroll-y>
+            <view class='choose_model_item'  wx:for='{{allAddressList}}' wx:key="{{index}}"> 
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.provinceInfoList}}' wx:key='{{index}}' bindtap='allProHandler' data-index='{{index}}' data-provInitial='{{item.provInitial}}' data-provName='{{item.provName}}'>
+                  <text class='fontSize28'>{{item.provName}}</text>
+                </view>
+              </view>
+            </view>
+        </scroll-view>
+
+      </view>
+
+
+    </view>
+      <view class='chooseSeries' wx:if='{{cityShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+        <view class='line'>
+          <text></text>
+          <text></text>
+          <text></text>
+        </view>
+        <view class='title'>
+          <text>{{proName}}</text>
+          <text>请选择城市</text>
+        </view>
+        </view>
+
+        <view class='series'>
+          <text>选择城市</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view class='carSeriesDivideList_item' wx:for='{{cityList.cityInfoList}}' wx:key='item.cityCode'>
+              <text style='width:30rpx;'></text>
+              <!-- {{item.provInitial}} -->
+              <view>
+                <view  bindtap='allCityHandler' data-index='{{index}}' data-cityCode='{{item.cityCode}}' data-cityName='{{item.cityName}}' >
+                {{item.cityName}}
+                </view>
+             </view>
+            </view>
+          </scroll-view>
+
+        </view>
+        
+
+      </view>
+  
+
+  </view>
+ </view>
+ 
+</view>

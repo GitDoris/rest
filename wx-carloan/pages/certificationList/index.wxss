@@ -1,0 +1,43 @@
+/* pages/certificationList/index.wxss */
+.cerStateBox{
+  width: 100%;
+  height: 385rpx;
+  border-radius: 10rpx;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.cerStateSucc{
+   background-image: url(http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/index_pic402.png);
+}
+.cerStateError{
+   background-image: url(http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/index_pic404.png);
+
+}
+.cerStateSucc .ACline, .cerStateError .ACline{
+  height:29rpx;
+  line-height: 29rpx;
+  width: 640rpx;
+  display: inline-block;
+  color: white;
+  font-size: 29rpx;
+  margin-left: 40rpx;
+  margin-top: 36rpx;
+}
+.ACLink{
+  position: absolute;
+  width: 34rppx;
+  height: 34rpx;
+  line-height: 34rpx;
+  top: 176rpx;
+  right: 34rpx;
+  vertical-align: middle;
+}
+.ACtitle{
+  position: relative;
+  width: 170rpx;
+  height: 30rpx;
+  text-align: left;
+  text-indent: 0;
+  display: inline-block;
+}

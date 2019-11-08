@@ -1,0 +1,11 @@
+<!--pages/myMsg/index.wxml-->
+<view class='contentBox'>
+  <text style="font-size:32rpx;">进件进度</text>
+</view>
+<view class='contentBox'>
+  <div class="msgBox"  wx:for="{{msgList}}" wx:key="index">
+    <span class="msgTitlle">{{ item.orderUserName+" "+ item.orderProductName}}</span>
+    <span class="msgTime">{{ item.createdTime }}</span>
+    <span class="msgResult">{{ item.orderDesc }}</span>
+  </div>
+</view>

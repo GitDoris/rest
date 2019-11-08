@@ -1,0 +1,3522 @@
+<!DOCTYPE html PUBLIC "" "">
+<html>
+
+<head>
+    <meta name="renderer" content="ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>双录系统</title>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=11,ie=10,ie=9">
+    <meta name="description" content="cloudroom live demo" />
+    <meta name="author" content="deva" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/detail.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video-js.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/videojs-markers/0.7.0/videojs.markers.css" rel="stylesheet">
+    <link type="favicon" rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<body style="background-color: #f0f0f0 !important;">
+<!-- 加载层 -->
+<div class="full_page" id="full_page"></div>
+<div id="loading_gif"><img src="image/loading-0.gif" /></div>
+
+
+
+<!--播放视频的弹窗容器-->
+<div class="playVideo" id="playVideo" style="display: none;">
+    <div class="full_page_header" style="margin-bottom: 0">
+        <span class="name_label">视频播放</span>
+        <span class="name_del1" onclick="closeVideo()" style="color: #fff;"><img style="width: 22px;"
+                                                                                 src="image/delete.png" /></span>
+    </div>
+    <!--未初始化时利用video.js播放mp4-->
+    <div id="my-wrap"></div>
+</div>
+
+<!--上传进度面板显示弹层  开始-->
+<div class="full_page_div" id="full_page_div">
+    <div class="full_page_header">
+        <span class="name_label">上传面板</span>
+        <span class="name_del1" onclick="cancle_upload(uploadingFile)" style="color: #fff;"><img
+                style="width: 22px;" src="image/delete.png" /></span>
+    </div>
+    <p style="text-align: center" id="upload_status"></p>
+    <div class="percent_box">
+        <span class="percent_item" id="percent_item"></span>
+        <b style="position:absolute;right:-60px;top:-10px;" id="upload_num_percert">0%</b>
+    </div>
+    <div style="text-align: center">
+            <span class="f-stepBtn" id="reStart2" onclick="reStart()" style="display:none;">
+                重新录制
+            </span>
+        <span class="f-stepBtn" id="cancelUpload2" onclick="cancle_upload(uploadingFile)">
+                取消上传
+            </span>
+    </div>
+</div>
+<!--视频录制参数设置弹层  开始-->
+<div class="full_page_div2 f-shadow" id="full_page_div2">
+    <div class="list_page_header">
+            <span class="list_name_label">
+                <span class="active" onclick="changeTab(1,this)">录制设置</span>
+                <b>|</b>
+                <span onclick="changeTab(2,this)">视频设置</span>
+            </span>
+        <!--<span class="list_name_del" onclick="setCancle()"><img src="image/delete.png"/></span>-->
+    </div>
+    <div class="full_page_div4" id="full_page_div4">
+        <div class="full_page_msg3">
+            <span class="msg_label3">分辨率：</span>
+            <select id="recordWH">
+                <!--<option value ="1" checked="checked">360P(640*360)</option>-->
+                <!--<option value ="2">480P(864*480)</option>-->
+                <option value="3">720P(1280*720)</option>
+                <!--<option value="4">1080P(1920*1080)</option>-->
+                <!--<option value ="5">480P(640*480)</option>-->
+            </select>
+        </div>
+        <div class="full_page_msg4">
+            <span class="msg_label4">码率(kbps)：</span>
+            <input id="bitRate" type="text" name="malv" value="350" />
+        </div>
+        <div class="full_page_msg6">
+            <span class="msg_label6">上传限制(KB/s)：</span>
+            <input id="fuRate" type="text" name="malv" value="0" />
+        </div>
+        <div class="full_page_msg7">
+            <span class="msg_label7">帧率(取值6~20)：</span>
+            <input id="frameRate" type="text" name="frameRate" value="15" />
+        </div>
+        <div class="full_page_msg8">
+            <span class="msg_label8">录制上传方式：</span>
+            <input type="radio" name="recUpType" class="recUpType" value="0"
+                   style="margin-left: 138px;" /><label>手动上传</label>
+            <input type="radio" name="recUpType" class="recUpType" value="1" checked="checked" /><label>边录边传</label>
+        </div>
+    </div>
+    <div class="full_page_msg2" id="full_page_msg2">
+        <div id="meet_reset_camera" class="meet_video_reset" style="margin-top: 12px;">
+            <label class="meet_label">摄像头</label>
+            <select id="video_select"></select>
+            <!-- <button id="video_operate_btn">关闭</button> -->
+        </div>
+        <div id="meet_reset_speaker" class="meet_video_reset">
+            <label class="meet_label">扬声器</label>
+            <select id="spker_select"></select>
+        </div>
+        <div id="meet_reset_micraphone" class="meet_video_reset">
+            <label class="meet_label">麦克风</label>
+            <select id="mic_select"></select>
+            <!-- <button id="mic_operate_btn">关闭</button> -->
+        </div>
+        <div id="meet_reset_video_size" class="meet_video_reset">
+            <label class="meet_label">视频尺寸</label>
+            <select id="size_select">
+                <option value="8" selected="true">640*360</option>
+                <option value="10">864*480</option>
+                <option value="12">1280*720</option>
+                <option value="13">1920*1080</option>
+            </select>
+        </div>
+        <div id="meet_reset_video_zl" class="meet_video_reset">
+            <label class="meet_label">视频帧率</label>
+            <input id="frame_input" type="text" name="meet_reset_video_zl" value="15" />
+        </div>
+        <div id="meet_reset_video_yx" class="meet_video_reset">
+            <p class="radio_contain">
+                <input onclick="choseMeetYx(0)" class="radio_label" type="radio" name="meet_yx" checked="checked"
+                       value="0" />
+                <span class="fs14_col48_verm_disib">视频质量优先</span>
+                <input onclick="choseMeetYx(1)" class="radio_label" type="radio" name="meet_yx" value="1" />
+                <span class="fs14_col48_verm_disib">视频流畅优先</span>
+            </p>
+        </div>
+    </div>
+    <div class="full_page_button" style="display: block;">
+        <!--<div style="margin-right: 20px;" >-->
+        <!--<img src="image/cancelBtn.png" onclick="setCancle()" alt="">-->
+        <!--<span onclick="setCancle()">取消</span>-->
+        <!--</div>-->
+        <div style="margin-left: 20px;">
+            <img src="image/confirmBtn.png" onclick="setSubmit()" alt="">
+            <span onclick="setSubmit()">确定</span>
+        </div>
+    </div>
+</div>
+<!--视频录制参数设置弹层  结束-->
+<!--警告弹出层 开始-->
+<div class="warning_palyer" id="warning_palyer" style="display: none;">
+    <div class="palyer_page_header" style="display: none">
+        <span class="player_name_label" style="font-size: 20px;color: #fff;">提示面板</span>
+        <span class="player_name_del" onclick="closePlayer()" style="color: #fff;"><img
+                src="image/closepage.png" /></span>
+    </div>
+    <div class="player_page_msg" id="full_page_msg_input" style="display: none;">
+        <span class="player_label"></span>
+        <input type="text" name="" value="" />
+    </div>
+    <div class="player_page_msg" id="full_page_msg_img" style="display: none;">
+        <span class="player_label">上传进度：</span>
+        <img src="image/s_03.png" alt="">
+    </div>
+    <div class="player_page_msg" id="full_page_msg_time" style="display: none;margin-top:40px;">
+        <span class="player_one_word">进入会议失败 <span id="login_time">--</span>秒后重新登录</span>
+    </div>
+    <div class="player_page_msg" id="full_page_msg_normal" style="display: none;">
+        <span class="player_label"></span>
+        <span class="player_label_detail"></span>
+    </div>
+    <div class="player_page_button" style="margin-top:60px;">
+        <button class="player_page_cancle" style="display: none;"></button>
+        <button class="player_page_submit" style="display: none;"></button>
+    </div>
+</div>
+<!--警告弹出层结束-->
+<!--alert 弹出层样式 开始-->
+<div class="alert_palyer" id="alert_palyer" style="display: none;">
+    <!--<div class="alert_page_header">-->
+    <!--<span class="alert_name_label" style="font-size: 20px;color: #fff;">提示</span>-->
+    <!--<span class="alert_name_del" onclick="closeAlert()" style="color: #fff;"><img src="image/closepage.png"/></span>-->
+    <!--</div>-->
+    <div class="alert_page_msg" id="alert_page_msg">
+        <p class="alert_label_detail"></p>
+    </div>
+    <div class="alert_page_button">
+        <span class="f-stepBtn" onclick="closeAlert()">确定</span>
+        <!--<button class="alertr_page_commit" onclick="closeAlert()">确定</button>-->
+    </div>
+</div>
+<!--alert 弹出层样式 结束-->
+<!--列表弹出层   开始-->
+<div class="list_container" id="list_container" style="display: none;">
+    <div class="list_page_header">
+            <span class="list_name_label" id="checkList"><span class="active"
+                                                               onclick="checkList(this,0)">录制文件管理</span><b>|</b><span
+                    onclick="checkList(this,1)">已上传服务器视频</span></span>
+        <span class="list_name_del" onclick="closelistPage()"><img src="image/delete.png" /></span>
+    </div>
+    <div class="table_list">
+        <table width="94%" border="0" cellspacing="0" cellpadding="0" id="table_list_container" class="box">
+            <tr>
+                <td width="25%">
+                    <div class="tabel_list_head">文件名</div>
+                </td>
+                <td width="12%">
+                    <div class="tabel_list_head">文件大小</div>
+                </td>
+                <td width="12%">
+                    <div class="tabel_list_head">文件时长</div>
+                </td>
+                <td width="12%" id="onlineNotSee">
+                    <div class="tabel_list_head">上传状态</div>
+                </td>
+                <td width="34%">操作</td>
+            </tr>
+        </table>
+
+        <div style="display: none;text-align: center;margin-top: 60px;" id="localListContainer">暂无文件</div>
+    </div>
+</div>
+<!--列表弹出层   结束-->
+<!--打点文件管理弹出层   开始-->
+<div class="mark_list_container_wrapper" id="mark_list_container_wrapper" style="display: none;">
+
+</div>
+<div class="mark_list_container" id="mark_list_container" style="display: none;">
+    <div class="list_page_header">
+        <span class="list_name_label">视频打点信息管理</span>
+        <span class="list_name_del" onclick="closeMarkListPage()"><img src="image/closepage.png" /></span>
+    </div>
+    <div class="table_list">
+        <table width="100%" border="1" cellspacing="0" cellpadding="0" id="mark_table">
+            <thead>
+            <tr>
+                <th colspan="3">视频文件名</th>
+            </tr>
+            </thead>
+            <tr>
+                <td width="10%">
+                    <div class="mark_list_item">时间戳</div>
+                </td>
+                <td width="65%">
+                    <div class="mark_list_item no_wrap">内容</div>
+                </td>
+                <td width="25%">
+                    <div class="mark_list_item">操作</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!--打点文件管理弹出层   结束-->
+<!--某一视频文件的打点记录修改层   开始-->
+<div class="mark_change_container_wrapper" id="mark_change_container_wrapper" style="display: none;"></div>
+<div class="mark_change_container" id="mark_change_container" style="display: none;">
+    <div class="mark_change_page_header">
+        <span class="mark_list_name_label">请输入打点修改内容</span>
+        <span class="mark_list_name_del" onclick="closeMarkChangePage()">X</span>
+    </div>
+    <div class="mark_change_page_con">
+        <span class="con_item">内容</span>
+        <input class="con_item" id="MarkChangeInput" type="text" value="">
+        <div class="con_item">
+            <button onmouseover="$(this).addClass('active');" onmouseleave="$(this).removeClass('active');"
+                    onclick="changeMarkText()">OK</button>
+            <button onmouseover="$(this).addClass('active');" onmouseleave="$(this).removeClass('active');"
+                    onclick="closeMarkChangePage()">Cancle</button>
+        </div>
+    </div>
+</div>
+<!--某一视频文件的打点记录修改层   结束-->
+<!--主页面开始-->
+<div class="container" style="background-color: #f0f0f0">
+    <div class="login_box form-inline" style="display: none;">
+        <div class="login_logo">
+            <img src="image/login_logo.png">
+        </div>
+        <div class="label_words">
+            <span>服务器</span>
+        </div>
+        <div class="login_name">
+            <div id="login_server_input" class="login_input">
+                <input class="normal" type="text" id="server_name" placeholder="请输入账号"
+                       value="118.31.132.16:58131" />
+                <!-- <div id="server_name" class="normal" contenteditable="true" placeholder="请输入账号">192.168.15.222:2726  www.cloudroom.com</div> -->
+                <span id="login_server_img"><img class="remeber_server" src="image/icon_14.png"></span>
+                <div class="inputLayer"></div>
+            </div>
+            <ul class="pull_down_name" id="login_server_pull">
+                <li>10.8.8.220</li>
+                <li>www.cloudroom.com</li>
+            </ul>
+        </div>
+        <div class="login_cpyname">
+            <div id="login_cpyname_input" class="login_cpyname_input">
+                <input class="normal" type="text" id="login_cpyname" value="demo@cloudroom.com" />
+                <div class="inputLayer1"></div>
+            </div>
+        </div>
+        <div class="login_psd">
+            <div id="login_psd_input" class="login_psd_input">
+                <input class="normal" type="password" id="login_psd" value="123456" />
+                <div class="inputLayer2"></div>
+            </div>
+        </div>
+        <div class="login_button">
+            <button onclick="login()">登录</button>
+            <!-- <button onclick="location.replace('http://www.baidu.com/')">登录</button> -->
+        </div>
+    </div>
+    <div class="menu_box" style="display:none">
+        <div class="menu_left">
+            <div class="meun_left_logo">
+                <span class="detail_header_logo"><img src="image/logo.png" /></span>
+                <!--<span class="detail_header_logo">双录</span>-->
+            </div>
+            <ul class="menu_left_ul">
+                <li class="menu_left_li_item onmenu">
+                    <a href="#">基金类</a>
+                </li>
+                <li class="menu_left_li_item">
+                    <a href="#">期货类</a>
+                </li>
+                <li class="menu_left_li_item">
+                    <a href="#">货币市场类</a>
+                </li>
+                <li class="menu_left_li_item">
+                    <a href="#">固定收益类</a>
+                </li>
+                <li class="menu_left_li_item">
+                    <a href="#">权益类</a>
+                </li>
+                <li class="menu_left_li_item">
+                    <a href="#">另类投资类</a>
+                </li>
+            </ul>
+        </div>
+        <div class="menu_right">
+            <ul id="menu_right_content1" style="padding:20px;">
+                <div class="menu_right_title">
+                    <span>基金类</span>
+                </div>
+                <div class="menu_right_detail">
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00034</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00035</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00036</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00037</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00038</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00039</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00040</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00041</dd>
+                    </dl>
+                    <dl>
+                        <dt style="cursor:pointer">
+                            <img src="image/pics.png" onclick="enterRoom()" />
+                        </dt>
+                        <dd>财富宝货币市场基金 00042</dd>
+                    </dl>
+                    <div style="clear: both;"></div>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="detail_box" style="display:block">
+        <div class="detail_header">
+            <span class="detail_header_logo"><img src="image/logo.png" /></span>
+            <!--<span class="detail_header_logo">双录</span>-->
+        </div>
+        <div class="detail_left">
+            <div class="detail_left_product">
+                <div class="detail_left_product_title">
+                    <span>借款信息</span>
+                </div>
+                <ul class="detail_left_product_detail">
+                    <li>
+                        <span class="product_detail_title">客户姓名：</span>
+                        <span class="product_detail_main" id="cName"></span>
+                    </li>
+                    <li>
+                        <span class="product_detail_title">身份证号：</span>
+                        <span class="product_detail_main" id="idCard"></span>
+                    </li>
+                    <li>
+                        <span class="product_detail_title">产品名称：</span>
+                        <span class="product_detail_main" id="pName"></span>
+                    </li>
+                    <li>
+                        <span class="product_detail_title">合同编号：</span>
+                        <span class="product_detail_main" id="contractId" style="display: inline-block;
+										width: 74%;
+										word-wrap: break-word;
+										white-space: normal;">
+
+                            </span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="detail_right">
+            <!--<div>123/123/123</div>-->
+            <div class="detail_right_view">
+                <div class="f-tab" id="tabCon"></div>
+                <!--<video controls="controls" autoplay width="640" height="320">-->
+                <!--<source src="http://www.storiesinflight.com/js_videosub/jellies.mp4" type="video/mp4" />&lt;!&ndash; WebKit &ndash;&gt;-->
+                <!--<track src="http://www.storiesinflight.com/js_videosub/jellies.srt" kind="subtitle" srclang="en-US" label="English" />-->
+                <!--&lt;!&ndash; <track src="includes/jellies.vtt" srclang="zh-cn" label="简体中文" kind="caption"> &ndash;&gt;-->
+                <!--Your browser does not support HTML5 video.-->
+                <!--</video>-->
+                <div class="detail_right_video f-shadow">
+                    <div id="initImg"
+                         style="position: absolute;left: 29%;top: 25%;text-align: center;color: #666;font-size: 16px">
+                        <img src="./image/init.png" style="width: 180px;" alt="">
+                        <p>暂未开启摄像头</p>
+                        <p style="font-size: 14px;margin-top: 15px">若您需要录制视频,请点击下方"打开摄像头"按钮</p>
+                    </div>
+
+                    <div id="mediaContainer" style="position:absolute;overflow:hidden;"></div>
+                    <div id="videoAContainer" style="position:absolute"></div>
+                    <div id="videoBContainer" style="position:absolute"></div>
+                </div>
+            </div>
+            <div class="detail_right_voice f-shadow" style="overflow: hidden;">
+                <div class="head" id="toolBar" style="display: none">
+                    <span class="title">录制指引</span>
+                    <span class="right">
+                            <span onclick="openSetVideoPanel()">设置</span>
+                        <!--<b>|</b>-->
+                        <!--<span  onclick="showAllList()">预览所有录制内容 ></span>-->
+                        </span>
+                </div>
+                <!--<ul class="detail_right_voice1_item" id="detail_video_lists"></ul>-->
+                <!--视频步骤-->
+                <div id="step" style="display: none"></div>
+                <!--未初始化所展示的状态-->
+
+                <div id="init" class="f-singleStep">
+                    <div id="justRead" style="display: none">
+                        <p class="noAccess"></p>
+                        <span class="f-stepBtn" onclick="showAllList()">
+                                视频管理
+                            </span>
+                    </div>
+                    <div id="openCam" style="margin-top: 50px;display: none">
+                        <p class="noAccess"></p>
+                        <span class="f-stepBtn" onclick="showAllList()">
+                                视频管理
+                            </span>
+                        <span class="f-stepBtn" onclick="stepInit()">
+                                请打开摄像头
+                            </span>
+                    </div>
+                </div>
+                <!--外部拉取状态所展示的视频状态-->
+                <div id="alreadyHave" class="f-singleStep" style="display: none">
+                    <p class="access">已完成录制！</p>
+                    <span class="f-stepBtn access" onclick="step_reStart()">
+                            重新录制
+                        </span>
+                    <span class="f-stepBtn access" onclick="showAllList()">
+                            视频管理
+                        </span>
+                    <div class="noAccess" style="display: none;">
+                        <p></p>
+                        <span class="f-stepBtn" onclick="showAllList()">
+                                视频管理
+                            </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div style="display: none;overflow: hidden;">
+    <object id="crBoardObjG" type="application/x-cloudroom-boardui" style="width:1px;height: 1px;"></object>
+    <object id="crBoardObj" classid="clsid:D9ED4651-4461-458A-99F4-A455977582FF" width="1" height="1"></object>
+</div>
+<object id="crVideoObjG" type="application/x-cloudroom-videosdk" style="width:1px;height: 1px;"></object>
+<object id="crMgrObjG" type="application/x-cloudroom-videomgr" style="width:1px;height: 1px;"></object>
+<object id="crMeetObjG" type="application/x-cloudroom-videomeeting" style="width:1px;height: 1px;"></object>
+<object id="crQueueObjG" type="application/x-cloudroom-queue" style="width:1px;height: 1px;"></object>
+<object id="crHttpObjG" type="application/x-cloudroom-httpfilemgr" style="width:1px;height: 1px;"></object>
+
+<object id="crVideoObj" classid="clsid:07EFD662-A1BB-4d8d-9BEE-F7E43E5FEBF5" width="1" height="1"></object>
+<object id="crMgrObj" classid="clsid:120AD2B0-68F2-46c6-88D8-52173F501C0F" width="1" height="1"></object>
+<object id="crMeetObj" classid="clsid:9E9DD983-A9F8-4dff-B694-B1AE1C708B1E" width="1" height="1"></object>
+<object id="crQueueObj" classid="clsid:9AAD199D-A02F-4513-875D-AA81091E44B9" width="1" height="1"></object>
+<object id="crHttpObj" classid="clsid:7E44F8C9-7C8D-4004-8F45-D9819D78663C" width="1" height="1"></object>
+<script type="text/javascript" src="js/CloudroomVideoSDK_iePatch.js"></script>
+
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<!-- <script type="text/javascript" src="js/css3-mediaqueries.js"></script> -->
+<!-- <script type="text/javascript" src="js/html5.js"></script>  -->
+
+
+<!--录制tab循环模板-->
+<script type="text/html" id="tab">
+{{each tabList value i}}
+<span
+        onclick="checkRecord(this,'{{value.roleIndex}}','{{value.name}}','{{value.action}}')">{{value.name}}</span>
+{{/each}}
+</script>
+
+<!--录制指引循环模板-->
+<script type="text/html" id="tpl">
+<div class="f-singleStep f-show" id="firstStep" style="margin-bottom: 50px">
+    <i>
+        我已经准备好了，开始录制！
+    </i>
+    <div>
+                <span class="f-stepBtn" onclick="stepStart()">
+                    确定
+                </span>
+    </div>
+</div>
+
+<!--if(CRVideo_TryReadFile(g_location_dir+g_record+".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST){-->
+
+
+{{each videoConfigList value i}}
+<div class="f-singleStep f-show">
+    <div>
+        <i>
+            {{value.content}}
+        </i>
+    </div>
+
+    <div>
+        {{if(value.isFaceCompare==1)}}
+        <span class="f-stepBtn" onclick="headPic(this)">
+                    人像拍照
+                </span>
+        <span class="f-stepBtn" onclick="cardPic()">
+                    身份证正面照
+                </span>
+        {{/if}}
+        <span class="f-stepBtn" id="nextBtn"
+              onclick="stepNext(this,'{{value.targetContent}}','{{value.stepSerial}}')">
+                    下一项
+                </span>
+    </div>
+</div>
+{{/each}}
+
+<div class="f-singleStep f-show" id="lastStep" style="display: none">
+    <p id="upload_status2">已录制完成,请上传!</p>
+    <div class="percent_box">
+        <span class="percent_item" id="percent_item2"></span>
+        <b style="position:absolute;right:-60px;top:-10px;" id="upload_num_percert2">0%</b>
+    </div>
+    <div>
+                <span class="f-stepBtn" id="reStart" onclick="step_reStart()" style="display:none;">
+                    重新录制
+                </span>
+        <span class="f-stepBtn" id="cancelUpload" onclick="step_cancle_upload(g_record)">
+                    取消上传
+                </span>
+        <span class="f-stepBtn" id="startRecord" onclick="step_upload(g_record)" style="display: none;">
+                    开始上传
+                </span>
+        <span class="f-stepBtn" onclick="showAllList()">
+                    视频管理
+                </span>
+    </div>
+</div>
+</script>
+
+<script type="text/html" id="localList">
+{{each item}}
+<tr id="list_item{{$index}}" class="list_all_items" {{if(/\.srt$/.test($value.listName))}} style="display:none"
+{{/if}}>
+<!--{{if($index%2==0)}}-->
+<!--style="background-color: #f8fafe;"-->
+<!--{{/if}}-->
+
+<td>
+    <div class="text_left" id="fileName{{$index}}">{{$value.listName}}</div>
+</td>
+<td>
+    <div class="list_item_size">{{$value.fileSize}}</div>
+</td>
+<td>
+    <div class="list_item_state">{{$value.duration}}秒</div>
+</td>
+<td>
+    <div class="list_item_state">{{$value.listState}}</div>
+</td>
+<td>
+    <div class="table_done text_left" style="white-space: nowrap">
+        <span class="table_up_del_rec" onclick="uploadFile('{{$index}}')">上传</span>
+        <span class="table_up_del_rec" onclick="deleteFile('{{$index}}')">本地删除</span>
+        <!--{{if (/\.srt$/.test($value.listName)) }}-->
+        <!--<span class="table_up_del_rec" onclick="markFileMgr('{{$index}}')">打点管理</span>-->
+        <!--{{else}}-->
+        <span class="table_up_del_rec" onclick="playbackList('{{$index}}')">播放</span>
+        <!--{{/if}}-->
+        <div class='table_up_perc'></div>
+    </div>
+</td>
+</tr>
+{{/each}}
+</script>
+<script type="text/html" id="onlineList">
+{{each item}}
+<tr class="list_all_items" {{if(/\.srt$/.test($value.videoName))}} style="display:none" {{/if}}>
+<td>
+    <div class="text_left" id="videoName{{$index}}">{{$value.videoName}}</div>
+</td>
+<td>
+    <div class="list_item_size">{{$value.videoSize}}</div>
+</td>
+<td>
+    <div class="list_item_state">{{$value.videoTime}}秒</div>
+</td>
+<td>
+    <div class="table_done text_left" style="white-space: nowrap">
+                    <span class="table_up_del_rec"
+                          onclick="playbackList('{{$index}}','{{$value.videoName}}','{{$value.videoType}}','{{$value.tenantId}}')">播放</span>
+    </div>
+</td>
+</tr>
+{{/each}}
+</script>
+<script type="text/javascript" src="js/template-web.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/detail.js"></script>
+<script type="text/javascript" src="js/uuid.js"></script>
+<script type="text/javascript" src="js/CloudroomVideoSDK.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video.min.js"></script>
+<script src="https://cdn.bootcss.com/videojs-markers/0.7.0/videojs-markers.js"></script>
+
+<script type="text/javascript">
+//***接口请求集中
+var ROOT = 'https://inc.huaxiafinance.com/huaxia-recording';
+function showBaseinfo() {
+  $("#baseinfoTab").attr("class", "on_tab1");
+  $("#IdentityATab").removeClass();
+  $("#IdentityBTab").removeClass();
+  $("#gereninfo").css("display", "block")
+  $("#sfzzm").css("display", "none")
+  $("#sfzfm").css("display", "none")
+}
+
+function showIdentityA() {
+  $("#baseinfoTab").removeClass();
+  $("#IdentityATab").attr("class", "on_tab1");
+  $("#IdentityBTab").removeClass();
+  $("#gereninfo").css("display", "none")
+  $("#sfzzm").css("display", "block")
+  $("#sfzfm").css("display", "none")
+}
+
+function showIdentityB() {
+  $("#baseinfoTab").removeClass();
+  $("#IdentityATab").removeClass();
+  $("#IdentityBTab").attr("class", "on_tab1");
+  $("#gereninfo").css("display", "none")
+  $("#sfzzm").css("display", "none")
+  $("#sfzfm").css("display", "block")
+}
+var g_nickname; //用户昵称
+var g_userID; //用户id
+var g_logining = false; // 判断登录状态登录
+var g_usrID; // 登录成功后 用户id
+var g_mediaObj; // 创建的 正在播放的媒体对象
+var g_videoAObj; // 创建的 video1 对象
+var g_videoBObj; // 创建的 vidoe2 对象
+var g_startRecord = false; // 判断回放状态的全局变量
+var g_layout; // 视频和摄像头(三种布局：A：2个视频窗口；B: 媒体播放和视频窗口；C:回放/单摄像头视频布局
+var g_playbacking = false; // 是否回放状态
+var g_uploading = false; // 视频是否正在上传
+var g_record; // 录制视频的文件名称
+var g_recordWidth = 640; // 录制视频的宽度初始值
+var g_recordHeight = 360; // 录制视频的高度初始值
+var g_bitRate = 350000; // 录制视频码率的初始值
+var g_frameRate = 10; // 录制视频帧率的初始值
+var g_isUploadOnRecording = 1; // 是否边录边传
+var g_FURate = 0; // 录制视频的上传限制初始值 kb/s  不设置限速就设置为小于等于0！！！
+var video_size_arr = [
+  [0, 0, 0],
+  [160, 96, 70],
+  [224, 128, 96],
+  [288, 160, 123],
+  [352, 192, 146],
+  [448, 256, 200],
+  [512, 288, 250],
+  [576, 320, 300],
+  [640, 360, 350],
+  [704, 400, 420],
+  [864, 480, 500],
+  [1024, 576, 650],
+  [1280, 720, 1000],
+  [1920, 1080, 2000]
+];
+var g_video_size_type = 8;
+var g_first_set_video_and_med = true;
+var g_video_fps = 15
+var g_video_qp = 0;
+var g_bg_color = 0;
+var g_residual_timer = -1;
+
+var g_meetingId; // 创建的会议号
+var g_meetingPsw; // 会议密码
+var g_meeLoginTimes = 0; // 记录掉线的次数1
+var g_meeLoginTimes2 = 0; // 记录的掉线次数 2
+var g_video_filename_list; // 媒体库所有媒体文件
+var g_getAll_videfile_list; // 获取所有视频文件信息
+var g_nowTime_play_num = -1; // 当前播放哪一个文件
+var g_server_name; //服务器地址
+var g_single_video = true; //是否单摄像头
+
+var g_init_room = false; //是否初始化完房间
+
+var g_bg_color; //修改背景颜色
+var g_init = false; ///  是否初始化
+var cr_account; // 云屋授权账号
+var cr_psw; //云屋授权密码
+var g_meeting = false; //是否在会议中
+
+var g_timer_relogin = -1; //入会定时器
+
+//华夏信财录制流程
+var f_stepNum = 0; // 步骤总数
+
+var roleJson = {
+  1: 'P2P直销风控面谈',
+  2: 'P2P直销客服签约',
+  3: 'P2P直销客户声明',
+  4: 'P2P渠道风控面谈',
+  5: 'P2P渠道客服签约',
+  6: 'P2P渠道客户声明',
+  7: 'P2P电销风控面谈',
+  8: 'P2P电销客服签约',
+  9: 'P2P电销客户声明',
+  10: '信托直销风控面谈',
+  11: '信托直销客服签约',
+  12: '信托直销客户声明',
+  13: '信托直销信托签约',
+  14: '信托渠道风控面谈',
+  15: '信托渠道客服签约',
+  16: '信托渠道客户声明',
+  17: '信托渠道信托签约',
+  18: '结清再贷电销风控面谈',
+  19: '结清再贷电销客服签约',
+  20: '结清再贷电销客户声明',
+  21: '借新还旧电销风控面谈',
+  22: '借新还旧电销客服签约',
+  23: '借新还旧电销客户声明'
+}
+var currentType = '' //当前视频类型
+var currentFileName = '' //当前视频名称
+var currentAction = ''
+var slideInformation = ''; //侧边栏借款信息
+var valueA = '' //sdk所需上传A值
+var uploadPath = '' //路径后半截
+var uploadingFile = '' //记录手动上传点击上传的当前文件名，方便取消调用
+var uploadingType = '' //记录手动上传点击上传的当前文件类型，方便成功回调调用
+var onlineList = '' //服务器视频列表
+var getClientFace = {} //人证对比，base64对象
+var throughFace = false //未通过认证对比
+var onlineStatus = '' //拉取视频状态
+var lost = false //掉线
+
+
+var API = {
+  getStep: ROOT + '/template/detail',
+  getJson: ROOT + '/common/code',
+  getOss: ROOT + '/common/getUploadPath',
+  getPolicy: ROOT + '/common/genratePolicy',
+  getFile: ROOT + '/common/getFilePath',
+  getFileStatus: ROOT + '/video/uploadStatus',
+  face: ROOT + '/video/authentication',
+  uploadCallback: ROOT + '/video/uploadCallBack',
+  getPage: ROOT + '/video/page',
+  getMp4: ROOT + '/common/getConfigFilePath'
+
+}
+var AJAX = {
+  getStep: function (success, fail) {
+    //***步骤获取api
+    $.ajax({
+      type: "GET",
+      url: API.getStep + '?videoType=' + currentType,
+      contentType: "application/json",
+      async: true,
+      cache: false,
+      crossDomain: true,
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+        }
+      }
+    })
+    // $.get('http://192.168.11.228:3000/mock/41/template/detail?tenantId=1', function(data) {
+    //     if(typeof success === 'function'){
+    //         success(data)
+    //     }
+    // })
+  },
+  // getJson: function (success,fail) {
+  //     //***步骤获取api
+  //     $.get(API.getJson, function(data) {
+  //         if(typeof success === 'function'){
+  //             success(data)
+  //         }
+  //     })
+  // },
+  getPolicy: function (success, fail) {
+    var getPolicyParam = {
+      'tenantId': slideInformation.rentId,
+      'videoType': currentType,
+      'category': slideInformation.contractId
+    }
+    //***步骤获取api
+    $.ajax({
+      type: "POST",
+      url: API.getPolicy,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getPolicyParam),
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+        }
+      }
+    })
+  },
+  getOss: function (success, fail) {
+    var getOssParam = {
+      'tenantId': slideInformation.rentId,
+      'videoType': currentType,
+      'fileName': slideInformation.contractId + '_' + currentFileName + '_' + currentType +
+        '.mp4',
+      'category': slideInformation.contractId
+    }
+    //***步骤获取api
+    $.ajax({
+      type: "POST",
+      url: API.getOss,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getOssParam),
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+          console.log("重新确认上传地址",data.data)
+        }
+      }
+    })
+  },
+  getPage: function (success, fail) {
+    var getPageParam = {
+      'tenantIds': slideInformation.rentId == 'XINTUO' ? ['ANSHUO'] : ['ANSHUO', 'HXPH',
+        'BEIJING'
+      ], // 租户为信托，传值为租户ID+videoType
+      'businessNo': slideInformation.contractId,
+      'videoType': slideInformation.rentId == 'XINTUO' ? currentType : ''
+      // 'videoType':
+      // 'pageNum':'10',
+      // 'pageSize':'1'
+    }
+    //***步骤获取api
+    $.ajax({
+      type: "POST",
+      url: API.getPage,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getPageParam),
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+        }
+      }
+    })
+  },
+
+  // getMp4: function (success,fail) {
+  //     var getMp4Param = {
+  //         'videoType':currentType,
+  //         'fileName':slideInformation.contractId+'_'+currentFileName+'_'+currentType+'.mp4',
+  //     }
+  //     //***拉取视频状态
+  //     $.ajax({
+  //         type: "POST",
+  //         url: API.getMp4,
+  //         contentType: "application/json",
+  //         async: true,
+  //         cache: false,
+  //         dataType: "json",
+  //         data: JSON.stringify(getMp4Param),
+  //         success: function (data) {
+  //             if (typeof success === 'function') {
+  //                 success(data)
+  //             }
+  //         },
+  //         fail:function () {
+  //             alertLayer('接口报错')
+  //         }
+  //     })
+  // },
+  getFile: function (success, fail) {
+    var getFileParam = {
+      'tenantId': slideInformation.rentId,
+      'category': slideInformation.contractId,
+      'videoType': currentType,
+      'fileName': slideInformation.contractId + '_' + currentFileName + '_' + currentType +
+        '.mp4',
+    }
+    //***拉取视频状态
+    $.ajax({
+      type: "POST",
+      url: API.getFile,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getFileParam),
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+        }
+      },
+      fail: function () {
+        alertLayer('接口报错')
+      }
+    })
+  },
+
+  getFileStatus: function (success, fail) {
+    var getStatusParam = {
+      'tenantIds': slideInformation.rentId == 'XINTUO' ? ['ANSHUO'] : ['ANSHUO', 'HXPH',
+        'BEIJING'
+      ],
+      'businessNo': slideInformation.contractId,
+      'videoType': currentType
+    }
+    //***拉取视频状态
+    $.ajax({
+      type: "POST",
+      url: API.getFileStatus,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getStatusParam),
+      success: function (data) {
+        if (typeof success === 'function') {
+          success(data)
+        }
+      },
+      fail: function () {
+        alertLayer('接口报错')
+      }
+    })
+  },
+
+}
+
+
+var g_location_dir = location.href //目录地址
+if (g_location_dir.indexOf("http") > -1) {
+  var g_logo_id = "6cb4d64a-5647-11e7-bbc9-989096d01cf2"
+  g_location_dir = "C:/Users/Public/Cloudroom-Web/"
+} else {
+  var g_logo_id = "6cb4d64a-5647-11e7-bbc9-989096d01cf2"
+  var end = g_location_dir.lastIndexOf('/')
+  var start = g_location_dir.indexOf('file:///')
+  if (start > -1) {
+    start = 8
+  } else {
+    start = 0;
+  }
+  g_location_dir = g_location_dir.slice(start, end) + "/home/";
+  g_location_dir = decodeURIComponent(g_location_dir);
+}
+window.onload = function () {
+
+  $.ajax({
+    type: 'GET',
+    url: ROOT + '/common/checkAuth',
+    dataType: 'json',
+    cache:false,
+    success: function (res) {
+      //请求成功函数内容
+      var msgs = res.msg?"1":"0"
+      // undefind 0 未登录
+      // success 1 已登录
+      if (msgs=="1") {
+        console.log("登录成功！初始化开始...")
+
+        //***地址栏参数
+        var searchParam = getLocationParam('roleList')
+        var role = searchParam.split(',')
+        var tabList = []
+        for (var i = 0; i < role.length; i++) {
+          tabList.push({
+            name: roleJson[role[i].split('^')[0]],
+            roleIndex: role[i].split('^')[0],
+            action: role[i].split('^')[1]
+          })
+        }
+        //初始视频类型
+        currentType = tabList[0].roleIndex
+        //初始文件名
+        currentFileName = tabList[0].name
+        //初始操作
+        currentAction = tabList[0].action
+        var myData = {};
+        myData.tabList = tabList
+        document.getElementById("tabCon").innerHTML = template('tab', myData);
+        $('#tabCon span').eq(0).addClass('active')
+        // var player = videojs('example_video');  //实例化对象
+        //侧面借款信息
+        slideInformation = getQueryStringArgs()
+        $('#cName').html(slideInformation.cName)
+        $('#idCard').html(slideInformation.idCard)
+        $('#pName').html(slideInformation.pName)
+        $('#contractId').html(slideInformation.contractId)
+        //首次加载需要获取上传地址，切换tab视频类型也需要重新获取地址
+        AJAX.getOss(function (data) {
+          uploadPath = data.data
+        })
+
+        // AJAX.getStep(function (data) {
+        //     f_stepNum = data.data
+        //     var mydata ={}
+        //     mydata.videoConfigList = f_stepNum
+        //     document.getElementById("step").innerHTML= template('tpl',mydata);
+        // })
+        AJAX.getPolicy(function (data) {
+          valueA = data.data.accessid
+        })
+        //根据权限鉴别展示打开摄像头或者是视频管理
+        //判断操作在前
+        if (currentAction == 2) { //有操作
+          AJAX.getFileStatus(function (data) {
+            $('#openCam').show()
+            if (data.data.length == 0) { //拉取状态接口无数据
+              $('#justRead p').html('未上传') //无操作
+              $('#openCam p').html('未上传') //有操作
+            } else {
+              onlineStatus = data.data[0].uploadStatus
+              var v = ''
+              if (onlineStatus == '1') {
+                v = '已上传成功'
+              } else if (onlineStatus == '0') {
+                v = '未上传'
+              } else if (onlineStatus == '-1') {
+                v = '上传失败'
+              } else if (onlineStatus == '2') {
+                v = '上传中...'
+              }
+              $('#justRead p').html(v) //无操作
+              $('#openCam p').html(v) //有操作
+            }
+
+          })
+
+        } else { //无操作
+          AJAX.getFileStatus(function (data) {
+            $('#justRead').show()
+            if (data.data.length == 0) { //拉取状态接口无数据
+              $('#justRead p').html('未上传') //无操作
+              $('#openCam p').html('未上传') //有操作
+            } else {
+              onlineStatus = data.data[0].uploadStatus
+              var v = ''
+              if (onlineStatus == '1') {
+                v = '已上传成功'
+              } else if (onlineStatus == '0') {
+                v = '未上传'
+              } else if (onlineStatus == '-1') {
+                v = '上传失败'
+              } else if (onlineStatus == '2') {
+                v = '上传中...'
+              }
+              $('#justRead p').html(v) //无操作
+              $('#openCam p').html(v) //有操作
+            }
+
+          })
+
+        }
+
+      } else {
+        /**
+         * 单点登陆（嵌套到整个系统中时需要的）
+         */
+        console.log("登录失败！跳转登录...")
+        if (res.ssotype && res.redirect) {
+          var backUrl = decodeURIComponent(res.redirect)
+          // 替换url中的redirect内容，不是AJAX使用POST提交的地址，而是页面本身的地址。
+          var pos = backUrl.indexOf("redirect=");
+          if (pos > 0) {
+            backUrl = backUrl.substring(0, pos) + "redirect=" + window.location.href;
+          }
+          window.location.href = backUrl;
+        }
+      }
+    },
+    error: function (jqXHR) {
+      //请求失败函数内容
+      alertLayer('接口报错')
+
+    }
+  });
+
+}
+
+window.onbeforeunload = function () {
+  if (g_meeting) {
+    CRVideo_ExitMeeting();
+    CRVideo_Logout();
+    g_logining = false;
+    g_meeting = false;
+  }
+
+  // if(g_meeting){
+  //     CRVideo_ExitMeeting(); //CRVideo_ExitMeeting();
+  //     g_meeting = false;
+  // }
+  // if(g_logining){
+  //     CRVideo_Logout();
+  //     g_logining = false;
+  // }
+
+  if (g_init) {
+    CRVideo_Uninit();
+    g_init = false;
+  }
+  if (g_residual_timer != -1) {
+    clearInterval(g_residual_timer);
+    g_residual_timer = -1;
+  }
+  if (g_layout != null) {
+    $(".detail_box").css('display', 'none');
+  }
+}
+
+document.onkeydown = function (e) {
+  var ev = window.event || e;
+  var code = ev.keyCode || ev.which;
+  if (code == 116) {
+    ev.keyCode ? ev.keyCode = 0 : ev.which = 0;
+    cancelBubble = true;
+    return false;
+  }
+} //禁止f5刷新
+document.oncontextmenu=function(){return false};//禁止右键刷新
+
+// document.onkeydown = function (e) {
+//         var ev = window.event || e;
+//         var code = ev.keyCode || ev.which;
+//         if (code == 116) { //f5
+//             if (ev.preventDefault) {
+//                 ev.preventDefault();
+//                 location.replace(location.href);
+//             } else {
+//                 ev.keyCode = 0;
+//                 ev.returnValue = false;
+//                 location.replace(location.href);
+//             }
+//         }
+//     }
+
+function getQueryStringArgs() {
+  var param = (window.location.search.length > 0 ? window.location.search.substring(1) : "") //去问号
+  var paramArr = param.split("&")[0]
+  console.log(typeof paramArr)
+  // google 重定向后的 url会将 “+” 转换为 “%20” 但是 decodeURIComponent 又会将 “%20” 转换为 空格
+  // IE 重定向后的 url会将 “+” 转换为 “ ” 空格
+  // 所以需要手动替换
+  var reg1=/%20/g; //正则判断被转换 “%20”
+  var reg2=/ /g; //正则判断被转换 “ ”的“ ”
+  paramArr=paramArr.replace(reg1,'+');
+  paramArr=paramArr.replace(reg2,'+');
+  var baseUrl = decodeURIComponent(escape(window.atob(paramArr)));
+  // console.log(baseUrl)
+
+
+  var args = {},
+    items = baseUrl.length ? baseUrl.split("&") : [],
+    item = null,
+    name = null,
+    value = null,
+    i = 0,
+    len = items.length;
+
+  for (i = 0; i < len; i++) {
+    item = items[i].split("=");
+
+    // decodeURIComponent解码
+    // name = decodeURIComponent(item[0]);
+    // value = decodeURIComponent(item[1]);
+    name = item[0];
+    value = item[1];
+
+    if (name.length) {
+      args[name] = value;
+    }
+  }
+  // console.log(args)
+  return args;
+}
+
+
+function getLocationParam(strParame) {
+  var args = new Object()
+
+  var query = (window.location.search.length > 0 ? window.location.search.substring(1) : "") //去问号
+  var listArr = query.split("&")[0]
+  console.log(typeof listArr)
+
+  // google 重定向后的 url会将 “+” 转换为 “%20” 但是 decodeURIComponent 又会将 “%20” 转换为 空格
+  // IE 重定向后的 url会将 “+” 转换为 “ ” 空格
+  // 所以需要手动替换
+  var reg1=/%20/g; //正则判断被转换 “%20”
+  var reg2=/ /g; //正则判断被转换 “ ”的“ ”
+  listArr=listArr.replace(reg1,'+');
+  listArr=listArr.replace(reg2,'+');
+
+  var baseUrl = decodeURIComponent(escape(window.atob(listArr)));
+
+
+  var pairs = baseUrl.split('&') // Break at ampersand
+  for (var i = 0; i < pairs.length; i++) {
+    var pos = pairs[i].indexOf('=')
+    if (pos == -1) continue
+    var argname = pairs[i].substring(0, pos)
+    var value = pairs[i].substring(pos + 1)
+    // value = decodeURIComponent(value)||value
+    args[argname] = value
+  }
+  return args[strParame]
+}
+
+function stepInit() {
+
+  if (g_init && g_logining) {
+    enterMeet()
+  } else {
+    AJAX.getStep(function (data) {
+      f_stepNum = data.data
+      var mydata = {}
+      mydata.videoConfigList = f_stepNum
+      document.getElementById("step").innerHTML = template('tpl', mydata);
+    })
+    $('#toolBar').show()
+    showLodingPage();
+    // $(".detail_box").css('display','none');
+    login()
+  }
+}
+
+function stepStart() {
+  if (g_playbacking) {
+    alertLayer("回放时不能录制");
+    return;
+  }
+  if (f_stepNum == '') {
+    alertLayer("没有获取到录制指引，不能进行录制！");
+    return;
+  }
+  if (g_startRecord) {
+    alertLayer("录制中！");
+    return;
+  }
+
+  //
+  // showLodingPage();
+  // $(".detail_box").css('display','none');
+  // login()
+  // 隐藏步骤提示开始录制
+  $('#firstStep').hide()
+  startRecord()
+  //录制开始，首次打点
+  if (f_stepNum[0].targetContent) {
+    CRVideo_SetMarkText(g_location_dir + g_record, g_curRecordDuration, f_stepNum[0].targetContent);
+  }
+  if (f_stepNum[0].mp4Flag == 1) {
+    //接口取地址
+    var getMp4Param = {
+      'videoType': currentType,
+      'fileName': f_stepNum[0].mp4Name,
+    }
+    console.log('f_stepNum[0]', f_stepNum[0])
+    //***拉取视频状态
+    $.ajax({
+      type: "POST",
+      url: API.getMp4,
+      contentType: "application/json",
+      async: true,
+      cache: false,
+      dataType: "json",
+      data: JSON.stringify(getMp4Param),
+      success: function (data) {
+        //开始播放 mp4 需要切换布局(使用demo的video_play)
+        //获取的MP4的地址 data.data
+        //利用C布局播放这个MP4
+        //开始播放 mp4 需要切换布局(使用demo的video_play)
+        if (data.data) {
+          if (g_layout != 'layoutA') {
+            // 如果不是A布局则停止播放
+            CRVideo_StopPlayMedia();
+          }
+          g_playbacking = false;
+          videoContainerHide();
+          layoutB();
+          if (g_uploading == false) {
+            videoContainerShow();
+          }
+          CRVideo_StartPlayMedia(data.data);
+        } else {
+          console.log('MP4获取失败！')
+        }
+      },
+      fail: function () {
+        alertLayer('接口报错')
+      }
+    })
+  }
+}
+function headPic(item) {
+  g_videoAObj.setSavePicRect(0, 0, 543 / 3 * 2, 300)
+  g_videoAObj.savePic(g_location_dir + "img/" + 'head.png');
+  getClientFace.photo1 = g_videoAObj.savePicToBase64('png')
+  // alertLayer("截图位置("+g_location_dir+"img/"+'head.png'+")");
+  g_videoAObj.setMaskPic(
+    'iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAHlBMVEUBhf////8Aff/y+f8Tjv85oP9ktf+Sy//C4v/X7P8Cm1agAAAEkklEQVRo3u1a65bzKgiNgIrv/8JHUFON5p75zh93s9pJmga5I8yyTExMTExMTExMTEz8f4AFAP4pQaVHRFYQP8ulv6W5kHWeOSAaBSIG9t5Z+jPiAEIzmBWor3KC7B0tnxOPVBuiW6QFYPD2U9qRV48VFeQoXe8E8TPKfaWOJjj7FenIbChMiUBtNic1qaRZa71P5OWNI9tfkF2ZZW+p9iGSg7KhAxVlxNuDe0v6R5ZFhMmPxINqlEti8h4T18G9ETgsLj0HI6/pOcBRxaGhTNG3kJME5CcsVhCVYh9TBhvkEQYd/ZbP4kQtYfEqrhzA+uRsnp6RBo+J2+b3LA+lRhtqUNCsmFU94QnTQKxS9tQqSwkvG44jjV5Y+uvblMHhcM0QOlEvynG9En33yf1uihucysp3XgEjjlFE3YH4gbi9+kSMUBz0+AHHOkbnSiTL4BJi71Bmc4iBjo/g4Kr3sjl+1kDHpv8J3qVMJ/wOdXzC8zXC9gidVScdh8Mf2evFzS6Gfowjq67wRZLkcz/+mwIobDmGzPGnZKhDjtUNVMc0uPe5WLFHqS03l/obw0Vb3tNnKSZx66pYjs2l8vYkQ1wMYOajiHVN1IdCb79/TlgMJL+StVAq8PRT8whSOV3vqv5+U3S1MaVLnFin2+aer9xLM12d4MB36YL0po8Dh+ZW21RkYrwNYTvIXF8QxialZ1FXIgXbZ65XwUqROa7CUhZ1BWv6qHY5jvGR85y505GDBTqNGTg6DgLWwZXqQLoYJYeUsf62u4JmcFLOwkmd+zJKXq7TOrgdpKhfX+G6qr2Ah2VPsur6SolcV/HYj3HjxyVWt86Yg/nXkes4ZI5C+vtYLdsXOkkSi5U9jHP0lrY0V9Lrp6n1QhK1npWuRelHIbtXdK111WGbU2eTqOUkb0uxjh/BvmD6ok+rBijksqxETuPfEN6EriYUrZErqhmsXglemqrkEvOe/pZjC5R2MeiyRUMsCV5Vmf4QnM0I8hKbpkPqZDys9k4iUTIuYVE9i9sWlFYFz6sR2n8VP84tAdwmH2lWvSjpj7pgJWTqEhzQYHt3l+USKQ7h1gqLZc82ahzdremPWwIFa6ymsUyBbsuarlcDmIvLIWd8d78+aPvg4C1zrDIfBUix+0C3LcfgVY7dpuJuHkL3bTaPNwQc2u6eIjQcLx8RLk1ULMqDHXfKOrZ7Or7vyGvjd6cshTOrloSFT3oysHiz08KtK5BUFoXRyh9Ha3DKNMpoYBy5dLeof/UUtBX3dDiw+JyFfVdGaSzWyAVkBiyrRJ6n5DwgkKFKKuFoIGpV90bL79tuabAhXGOaWkLOe1V5q5vYxhTUNLdJ+ra81ymWFDcuTdtA40bZmOvOmMtQEXRelRpj4VV1D7YZ3+rA2KUKxDlbjTB07LhQMsrgzU5Mu1Vg270pLsZHk1R7eVGcJ6CstUJ4n/hln8DhV1wWYWY92jaloZeUbh19UYPkkelvTm+qChqgIl2mcx9uo9I+RkqFvO2Vf1AoViirkpm2pb/7X4VmP1Uv61s+hwXoxMTExMTExMTExETGf5v+JsrAv97dAAAAAElFTkSuQmCC',
+    false)
+}
+function cardPic() {
+  if (getClientFace.photo1) {
+    g_videoAObj.setSavePicRect(0, 0, 543 / 3 * 2, 300)
+    g_videoAObj.savePic(g_location_dir + "img/" + 'card.png');
+    getClientFace.photo2 = g_videoAObj.savePicToBase64('png')
+
+    //***步骤获取api
+    if (getClientFace.photo2) {
+      $.ajax({
+        type: "POST",
+        url: API.face,
+        contentType: "application/json",
+        dataType: "json",
+        cache:false,
+        data: JSON.stringify(getClientFace),
+        success: function (data) {
+          if (data.data.code == '0') {
+            throughFace = true
+            alertLayer("通过验证");
+          } else {
+            alertLayer(data.data.info);
+          }
+        }
+      })
+    }
+
+  } else {
+    alertLayer('请先进行人像拍照！');
+  }
+}
+function checkRecord(item, i, name, handle) {
+  if (g_startRecord) {
+    alertLayer("录制中不可切换视频类型!");
+    return;
+  }
+  if (g_init && !g_init_room) {
+    alertLayer("房间初始化失败,请刷新页面后重试!");
+    return;
+  }
+  if (g_uploading) {
+    alertLayer("视频上传中,请稍后操作！");
+    return;
+  }
+  //切换tab更改文件名
+  currentFileName = name
+  currentType = i
+  $(item).addClass('active').siblings().removeClass('active')
+  //切换录制类型也需要获取上传地址
+  AJAX.getOss(function (data) {
+    uploadPath = data.data
+  })
+
+
+  //重新请求步骤
+  AJAX.getStep(function (data) {
+    f_stepNum = data.data
+    var mydata = {}
+    mydata.videoConfigList = f_stepNum
+    document.getElementById("step").innerHTML = template('tpl', mydata);
+  })
+
+  //判断操作在前
+  if (g_init) {
+    $('#init').hide()
+    $('#initImg').hide()
+    if (handle == 2) { //有操作
+      $('#alreadyHave .noAccess').hide()
+      $('#alreadyHave .access').show()
+      //判断此种类型是否录制过
+      if (CRVideo_TryReadFile(g_location_dir + slideInformation.contractId + "_" + currentFileName + "_" +
+        currentType + ".mp4") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+        $('#alreadyHave').show()
+        $('#step').hide()
+      } else {
+        $('#step').show()
+        $('#alreadyHave').hide()
+      }
+    } else {
+      AJAX.getFileStatus(function (data) {
+
+        if (data.data.length == 0) { //拉取状态接口无数据
+          $('#alreadyHave .noAccess p').html('未上传')
+          $('#alreadyHave .noAccess').show()
+          $('#alreadyHave .access').hide()
+          $('#alreadyHave').show()
+          $('#step').hide()
+        } else {
+          onlineStatus = data.data[0].uploadStatus
+          var v = ''
+          if (data.data[0].uploadStatus == '1') {
+            v = '已上传成功'
+          } else if (data.data[0].uploadStatus == '0') {
+            v = '未上传'
+          } else if (data.data[0].uploadStatus == '-1') {
+            v = '上传失败'
+          } else if (data.data[0].uploadStatus == '2') {
+            v = '上传中...'
+          }
+          $('#alreadyHave .noAccess p').html(v)
+          $('#alreadyHave .noAccess').show()
+          $('#alreadyHave .access').hide()
+          $('#alreadyHave').show()
+          $('#step').hide()
+        }
+
+      })
+    }
+  } else { //未初始化
+    if (handle == 2) { //有操作
+      $('#openCam').show()
+      $('#justRead').hide()
+      AJAX.getFileStatus(function (data) {
+        if (data.data.length == 0) { //拉取状态接口无数据
+          $('#justRead p').html('未上传')
+          $('#openCam p').html('未上传') //有操作
+
+        } else {
+          onlineStatus = data.data[0].uploadStatus
+          var v = ''
+          if (onlineStatus == '1') {
+            v = '已上传成功'
+          } else if (onlineStatus == '0') {
+            v = '未上传'
+          } else if (onlineStatus == '-1') {
+            v = '上传失败'
+          } else if (onlineStatus == '2') {
+            v = '上传中...'
+          }
+          $('#justRead p').html(v)
+          $('#openCam p').html(v)
+
+        }
+
+      })
+    } else { //无操作
+      $('#openCam').hide()
+      $('#justRead').show()
+      AJAX.getFileStatus(function (data) {
+        if (data.data.length == 0) { //拉取状态接口无数据
+          $('#justRead p').html('未上传')
+          $('#openCam p').html('未上传') //有操作
+
+        } else {
+          onlineStatus = data.data[0].uploadStatus
+          var v = ''
+          if (onlineStatus == '1') {
+            v = '已上传成功'
+          } else if (onlineStatus == '0') {
+            v = '未上传'
+          } else if (onlineStatus == '-1') {
+            v = '上传失败'
+          } else if (onlineStatus == '2') {
+            v = '上传中...'
+          }
+          $('#justRead p').html(v)
+          $('#openCam p').html(v)
+
+        }
+
+      })
+
+    }
+
+  }
+
+}
+
+function step_reStart() {
+
+  if (g_playbacking) {
+    alertLayer("回放时不能录制");
+    return;
+  }
+  if (f_stepNum == '') {
+    alertLayer("没有获取到录制指引，不能进行录制！");
+    return;
+  }
+  if (g_uploading == false) {
+    videoContainerShow();
+  }
+  $('#nextBtn').html('下一项')
+
+  $('#full_page_div').hide()
+  $('#full_page').hide()
+  $("#list_container").hide()
+  $("#list_container").css({
+    "z-index": 220
+  });
+
+  $('#alreadyHave').hide()
+  $('#step').show()
+  $('.f-show').show()
+
+}
+function reStart() {
+
+  if (g_playbacking) {
+    alertLayer("回放时不能录制");
+    return;
+  }
+  if (f_stepNum == '') {
+    alertLayer("没有获取到录制指引，不能进行录制！");
+    return;
+  }
+  if (g_uploading == false) {
+    videoContainerShow();
+  }
+  $('#nextBtn').html('下一项')
+
+  $('#full_page_div').hide()
+  $('#full_page').hide()
+  $("#list_container").hide()
+  $("#list_container").css({
+    "z-index": 220
+  });
+
+  // $('#alreadyHave').hide()
+  // $('#step').show()
+  // $('.f-show').show()
+
+}
+
+function stepNext(item, tag, i) {
+  // if(throughFace){
+  console.log(i == f_stepNum.length)
+  CRVideo_StopPlayMedia();
+  //打点
+  // if (i + 1 == f_stepNum.length) {
+  //     $('#nextBtn').html('停止录制')
+  // }
+
+
+  if (i < f_stepNum.length) {
+    if (f_stepNum[i].targetContent) {
+      CRVideo_SetMarkText(g_location_dir + g_record, g_curRecordDuration, f_stepNum[i].targetContent);
+    }
+    if (f_stepNum[i].mp4Flag == 1) {
+
+      //接口取地址
+      var getMp4Param = {
+        'videoType': currentType,
+        'fileName': f_stepNum[i].mp4Name,
+      }
+      //***拉取视频状态
+      $.ajax({
+        type: "POST",
+        url: API.getMp4,
+        contentType: "application/json",
+        async: true,
+        cache: false,
+        dataType: "json",
+        data: JSON.stringify(getMp4Param),
+        success: function (data) {
+          //开始播放 mp4 需要切换布局(使用demo的video_play)
+          //获取的MP4的地址 data.data
+          //利用C布局播放这个MP4
+          //开始播放 mp4 需要切换布局(使用demo的video_play)
+          if (data.data) {
+            if (g_layout != 'layoutA') {
+              // 如果不是A布局则停止播放
+              CRVideo_StopPlayMedia();
+            }
+            g_playbacking = false;
+            videoContainerHide();
+            layoutB();
+            if (g_uploading == false) {
+              videoContainerShow();
+            }
+            CRVideo_StartPlayMedia(data.data);
+          } else {
+            console.log('mp4地址获取失败！')
+          }
+
+        },
+        fail: function () {
+          alertLayer('接口报错')
+        }
+      })
+    }
+  }
+
+  if (i == f_stepNum.length) {
+
+    //上传视频
+    // 判断是边录边传还是手动
+    if (g_isUploadOnRecording == "0") { //手动
+      stopRecord()
+      $('#startRecord').show()
+      $('#cancelUpload').hide()
+    } else {
+      stopRecord()
+    }
+  }
+
+  if (i == f_stepNum.length - 1) {
+    $(item).parents('.f-singleStep').next().find('#nextBtn').html('结束录制')
+  }
+
+  $(item).parents('.f-singleStep').hide().next().show()
+  // }else{
+  //   alertLayer("请先进行人证对比拍照！")
+  //  }
+}
+
+function takePic() {
+  g_videoAObj.setSavePicRect(0, 0, 543 / 3 * 2, 300)
+  g_videoAObj.setMaskPic(
+    'iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAHlBMVEUBhf////8Aff/y+f8Tjv85oP9ktf+Sy//C4v/X7P8Cm1agAAAEkklEQVRo3u1a65bzKgiNgIrv/8JHUFON5p75zh93s9pJmga5I8yyTExMTExMTExMTEz8f4AFAP4pQaVHRFYQP8ulv6W5kHWeOSAaBSIG9t5Z+jPiAEIzmBWor3KC7B0tnxOPVBuiW6QFYPD2U9qRV48VFeQoXe8E8TPKfaWOJjj7FenIbChMiUBtNic1qaRZa71P5OWNI9tfkF2ZZW+p9iGSg7KhAxVlxNuDe0v6R5ZFhMmPxINqlEti8h4T18G9ETgsLj0HI6/pOcBRxaGhTNG3kJME5CcsVhCVYh9TBhvkEQYd/ZbP4kQtYfEqrhzA+uRsnp6RBo+J2+b3LA+lRhtqUNCsmFU94QnTQKxS9tQqSwkvG44jjV5Y+uvblMHhcM0QOlEvynG9En33yf1uihucysp3XgEjjlFE3YH4gbi9+kSMUBz0+AHHOkbnSiTL4BJi71Bmc4iBjo/g4Kr3sjl+1kDHpv8J3qVMJ/wOdXzC8zXC9gidVScdh8Mf2evFzS6Gfowjq67wRZLkcz/+mwIobDmGzPGnZKhDjtUNVMc0uPe5WLFHqS03l/obw0Vb3tNnKSZx66pYjs2l8vYkQ1wMYOajiHVN1IdCb79/TlgMJL+StVAq8PRT8whSOV3vqv5+U3S1MaVLnFin2+aer9xLM12d4MB36YL0po8Dh+ZW21RkYrwNYTvIXF8QxialZ1FXIgXbZ65XwUqROa7CUhZ1BWv6qHY5jvGR85y505GDBTqNGTg6DgLWwZXqQLoYJYeUsf62u4JmcFLOwkmd+zJKXq7TOrgdpKhfX+G6qr2Ah2VPsur6SolcV/HYj3HjxyVWt86Yg/nXkes4ZI5C+vtYLdsXOkkSi5U9jHP0lrY0V9Lrp6n1QhK1npWuRelHIbtXdK111WGbU2eTqOUkb0uxjh/BvmD6ok+rBijksqxETuPfEN6EriYUrZErqhmsXglemqrkEvOe/pZjC5R2MeiyRUMsCV5Vmf4QnM0I8hKbpkPqZDys9k4iUTIuYVE9i9sWlFYFz6sR2n8VP84tAdwmH2lWvSjpj7pgJWTqEhzQYHt3l+USKQ7h1gqLZc82ahzdremPWwIFa6ymsUyBbsuarlcDmIvLIWd8d78+aPvg4C1zrDIfBUix+0C3LcfgVY7dpuJuHkL3bTaPNwQc2u6eIjQcLx8RLk1ULMqDHXfKOrZ7Or7vyGvjd6cshTOrloSFT3oysHiz08KtK5BUFoXRyh9Ha3DKNMpoYBy5dLeof/UUtBX3dDiw+JyFfVdGaSzWyAVkBiyrRJ6n5DwgkKFKKuFoIGpV90bL79tuabAhXGOaWkLOe1V5q5vYxhTUNLdJ+ra81ymWFDcuTdtA40bZmOvOmMtQEXRelRpj4VV1D7YZ3+rA2KUKxDlbjTB07LhQMsrgzU5Mu1Vg270pLsZHk1R7eVGcJ6CstUJ4n/hln8DhV1wWYWY92jaloZeUbh19UYPkkelvTm+qChqgIl2mcx9uo9I+RkqFvO2Vf1AoViirkpm2pb/7X4VmP1Uv61s+hwXoxMTExMTExMTExETGf5v+JsrAv97dAAAAAElFTkSuQmCC',
+    false)
+
+  g_videoAObj.savePic(g_location_dir + "img/" + 'head.png');
+  getClientFace.photo1 = g_videoAObj.savePicToBase64('png')
+
+}
+
+function login() {
+  //------------------------------
+  //
+  //初始化
+  //
+  //------------------------------
+  if (g_init == false) {
+    var result = CRVideo_Init2(g_location_dir);
+
+    if (result == CRVideo_WEB_OCX_NOTINSTALLED) {
+      alertLayer("没有安装插件");
+      return;
+    } else if (result == CRVideo_OCX_VERSION_NOTUPPORTED) {
+      alertLayer("插件版本过低");
+      return;
+    } else if (result == CRVideo_WEB_BROWER_NOTUPPORTED) {
+      alertLayer("不支持的浏览器");
+      return;
+    } else if (result != 0) {
+      alertLayer("CRVideo_init sdkErr:" + result);
+      return;
+    } else {
+      g_init = true;
+    }
+  }
+
+  $(".login_button button").attr({
+    "disabled": "disabled"
+  });
+  $(".login_button button").css({
+    "backgroundColor": "#ccc",
+    "border": "1px solid #ccc"
+  });
+  if (g_logining == false) {
+    g_server_name = $("#server_name").val()
+    if (g_server_name && g_server_name != '') {
+
+      $("#catSerRecBtn").attr('href', "http://" + g_server_name + "/login.html");
+      //云屋授权账号
+      cr_account = $("#login_cpyName").val() || "demo@cloudroom.com"; //demo@cloudroom.com
+      cr_psw = md5($("#login_psd").val()) || "e10adc3949ba59abbe56e057f20f883e";
+
+      //昵称
+      g_nickname = uuid(32, 16);
+      //自定义帐号
+      g_userID = uuid(32, 16);
+
+      CRVideo_SetServerAddr(g_server_name);
+      CRVideo_Login(cr_account, cr_psw, g_nickname, g_userID, "");
+
+      // g_logining = true;
+    } else {
+      alertLayer("服务器地址不能为空");
+      $(".login_button button").attr({
+        "disabled": false
+      });
+      $(".login_button button").css({
+        "backgroundColor": "#3b65ff",
+        "border": "1px solid #3b65ff"
+      });
+    }
+  }
+
+}
+//登录成功
+CRVideo_LoginSuccess.callback = function (usrID, cookie) {
+  g_logining = true;
+  $(".login_button button").attr({
+    "disabled": "disabled"
+  });
+  $(".login_button button").css({
+    "backgroundColor": "#ccc",
+    "border": "1px solid #ccc"
+  });
+  g_usrID = usrID;
+  createMeet();
+}
+//登录失败
+CRVideo_LoginFail.callback = function (sdkErr, cookie) {
+  $(".login_button button").attr({
+    "disabled": false
+  });
+  $(".login_button button").css({
+    "backgroundColor": "#3b65ff",
+    "border": "1px solid #3b65ff"
+  });
+  g_logining = false;
+  alertLayer("登录失败 错误码:" + sdkErr);
+}
+
+//------------------------------
+//
+//创建会议
+//
+//-----------------------------
+
+function createMeet() {
+  CRVideo_CreateMeeting("华夏信财双录");
+}
+
+//创建会议成功
+CRVideo_CreateMeetingSuccess.callback = function (meetObj, cookie) {
+  g_meetingId = meetObj.ID; // 将会议信息放入全局变量中
+  g_meetingPsw = meetObj.pswd;
+  enterMeet();
+}
+//创建会议失败
+CRVideo_CreateMeetingFail.callback = function (sdkErr, cookie) {
+  alertLayer("创建会议失败 错误码:" + sdkErr);
+  g_logining = false;
+}
+// 监听用户会议掉线状态 重登
+CRVideo_MeetingDropped.callback = function () {
+  lost = true //因断网引起的，重新入会时不从服务器拉取视频上传状态，直接展示断网前步骤。。。
+  g_meeting = false
+  g_meeLoginTimes = g_meeLoginTimes + 1; // 每掉线一次，就将其加1 计数
+  $("#full_page_msg_normal").css("display", "none");
+  $(".player_page_cancle").text("");
+  $(".player_page_submit").text("");
+
+  if (g_meeLoginTimes <= 1) {
+    enterMeetLayer(10, g_meetingId, g_meetingPsw);
+  } else if (g_meeLoginTimes >= 2) {
+    enterMeetLayer(30, g_meetingId, g_meetingPsw);
+  } else {
+    enterMeetLayer(30, g_meetingId, g_meetingPsw)
+  }
+}
+// 弹出重登界面的方法
+function enterMeetLayer(time, m_meetID, m_meetPsw) {
+  // if($(".alert_palyer").css("display") == "block"){
+  //     $(".alert_palyer").hide()
+  // }
+  if (g_meeting) {
+    return;
+  }
+  $("#login_time").text(time);
+  // 提示用户已经离线
+  $("#full_page_msg_normal").css("display", "none");
+  $(".player_page_cancle").text("");
+  $(".player_page_submit").text("");
+  $(".player_name_label").text("提示面板");
+  $("#full_page_msg_time").css("display", "block");
+  $(".player_page_cancle").text("取消重登");
+  $(".player_page_submit").text("立即重登");
+  $(".player_page_cancle").css("display", "inline-block");
+  $(".player_page_submit").css("display", "inline-block");
+  $(".full_page").css("display", "block");
+  $(".warning_palyer").css("display", "block");
+  // lost=true
+  // $(".detail_right_video").css('display','none');
+  videoContainerHide();
+  // 倒计时。
+  var timeNum = parseInt(time);
+  if (g_timer_relogin && g_timer_relogin != -1) {
+    clearInterval(g_timer_relogin)
+  }
+  g_timer_relogin = setInterval(function () {
+    timeNum--;
+    if (timeNum <= 0) {
+
+      $("#login_time").text("0");
+      enterMeet();
+      $(".warning_palyer").css("display", "none");
+      $(".full_page").css("display", "none");
+      $("#full_page_msg_time").css("display", "block");
+      $(".player_page_cancle").text("");
+      $(".player_page_submit").text("");
+      $(".player_page_cancle").css("display", "none");
+      $(".player_page_submit").css("display", "none");
+      if ($(".list_container").css("display") == "block" || $(".full_page_div2").css("display") ==
+        "block" || $(".alert_palyer").css("display") == "block" || $(".full_page_div").css(
+          "display") == "block") {
+
+      } else {
+        $(".detail_right_video").css('display', 'block');
+        videoContainerShow();
+      }
+      clearInterval(g_timer_relogin)
+      // clearInterval(timer);
+    } else {
+      $("#login_time").text(timeNum);
+    };
+  }, 1000);
+  $(".player_page_submit").click(function () { //点击立即重登
+    enterMeet();
+    $(".warning_palyer").css("display", "none");
+    $(".full_page").css("display", "none");
+    $("#full_page_msg_time").css("display", "none");
+    $(".player_page_cancle").text("");
+    $(".player_page_submit").text("");
+    $(".player_page_cancle").css("display", "none");
+    $(".player_page_submit").css("display", "none");
+    if ($(".list_container").css("display") == "block" || $(".full_page_div2").css("display") ==
+      "block" || $(".alert_palyer").css("display") == "block" || $(".full_page_div").css(
+        "display") == "block") {
+
+    } else {
+      $(".detail_right_video").css('display', 'block');
+      videoContainerShow();
+    }
+    clearInterval(g_timer_relogin)
+    // clearInterval(timer);
+  });
+
+}
+// 会议离线
+CRVideo_LineOff.callback = function (sdkErr) {
+  alertLayer("会议离线");
+  if (g_residual_timer != -1) {
+    clearInterval(g_residual_timer);
+    g_residual_timer = -1;
+  }
+  g_meeting = false
+};
+//------------------------------
+//
+//进入会议
+//
+//-----------------------------
+function enterMeet() {
+  if (g_meeting) {
+    return;
+  }
+  CRVideo_EnterMeeting(g_meetingId, g_meetingPsw, g_userID, g_nickname);
+}
+//进入会议
+CRVideo_EnterMeetingRslt.callback = function (sdkErr) {
+  if (sdkErr == CRVideo_NOERR) //CRVideo_NOERR 0 代表没有错误
+  {
+    g_meeting = true;
+    if (g_timer_relogin && g_timer_relogin != -1) {
+      clearInterval(g_timer_relogin)
+      g_timer_relogin = -1
+    }
+    CRVideo_SetPicResource(g_logo_id, {
+      "fmt": "picdat",
+      "dat": "iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAMAAAC5zwKfAAAAkFBMVEUAAAAAAAD///9DQ0P///8AAAABAQEAAAAAAAACAgL29vY7OzsdHR0zMzO/v7/9/f0pKSn4+Pj///+rq6sVFRWfn5+JiYnq6upmZmbj4+O0tLTu7u7FxcUuLi5oaGibm5uRkZFCQkJzc3NWVlbd3d22trZ/f3/Pz8/Q0NC9vb3y8vLZ2dlTU1PIyMjAwMC9vb1J4NreAAAAMHRSTlNRPPd9/UJLTUhF6W9SZNTnXtvxrE2ci9RtyanmslmIk5Rfe3ndvoTYuL7WwWbQyKx8HgxgAAAGvElEQVRYw+1Za5drShDF0GmvIWiCNIIYz/j//+5WNzIkMufcs3K+3HX3vFJdeq+iy+6qHkFBB/w2HJAiIOGtQMJBeDOwIBzeBU73TsLD/4R/nxAhjFVVVVYAE2OE/jRCxsigzpisl3w/ELLQFNUzqGnq+scKum6a1PDACcT/JkKEVexdTlVG3Oja3D45bs01cklWnS4euNHvRghcEJupfyTk3IXt8ahZd2jHYxt2Z5J86CbE+cj6IkIMseWpe/sKgOrYBmHX1RxdFwbtEWiDr5ub5RAn/mWEEB5EV2TnwHKcuPy8ksz3qyrPT3meV5XvZ+Q6lLHjWME5K1iU6yB3CHl05FZqjtV2kV/Ardk2pdSghgF/bBseReFHXWs5WnkjD1E+ErLw7CKrj44TDFFa9RQLsMq2wFKFpZBgwyoLmPZVGg2B4xzrrLBXQT4Tehf/yqLrSKKb1FMUs7q6ia0qLP8U1U7ca2UqikdNPSEdi/JaQZD7hBCBUWSdZZUN3AoWRUUR1WKQLFfHKrtAxbprSUOhMo+Ip0ejQZDGkpMbQrglmrul5QRuYhpYgVmqqCZfshR9E0aS/JXAMDAq2DATN3Ss0s3p/PasCeF2aT62stTWWQ/PnoNe/FJ21hE6culf6OS17T6rW0lux5xOt70iRMi7VOdYlq2gjtIsy1ICSAkMbW9Zjs9k8rGLojqwZBiCB8liXBMal6xzZFmGdIGX4w5NeiSUtJW7bS2JTeqyi4FXhDy+mvHJsgTgf/kXQFsTaouLfy/Xyk5dUe+AtoTu5zOGUnuMUCuHnQthYdaEAMP82EGRlY+EZVbsXWkaT2kzyShk2ApKMcAqm6LIXKJowioPxeYCUZmk9yltDniSenELTqgrIntTREV/ImScfGvAu+KADgK8/d+gBeSh1CQmHzTNpJEgD4v1JaYtHNBLtcHIzom7QjTEslQ2i9mUkhwP0foKktsIvyRUsem21hoslSTH4rmnWQ5Pus0FATGnJXtBqEegXVtI/BfLurv1Devo/kSIsVm5zZWhAVwXgKpAgpe3xW7u3sb98ZZhUfi2qetFkVd5AYLNkbiBJIEKceNjcerTtrq3KOi+lbPcgeQS0QXmXDwmYmAZfug4oW9wjRQVo2dONKfMfSpevSnoXibPmWjk43D1L3NafhMyqH3WDGM+WYp6n4qWCHn2bUDtYrRk6+z3k+4VBDaQgBRMJ20TVNCRrbGw6XaWDbFxQsi+ZFK/+ZukaRSCpAQgfWwkdetYkuLanSxybiF5wgg+petZuS0glRFCslxhR98ChHClfJoDSXM3NUvayiKDZV11eH8ZoaJ+DPIicfIigxOkZ3NtbWYNH0hV5gizR337iuGKeJG+Lyb0VvB1F0nm/Hqcky0RIiToj/KWNJrMdsjZilgeRslswY4sa03ypInLonDtWuUhyxw7baU46tXZmtLG5nmoeKfxKLWpvSjXnIXrPESrsnfOvCy0QtLv5+EpCqwwM1ZyODGjverLYPCgJBnrMevhE7dSRpheJoueUnD63AL8WH0ZtD9N8NM09fPZqCKW2FG1mNw5Gz01XhGiA6InEo0RB5PXBeeOJXZ3Xmz37hwjcqJokYdHQuT1aRdPCMqyDKaPbRyz7VzSZlfclt/OuEt7D/1AGGp74ITWriv8iRBB/XWuz48Y61CTJC2sz+OT7wxbPNolZJoIFdiyKBs8LMoKOSyKh3f3Za6JcNfGE9RN2mzhGR5vt3YKTqaJ9i4oLUjoSCEpWNX+DJPNFB4I0cHOU1by+XtIoa6ESpTsOlmdmOb2YVsfYmRmdRiGHfyEwROOliRZx+fxcEadmQg/EEJBfJw2XekZ8r10fMA0gRXFD4S8QrzxcpIXgMPXGtA6gR7G5WZwmMpHNqN5Lol5UVw1UGSD7lVJkWxQNewZNv52tEggnSD4GPgM9ENbMVb9BTpN1QOwvFiljTqNeMxtXPpqDF62FUvjU2tacCPVRRXFRTpFhU56SBVxkWFQRdb4BNrxZeOztGYjtGZaRwrWmmEuyIqyKPZkKZi1ZgXpNNaa+S9bMx7j3Dxa5c1N895gLxXr8WZC1vPBCO1ZOw0N8NQ84peEc3tbTe1tULsVq5ZMSnvCCElPKaulisqFfud32tu5w6W8AYedG7bRq0tSv0pHJg5jClJNXNaAQ13AG3D6ywZ8ihJqr8xtvo8Iwhby0GnD7yOCxs1OF/QbRwTPhxj8FIM3Wbwybv/gEGPnmOV2+/yEX392zPJ3DoLWR1XqG46q/tZh2v8nnP8Rwjcf3R/e/c+Fg/DWf38ISPkHApQvomu0CrEAAAAASUVORK5CYII="
+    });
+    CRVideo_OpenVideo(g_usrID); // 打开本地摄像头
+    CRVideo_SetEnableMutiVideo(g_usrID, true); // 是否可以打开更多的摄像头
+    CRVideo_OpenMic(g_usrID); // 打开麦克风
+    if (g_init_room == false) {
+      g_init_room = true;
+    }
+    // 更新video 配置
+    updateVideoCfg(g_video_size_type, g_video_fps, g_video_qp);
+
+    //进入会议没有错误，再进入房间
+    setTimeout(function () {
+      enterRoom()
+    }, 500);
+  } else {
+    g_meeting = false
+    //进入会议失败后，弹框前应该隐藏 录制区域
+    // $('.detail_right_video').hide() //录制区域隐藏
+    // $('#full_page').show()
+    console.log("进入会议失败 错误码:", sdkErr)
+    g_meeLoginTimes2 = g_meeLoginTimes2 + 1; // 每掉线一次，就将其加1 计数
+    $("#full_page_msg_normal").css("display", "none");
+    $(".player_page_cancle").text("");
+    $(".player_page_submit").text("");
+    if (g_meeLoginTimes2 <= 1) {
+      enterMeetLayer(30, g_meetingId, g_meetingPsw);
+    } else if (g_meeLoginTimes2 >= 2) {
+      enterMeetLayer(30, g_meetingId, g_meetingPsw);
+    } else {
+      enterMeetLayer(30, g_meetingId, g_meetingPsw)
+    }
+  }
+  g_logining = false;
+  // 文件上传流量控制
+  CRVideo_SetFileUploadRate(g_FURate);
+  // 是否加密，是1为加密，0为不加密
+  CRVideo_SetRecordFileEncrypt(0);
+
+  // 获取所有视频的列表信息
+  g_getAll_videfile_list = CRVideo_GetAllRecordFiles();
+
+}
+
+function enterRoom() {
+  // 列表的设置及方法 此处列表是本地影音文件
+  g_video_filename_list = CRVideo_GetAllFilesInMediaPath(); //获取home/media下的影音文件
+  showVideoFileList(g_video_filename_list);
+
+  if (g_mediaObj == null) {
+    g_mediaObj = CRVideo_CreatMediaObj();
+    g_mediaObj.id("mediaObj");
+    //g_mediaObj.dblClickFullScreen(true);	//true 设置支持双击全屏（默认不支持）
+    $("#mediaContainer").append(g_mediaObj.handler());
+  }
+
+  // 创建和设置其他播放文件
+  if (g_videoAObj == null) {
+    g_videoAObj = CRVideo_CreatVideoObj();
+    g_videoAObj.id("videoAObj");
+    //g_videoAObj.dblClickFullScreen(true);
+    $("#videoAContainer").append(g_videoAObj.handler());
+  }
+
+  if (g_videoBObj == null) {
+    g_videoBObj = CRVideo_CreatVideoObj();
+    g_videoBObj.id("videoBObj");
+    //	g_videoBObj.dblClickFullScreen(true);
+    $("#videoBContainer").append(g_videoBObj.handler());
+  }
+
+
+  setTimeout(function () {
+    g_mediaObj.keepAspectRatio(true);
+    g_videoAObj.keepAspectRatio(1);
+    g_videoBObj.keepAspectRatio(1);
+  }, 500);
+
+  // showLodingPage();
+  layoutA();
+  setTimeout(function () {
+    $(".detail_box").css('display', 'block');
+    $(".warning_palyer").css({
+      "display": "none"
+    });
+    updateVideo();
+    hideLoadingPage()
+
+    if (!lost) { //判断是首次加载，再拉取状态
+      // setTimeout(function(){
+      $('#init').hide()
+      $('#initImg').hide()
+
+      //判断操作在前
+      if (currentAction == 2) {
+        //判断此种类型是否录制过
+        $('#alreadyHave').css({
+          'display': 'block'
+        })
+
+        if (CRVideo_TryReadFile(g_location_dir + slideInformation.contractId + "_" +
+          currentFileName + "_" + currentType + ".mp4") !=
+          CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+          $('#alreadyHave').css({
+            'display': 'block'
+          })
+          $('#alreadyHave .access').show()
+          $('#step').hide()
+        } else {
+          $('#step').show()
+          $('#alreadyHave').hide()
+        }
+      } else {
+
+        AJAX.getFileStatus(function (data) {
+          if (data.data.length == 0) { //拉取状态接口无数据
+            $('#alreadyHave .noAccess p').html('未上传')
+            $('#alreadyHave .noAccess').show()
+            $('#alreadyHave .access').hide()
+            $('#alreadyHave').show()
+            $('#step').hide()
+          } else {
+            onlineStatus = data.data[0].uploadStatus
+            var v = ''
+            if (onlineStatus == '1') {
+              v = '已上传成功'
+            } else if (onlineStatus == '0') {
+              v = '未上传'
+            } else if (onlineStatus == '-1') {
+              v = '上传失败'
+            } else if (onlineStatus == '2') {
+              v = '上传中...'
+            }
+            $('#alreadyHave .noAccess p').html(v)
+            $('#alreadyHave .noAccess').show()
+            $('#alreadyHave .access').hide()
+            $('#alreadyHave').show()
+            $('#step').hide()
+          }
+        })
+      }
+    }
+  }, 1000);
+
+  g_residual_timer = setInterval(function () {
+    if (g_bg_color != "#10132b") {
+      // $(".detail_right_video").css('background-color','#10232b')
+      g_bg_color = "#10132b"
+    } else {
+      // $(".detail_right_video").css('background-color','#10232a')
+      g_bg_color = "#10232a"
+    }
+  }, 100);
+
+}
+//-------------------------------
+//
+// 视频和摄像头布局
+//
+//-------------------------------
+function layoutA() {
+  // 布局A，单摄像头显示一个，A;双摄像头显示两个AB
+  g_layout = 'layoutA';
+  // 如果是单摄像头
+  if (g_single_video) {
+    $("#videoAContainer").css({
+      "display": "block",
+      "left": "58px",
+      "top": "38px",
+      "height": "360px",
+      "width": "630px"
+    });
+    g_videoAObj.width(630);
+    g_videoAObj.height(360);
+
+    $("#videoBContainer").css("display", "none")
+  } else { // 双摄像头
+    $("#videoAContainer").css({
+      "display": "block",
+      "left": "0px",
+      "top": "90px",
+      "width": "375px",
+      "height": "210px"
+    });
+    g_videoAObj.width(375);
+    g_videoAObj.height(210);
+
+    $("#videoBContainer").css({
+      "display": "block",
+      "left": "375px",
+      "top": "90px",
+      "width": "375px",
+      "height": "210px"
+    });
+
+    g_videoBObj.width(375);
+    g_videoBObj.height(210);
+  }
+  // $("#mediaContainer").hide();
+  g_mediaObj.width(1);
+  g_mediaObj.height(1);
+  $("#mediaContainer").css('width', '.5px');
+  $("#mediaContainer").css('height', '.5px');
+  // $("#videoAContainer").css('width', '.1px');
+  // $("#videoAContainer").css('height', '.1px');
+
+  //录制中
+  if (g_startRecord) {
+    var mixerContents = getMixerContent();
+    var rst = CRVideo_UpdateLocMixerContent(g_curMixerID, mixerContents);
+    if (rst != CRVideo_NOERR) {
+      alertLayer("UpdateLocMixerContent failed!!!  errCode=" + rst);
+    }
+  }
+}
+
+function layoutB() {
+  // B布局：单摄像头显示两个，主+A；双摄像头显示三个，主+A+B
+  g_layout = 'layoutB'
+
+  if (g_single_video) {
+    $("#mediaContainer").css({
+      "display": "block",
+      "left": "0px",
+      "top": "90px",
+      "width": "375px",
+      "height": "210px"
+    });
+    g_mediaObj.width(375);
+    g_mediaObj.height(210);
+
+
+    $("#videoAContainer").css({
+      "display": "block",
+      "left": "375px",
+      "top": "90px",
+      "width": "375px",
+      "height": "210px"
+    });
+    g_videoAObj.width(375);
+    g_videoAObj.height(210);
+
+    $("#videoBContainer").css("display", "none");
+    updateVideo();
+  } else {
+    $("#mediaContainer").css({
+      "display": "block",
+      "left": "0px",
+      "top": "60px",
+      "width": "500px",
+      "height": "280px"
+    })
+    g_mediaObj.width(500);
+    g_mediaObj.height(280);
+
+    $("#videoAContainer").css({
+      "display": "block",
+      "left": "500px",
+      "top": "60px",
+      "width": "250px",
+      "height": "140px"
+    })
+    g_videoAObj.width(250);
+    g_videoAObj.height(140);
+
+
+    $("#videoBContainer").css({
+      "display": "block",
+      "left": "500px",
+      "top": "200px",
+      "width": "250px",
+      "height": "140px"
+    })
+    g_videoBObj.width(250);
+    g_videoBObj.height(140);
+    updateVideo();
+
+  }
+  //录制中
+  if (g_startRecord) {
+    var mixerContents = getMixerContent();
+    var rst = CRVideo_UpdateLocMixerContent(g_curMixerID, mixerContents);
+    if (rst != CRVideo_NOERR) {
+      alertLayer("UpdateLocMixerContent failed!!!  errCode=" + rst);
+    }
+  }
+}
+
+function layoutC() {
+  // C布局，无论单双摄像头都只显示最大的 主 视频
+  g_layout = 'layoutC'
+
+  $("#mediaContainer").css({
+    "display": "block",
+    "top": "38px",
+    "left": "58px",
+    "height": "360px",
+    "width": "630px"
+  })
+  g_mediaObj.width(630);
+  g_mediaObj.height(360);
+
+  $("#videoAContainer").css("display", "none");
+  $("#videoBContainer").css("display", "none");
+
+}
+//摄像头处理
+//更新摄像头
+function updateVideo() {
+  // hideLoadingPage()
+  var devices = CRVideo_GetAllVideoInfo(g_usrID); // 获取用户所有摄像头信息
+  var devices_length = devices.length;
+  try {
+    if (g_videoAObj && devices_length == 0) {
+      alertLayer('请检查双录仪的连接！')
+
+    }
+    if (g_videoAObj && devices_length == 1) {
+      g_videoAObj.setVideo(g_usrID, devices[0]['videoID']);
+      g_videoAObj.setVisibleNickName(false);
+
+    }
+    if (g_videoAObj && devices_length == 2) {
+      CRVideo_SetLocVideoAttributes(1, {
+        "disabled": 1
+      })
+      g_videoAObj.setVideo(g_usrID, devices[1]['videoID']);
+      g_videoAObj.setVisibleNickName(false);
+    }
+  } catch (e) {}
+}
+
+//摄像头状态改变
+CRVideo_VideoStatusChanged.callback = function (userID, oldStatus, newStatus) {
+  if (userID == g_usrID) {
+    if (newStatus != CRVideo_VSTATUS.VOPEN || newStatus != CRVideo_VSTATUS.VOPENING) {
+      CRVideo_OpenVideo(g_usrID);
+    }
+  }
+}
+//摄像头列表更新
+CRVideo_VideoDevChanged.callback = function (userID) {
+  if (userID == g_usrID) {
+    updateVideo();
+  }
+
+}
+//设置摄像头
+function openSetVideoPanel() {
+  if (g_startRecord) {
+    alertLayer("视频录制中不可进行设置!");
+    return;
+  }
+  //$(".detail_right_video").css('display','none');
+  videoContainerHide();
+  $(".full_page").css('display', 'block');
+  $(".full_page_div2").css('display', 'block');
+  setVideoAndMedia();
+  // 打开设置按钮时，更新对应的信息
+}
+//------------------------------
+//
+//播放、停止媒体
+//
+//-----------------------------
+//播放媒体
+function video_play(videoName, num) {
+  if (g_nowTime_play_num != -1) {
+    // 如果现在没有播放，则开始播放点击的影音
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_play").css("display", "block")
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_stop").css('display', 'none');
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_pause").css('display', 'none')
+  }
+  // 正在播放影音全局变量变为当前播放的影音编号
+  g_nowTime_play_num = num;
+
+  if (g_layout != 'layoutA') {
+    // 如果不是A布局则停止播放
+    CRVideo_StopPlayMedia();
+  }
+  g_playbacking = false;
+  $('#playbackBtn').text("回放")
+  $("#videoList" + num + " " + ".voice1_item_play").css("display", "none")
+  $("#videoList" + num + " " + ".voice1_item_stop").css('display', 'block');
+  $("#videoList" + num + " " + ".voice1_item_pause").css('display', 'none')
+
+  // 调用布局B
+  //$(".detail_right_video").css('display','none');
+  videoContainerHide();
+
+  layoutB();
+  if (g_uploading == false) {
+
+    videoContainerShow();
+    // updateVideo();
+  }
+  // 开始播放
+  CRVideo_StartPlayMedia('http://hxxc-sit-uat-private.oss-cn-hangzhou.aliyuncs.com/shuanglu/phone.mp3');
+}
+//停止播放媒体
+function video_stop(num) {
+  CRVideo_StopPlayMedia();
+  $("#videoList" + num + " " + ".voice1_item_play").css("display", "block")
+  $("#videoList" + num + " " + ".voice1_item_stop").css('display', 'none');
+  $("#videoList" + num + " " + ".voice1_item_pause").css('display', 'none')
+  g_nowTime_play_num = -1;
+
+  // 没有影音播放，停止媒体播放
+}
+//恢复播放媒体
+function video_pause_false(num) {
+  $("#videoList" + num + " " + ".voice1_item_play").css("display", "none")
+  $("#videoList" + num + " " + ".voice1_item_stop").css('display', 'block');
+  $("#videoList" + num + " " + ".voice1_item_pause").css('display', 'none')
+
+  CRVideo_PausePlayMedia(false);
+  // 恢复影音播放，true为暂停播放 false为开始部播放
+}
+//暂停播放媒体
+function video_pause_true(num) {
+  $("#videoList" + num + " " + ".voice1_item_play").css("display", "none")
+  $("#videoList" + num + " " + ".voice1_item_stop").css('display', 'none');
+  $("#videoList" + num + " " + ".voice1_item_pause").css('display', 'block');
+
+  CRVideo_PausePlayMedia(true);
+}
+//媒体停止播放通知
+CRVideo_NotifyMediaStop.callback = function (userid, reson) {
+  // 当停止影音播放时就调用A布局
+  $("#list_container").hide();
+  $("#full_page_div2").hide();
+  $("#full_page_div").hide();
+  $("#warning_palyer").hide();
+  $("#alert_palyer").hide();
+  $("#full_page").hide();
+  //打点管理层和修改层
+  $("#mark_list_container_wrapper").hide();
+  $("#mark_list_container").hide();
+  $("#mark_change_container_wrapper").hide();
+  $("#mark_change_container").hide();
+  if (userid == g_usrID) {
+    g_playbacking = false;
+    $('#playbackBtn').text("回放")
+
+    layoutA();
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_play").css("display", "block")
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_stop").css('display', 'none');
+    $("#videoList" + g_nowTime_play_num + " " + ".voice1_item_pause").css('display', 'none')
+
+    updateVideo();
+  }
+}
+// SDK通知打开影音文件
+CRVideo_NotifyMediaOpened.callback = function (totalTime, width, height) {
+  // C布局且比例为4:3
+  if (g_layout == 'layoutB') {
+    $("#mediaContainer").css({
+      "display": "block",
+      "left": "0px",
+      "top": "90px",
+      "width": "375px",
+      "height": "210px"
+    });
+    g_mediaObj.width(375);
+    g_mediaObj.height(210);
+  }
+}
+//------------------------------
+//
+//录制
+//
+//-----------------------------
+//获取混图器内容
+function getMixerContent() {
+  var recContents = [];
+
+  if (g_layout == "layoutA") {
+    if (g_recordHeight * 16 / 9 > g_recordWidth) {
+      var sWidth = g_recordWidth;
+      var sHeight = g_recordWidth / 16 * 9
+      var sX = 0
+      var sY = (g_recordHeight - sHeight) / 2
+    } else {
+      var sWidth = g_recordHeight * 16 / 9;
+      var sHeight = g_recordHeight;
+      var sX = (g_recordWidth - sWidth) / 2
+      var sY = 0
+    }
+
+    var videoAContent = {};
+    var videoAStampContent = {};
+    var videoAlogoContent = {}
+    var videoBContent = {};
+    var videoBStampContent = {};
+    var videoBlogoContent = {}
+    if (g_single_video) {
+      // 单摄像头
+      videoAContent["type"] = 0;
+      videoAContent["left"] = sX;
+      videoAContent["top"] = sY;
+      videoAContent["width"] = sWidth;
+      videoAContent["height"] = sHeight;
+      videoAContent["keepAspectRatio"] = 1;
+      videoAContent["param"] = {
+        "camid": g_usrID + "." + g_videoAObj.getVideoID()
+      };
+      recContents.push(videoAContent);
+    } else {
+      // 双摄像头
+      videoAContent["type"] = 0;
+      videoAContent["left"] = sX;
+      videoAContent["top"] = sHeight / 4 + sY;
+      videoAContent["width"] = sWidth / 2;
+      videoAContent["height"] = sHeight / 2;
+      videoAContent["param"] = {
+        "camid": g_usrID + "." + g_videoAObj.getVideoID()
+      };
+      recContents.push(videoAContent);
+
+      videoBContent["type"] = 0;
+      videoBContent["left"] = sX + sWidth / 2;
+      videoBContent["top"] = sHeight / 4 + sY;
+      videoBContent["width"] = sWidth / 2;
+      videoBContent["height"] = sHeight / 2;
+      videoBContent["param"] = {
+        "camid": g_usrID + "." + g_videoBObj.getVideoID()
+      };
+      recContents.push(videoBContent);
+
+      videoBlogoContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_PIC;
+      videoBlogoContent["left"] = videoBContent["left"] + 3;
+      videoBlogoContent["top"] = videoBContent["top"] + 3;
+      videoBlogoContent["width"] = 32;
+      videoBlogoContent["height"] = 32;
+      videoBlogoContent["param"] = {
+        "resourceid": g_logo_id
+      };
+      recContents.push(videoBlogoContent);
+
+      videoBStampContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_TIMESTAMP;
+      videoBStampContent["left"] = videoBContent["left"] + 35;
+      videoBStampContent["top"] = videoBContent["top"] + 3;
+      videoBStampContent["width"] = 175;
+      videoBStampContent["height"] = 32;
+      recContents.push(videoBStampContent);
+    }
+    videoAlogoContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_PIC;
+    videoAlogoContent["left"] = videoAContent["left"] + 3;
+    videoAlogoContent["top"] = videoAContent["top"] + 3;
+    videoAlogoContent["width"] = 32;
+    videoAlogoContent["height"] = 32;
+    videoAlogoContent["param"] = {
+      "resourceid": g_logo_id
+    };
+    recContents.push(videoAlogoContent);
+
+    videoAStampContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_TIMESTAMP;
+    videoAStampContent["left"] = videoAContent["left"] + 35;
+    videoAStampContent["top"] = videoAContent["top"] + 3;
+    videoAStampContent["width"] = 175;
+    videoAStampContent["height"] = 32;
+    recContents.push(videoAStampContent);
+  } else if (g_layout == "layoutB") {
+    if (g_recordHeight * 16 / 9 > g_recordWidth) {
+      var sWidth = g_recordWidth;
+      var sHeight = g_recordWidth / 16 * 9
+      var sX = 0
+      var sY = (g_recordHeight - sHeight) / 2
+    } else {
+      var sWidth = g_recordHeight * 16 / 9;
+      var sHeight = g_recordHeight;
+      var sX = (g_recordWidth - sWidth) / 2
+      var sY = 0
+    }
+
+    var mediaContent = {}
+    var mediaStampContent = {};
+    var mediaStamplogoContent = {}
+    var videoAContent = {};
+    var videoAStampContent = {};
+    var videoAlogoContent = {}
+    var videoBContent = {};
+    var videoBStampContent = {};
+    var videoBlogoContent = {}
+
+    if (g_single_video) {
+      mediaContent["type"] = 3;
+      mediaContent["left"] = sX;
+      mediaContent["top"] = sHeight / 4 + sY;
+      mediaContent["width"] = sWidth / 2;
+      mediaContent["height"] = sHeight / 2;
+      mediaContent["param"] = "";
+      recContents.push(mediaContent);
+
+      videoAContent["type"] = 0;
+      videoAContent["left"] = sX + sWidth / 2;
+      videoAContent["top"] = sHeight / 4 + sY;
+      videoAContent["width"] = sWidth / 2;
+      videoAContent["height"] = sHeight / 2;
+      videoAContent["param"] = {
+        "camid": g_usrID + "." + g_videoAObj.getVideoID()
+      };
+      recContents.push(videoAContent);
+    } else {
+      mediaContent["type"] = 3;
+      mediaContent["left"] = sX;
+      mediaContent["top"] = (sHeight / 6) + sY;
+      mediaContent["width"] = sWidth * 2 / 3
+      mediaContent["height"] = sHeight * 2 / 3;
+      mediaContent["param"] = "";
+      recContents.push(mediaContent);
+
+
+      videoAContent["type"] = 0;
+      videoAContent["left"] = sWidth * 2 / 3 + sX;
+      videoAContent["top"] = sHeight / 6 + sY;
+      videoAContent["width"] = sWidth / 3;
+      videoAContent["height"] = sHeight / 3;
+      videoAContent["param"] = {
+        "camid": g_usrID + "." + g_videoAObj.getVideoID()
+      };
+      recContents.push(videoAContent);
+
+
+      videoBContent["type"] = 0;
+      videoBContent["left"] = sWidth * 2 / 3 + sX;
+      videoBContent["top"] = sHeight / 2 + sY;
+      videoBContent["width"] = sWidth / 3;
+      videoBContent["height"] = sHeight / 3;
+      videoBContent["param"] = {
+        "camid": g_usrID + "." + g_videoBObj.getVideoID()
+      };
+      recContents.push(videoBContent);
+
+      videoBlogoContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_PIC;
+      videoBlogoContent["left"] = videoBContent["left"] + 3;
+      videoBlogoContent["top"] = videoBContent["top"] + 3;
+      videoBlogoContent["width"] = 32;
+      videoBlogoContent["height"] = 32;
+      videoBlogoContent["param"] = {
+        "resourceid": g_logo_id
+      };
+      recContents.push(videoBlogoContent);
+
+      videoBStampContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_TIMESTAMP;
+      videoBStampContent["left"] = videoBContent["left"] + 35;
+      videoBStampContent["top"] = videoBContent["top"] + 3;
+      videoBStampContent["width"] = 175;
+      videoBStampContent["height"] = 32;
+      recContents.push(videoBStampContent);
+
+    }
+
+    mediaStamplogoContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_PIC;
+    mediaStamplogoContent["left"] = mediaContent["left"] + 3;
+    mediaStamplogoContent["top"] = mediaContent["top"] + 3;
+    mediaStamplogoContent["width"] = 32;
+    mediaStamplogoContent["height"] = 32;
+    mediaStamplogoContent["param"] = {
+      "resourceid": g_logo_id
+    };
+    recContents.push(mediaStamplogoContent);
+
+    mediaStampContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_TIMESTAMP;
+    mediaStampContent["left"] = mediaContent["left"] + 35;
+    mediaStampContent["top"] = mediaContent["top"] + 3;
+    mediaStampContent["width"] = 175;
+    mediaStampContent["height"] = 32;
+    recContents.push(mediaStampContent);
+
+
+    videoAlogoContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_PIC;
+    videoAlogoContent["left"] = videoAContent["left"] + 3;
+    videoAlogoContent["top"] = videoAContent["top"] + 3;
+    videoAlogoContent["width"] = 32;
+    videoAlogoContent["height"] = 32;
+    videoAlogoContent["param"] = {
+      "resourceid": g_logo_id
+    };
+    recContents.push(videoAlogoContent);
+
+    videoAStampContent["type"] = CRVideo_REC_VCONTENT_TYPE.RECVTP_TIMESTAMP;
+    videoAStampContent["left"] = videoAContent["left"] + 35;
+    videoAStampContent["top"] = videoAContent["top"] + 3;
+    videoAStampContent["width"] = 175;
+    videoAStampContent["height"] = 32;
+    recContents.push(videoAStampContent);
+  }
+  return recContents;
+}
+var g_mxierNum = 1; //混图器序号
+var g_curMixerID = "webM-" + g_mxierNum++; //混图器ID
+var g_curRecordDuration = 0; //录制中，当前录像时长（毫秒单位）
+//开始录像
+function closeVideo() {
+  var videoPlayer = $("#my-video").get(0);
+  if (typeof (videoPlayer) != "undefined") {
+    var myPlayer = videojs('my-video');
+    myPlayer.dispose();
+  }
+  $('#playVideo').hide()
+}
+
+function startRecord() {
+
+  uploadingType = '' //记录手动上传的视频类型置空
+
+  //清空录制的百分比进度条
+  $('#upload_status2').html('已录制完成,请上传!')
+  $("#percent_item2").css("width", "0");
+  $("#upload_num_percert2").text("0%");
+  $('#reStart').hide()
+  $('#cancelUpload').show()
+
+  //开始录制前获取上传路径
+  AJAX.getOss(function (data) {
+    uploadPath = data.data
+  })
+  g_record = slideInformation.contractId + "_" + currentFileName + "_" + currentType + ".mp4"
+  console.log("开始录制时定下的文件名称",g_record)
+
+
+  //录制开始前删去同名文件及其srt
+  if (CRVideo_TryReadFile(g_location_dir + g_record) != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    CRVideo_RemoveFromFileMgr(g_record);
+  }
+  if (CRVideo_TryReadFile(g_location_dir + g_record + ".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    CRVideo_RemoveFromFileMgr(g_record + ".srt");
+  }
+  //边录边传时将上传变量置true,开始录制即开始上传
+  if (g_isUploadOnRecording == "1") { //
+    g_uploading = true;
+  }
+  if (g_playbacking) {
+    alertLayer("回放时不能录制");
+    return;
+  }
+
+  //混图器规格配置, 尺寸:360p, fps:8, 码率:500kbps，画质:22
+  var mixerCfg = {
+    "width": g_recordWidth,
+    "height": g_recordHeight,
+    "frameRate": g_frameRate,
+    "bitRate": g_bitRate,
+    "defaultQP": 22,
+    "gop": 120
+  };
+  //混图器内容： 左右布局，左边为user1的1号摄像头， 右边为user2的1号摄像头
+  var mixerContent = getMixerContent();
+  //创建混图器
+  var errCode = CRVideo_CreateLocMixer(g_curMixerID, mixerCfg, mixerContent);
+  if (errCode != CRVideo_NOERR) {
+    //出错
+    alertLayer("创建混图器失败！ 错误码：" + errCode);
+    return;
+  } else {
+    //成功
+    CRVideo_SetAliyunOssAccountInfo(valueA, 'MG5daJsVkhQwQH0ulnjLKut4QcPumt')
+    g_isUploadOnRecording = $("input[name='recUpType'][checked]").val();
+    var outputObj = [{
+      "type": 0,
+      "filename": g_location_dir + g_record,
+      "isUploadOnRecording": g_isUploadOnRecording,
+      "serverPathFileName": uploadPath,
+      "encryptType": 0
+    }];
+    var addRst = CRVideo_AddLocMixerOutput(g_curMixerID, outputObj);
+    if (addRst == CRVideo_NOERR) {
+
+    } else {
+      alertLayer("添加混图器输出错误！ 错误码：" + addRst);
+      return;
+    }
+  }
+  g_startRecord = true;
+  $("#markInput").val("打点说明1");
+  $("#startRecordCon").css("display", "none");
+  $("#stopRecordCon").css("display", "block");
+  if (g_layout == 'layoutA') {
+    layoutA();
+  } else if (g_layout == 'layoutB') {
+    layoutB();
+  } else if (g_layout == 'layoutC') {
+    layoutC();
+  }
+}
+//停止录像
+function stopRecord() {
+  CRVideo_DestroyLocMixer(g_curMixerID);
+  g_startRecord = false;
+  $("#startRecordCon").css("display", "block");
+  $("#stopRecordCon").css("display", "none");
+
+  //添加打点文件
+  if (CRVideo_TryReadFile(g_location_dir + g_record + ".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    CRVideo_AddFileToRecordMgr(g_record + ".srt", g_location_dir);
+    //挪去mp4上传成功的回调里上传srt
+  }
+  //修改下一次录制时，混图器ID
+  g_curMixerID = "webM-" + g_mxierNum++;
+}
+//回放录像
+function playbackRecord(fileName) {
+  //利用B布局解决IE卡主的问题
+  if (g_playbacking) { //如果是正在回放
+    CRVideo_StopPlayMedia(); // 如果正在回放时点击回放则停止播放
+  } else {
+    // 如果没有回放
+    if (fileName == null) { // 如果回放文件名为空则return
+      alertLayer("还没录制");
+      return;
+    }
+    if (g_layout != 'layoutA') {
+      // 如果不是A布局则停止播放
+      CRVideo_StopPlayMedia();
+    }
+    g_playbacking = true;
+    layoutC();
+    $('#playbackBtn').text("停止回放");
+    // 回放视频
+    CRVideo_PlaybackRecordFile(fileName);
+  }
+
+}
+
+CRVideo_LocMixerOutputInfo.callback = function (mixerID, nameOrUrl, outputInfo) {
+  if (mixerID == g_curMixerID && outputInfo.state != 0 && outputInfo.state != 3) {
+    var recordFile = nameOrUrl.replace(g_location_dir, "");
+    if (recordFile == g_record) {
+      g_curRecordDuration = outputInfo.duration;
+    }
+  }
+}
+//上传
+function step_upload(fileName) {
+  if (g_playbacking) { //如果是正在回放
+    CRVideo_StopPlayMedia(); // 如果正在回放时点击回放则停止播放
+  }
+  //添加打点文件
+  if (CRVideo_TryReadFile(g_location_dir + fileName) == CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    alertLayer('该视频已删除，无法继续上传！')
+    $('#reStart').show()
+    $('#startRecord').hide()
+  }
+
+  uploadingFile = fileName
+  var nList = fileName.split('_')
+  $('#cancelUpload').show() //开始上传之后，取消上传需要展示
+  uploadingType = nList[2].split('.')[0]
+  $("#percent_item").css("width", "0");
+  $("#percent_item2").css("width", "0");
+  $("#upload_num_percert").text("0%");
+  $("#upload_num_percert2").text("0%");
+  g_uploading = true;
+
+  var uploadParam = {
+    'tenantId': slideInformation.rentId,
+    'videoType': uploadingType,
+    'fileName':uploadingFile,
+    'category': slideInformation.contractId
+  }
+  //***步骤获取api
+  $.ajax({
+    type: "POST",
+    url: API.getOss,
+    contentType: "application/json",
+    dataType: "json",
+    cache:false,
+    data: JSON.stringify(uploadParam),
+    success: function (data) {
+      uploadPath = data.data
+      // console.log('确认上传地址', uploadPath)
+      CRVideo_SetAliyunOssAccountInfo(valueA, 'MG5daJsVkhQwQH0ulnjLKut4QcPumt')
+      CRVideo_UploadRecordFile2(fileName, uploadPath);
+    }
+  })
+
+}
+
+function upload(fileName) {
+  //手动上传前打开取消按钮的展示以及关闭重新录制的按钮，在上传回调中再恢复
+  $('#cancelUpload2').show()
+  $('#reStart2').hide()
+  console.log('手动上传才走的方法')
+  uploadingFile = fileName
+  var nList = fileName.split('_')
+  uploadingType = nList[2].split('.')[0]
+  videoContainerHide();
+
+  if (fileName == null) {
+    alertLayer("还没录制");
+    return;
+  }
+  $("#percent_item").css("width", "0");
+  $("#percent_item2").css("width", "0");
+  $("#upload_num_percert").text("0%");
+  $("#upload_num_percert2").text("0%");
+
+  g_uploading = true;
+  if ($(".list_container").css("display") == "block") {
+
+  }
+
+  $(".full_page").css('display', 'block');
+  $(".full_page_div").css('display', 'block');
+
+
+  //上传前重新获取上传路径
+
+  var uploadParam = {
+    'tenantId': slideInformation.rentId,
+    'videoType': uploadingType,
+    'fileName': uploadingFile,
+    'category': slideInformation.contractId
+  }
+  //***步骤获取api
+  $.ajax({
+    type: "POST",
+    url: API.getOss,
+    contentType: "application/json",
+    dataType: "json",
+    cache:false,
+    data: JSON.stringify(uploadParam),
+    success: function (data) {
+      uploadPath = data.data
+      CRVideo_SetAliyunOssAccountInfo(valueA, 'MG5daJsVkhQwQH0ulnjLKut4QcPumt')
+      // console.log('确认上传地址', uploadPath)
+      CRVideo_UploadRecordFile2(fileName, uploadPath);
+    }
+  })
+}
+
+function cancle_upload(fileName) {
+  // var fileNameDetail = fileName;
+  $(".list_container").css({
+    "z-index": 222
+  });
+  // $(".list_container").css({"z-index":222});
+  $(".full_page_div").css('display', 'none');
+  if ($(".list_container").css("display") == "block") {
+    // 重新展示视频列表
+    g_getAll_videfile_list = CRVideo_GetAllRecordFiles();
+    getAllVideoList(g_getAll_videfile_list);
+  } else {
+    videoContainerShow();
+    //updateVideo();
+  }
+  if (g_uploading) {
+    // console.log('弹框里取消的', fileName)
+    // 如果正在上传视频，则调用取消视频上传的方法
+    CRVideo_CancelUploadRecordFile(fileName);
+    CRVideo_CancelUploadRecordFile(fileName + '.srt');
+    g_uploading = false;
+  }
+  if ($(".list_container").css("display") == "none") {
+    $(".full_page").css('display', 'none');
+  } else {
+    $(".full_page").css('display', 'block');
+  }
+}
+
+function step_cancle_upload(fileName) {
+  // console.log('步骤里取消的fileName', fileName, g_uploading)
+  if (g_uploading) {
+    // 如果正在上传视频，则调用取消视频上传的方法
+    CRVideo_CancelUploadRecordFile(fileName);
+    CRVideo_CancelUploadRecordFile(fileName + '.srt');
+    $('#reStart').show()
+    $('#startRecord').show()
+    $('#cancelUpload').hide()
+    $('#upload_status2').html('已取消')
+    g_uploading = false;
+  }
+
+}
+
+function parseToDate(value) {
+  if (value == null || value == '') {
+    return undefined;
+  }
+  var dt;
+  if (value instanceof Date) {
+    dt = value;
+  } else {
+    if (!isNaN(value)) {
+      dt = new Date(value);
+    } else if (value.indexOf('/Date') > -1) {
+      value = value.replace(/\/Date(−?\d+)\//, '$1');
+      dt = new Date();
+      dt.setTime(value);
+    } else if (value.indexOf('/') > -1) {
+      dt = new Date(Date.parse(value.replace(/-/g, '/')));
+    } else {
+      // 兼容ie11(只认准yyyy/MM/格式)
+      if (value.toString().indexOf("-") > 0) {
+        value = value.replace(new RegExp("-", "g"), "/");
+      }
+      dt = new Date(value);
+    }
+  }
+  return dt;
+}
+
+// sdk通知录制状态更改
+CRVideo_NotifyRecordFileStateChanged.callback = function (filename, state) {
+  if (state == 2) {
+    // console.log('exe回调文件名',filename)
+    var nList = filename.split('_')
+    var ingType = nList[2].split('.')[0]
+    //上传前重新获取上传路径
+    if (!/\.srt$/.test(filename)) {
+      var uploadParam = {
+        'tenantId': slideInformation.rentId,
+        'videoType': ingType,
+        'fileName': filename,
+        'category': slideInformation.contractId
+      }
+      //***步骤获取api
+      $.ajax({
+        type: "POST",
+        url: API.getOss,
+        contentType: "application/json",
+        dataType: "json",
+        cache:false,
+        data: JSON.stringify(uploadParam),
+        success: function (data) {
+          uploadPath = data.data
+          CRVideo_SetAliyunOssAccountInfo(valueA, 'MG5daJsVkhQwQH0ulnjLKut4QcPumt')
+          // console.log('确认srt上传地址', uploadPath+'.srt')
+          if (CRVideo_TryReadFile(g_location_dir + filename + ".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+            CRVideo_UploadRecordFile2(filename + ".srt", uploadPath + '.srt');
+          }
+        }
+      })
+    }
+    //判断该回调主题是srt文件再行删除
+    if (/\.srt$/.test(filename)) {
+      CRVideo_RemoveFromFileMgr(filename); //一起删除打点文件
+    }
+
+    // if (CRVideo_TryReadFile(g_location_dir + filename + ".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    //   CRVideo_UploadRecordFile2(filename + ".srt", uploadPath + '.srt');
+    // }
+    // if (!/\.srt$/.test(filename) && g_isUploadOnRecording == "1") {
+    //边录边传上传成功再上传srt文件
+    // console.log('边录边传上传成功再上传srt文件')
+    // console.log('确认上传地址', uploadPath)
+    // CRVideo_SetAliyunOssAccountInfo(valueA, 'MG5daJsVkhQwQH0ulnjLKut4QcPumt')
+    // if (CRVideo_TryReadFile(g_location_dir + filename + ".srt") != CRVideo_CRVIDEOSDK_FILE_NOT_EXIST) {
+    //   CRVideo_UploadRecordFile2(filename + ".srt", uploadPath + '.srt');
+    // }
+    // }
+
+
+    $('#upload_status').text("上传完成"); //上传面板
+    $('#upload_status2').text("视频已上传成功！"); //录制步骤的
+
+    $("#percent_item").css("width", "100%");
+    $("#percent_item2").css("width", "100%");
+    $("#upload_num_percert").text("100%");
+    $("#upload_num_percert2").text("100%");
+
+    $('.full_page_cancle').text("确定");
+    $(".full_page_submit").css("display", "inline-block");
+
+    $('#reStart').css("display", "inline-block");
+    $('#cancelUpload').css("display", "none");
+    $('#reStart2').css("display", "inline-block");
+    $('#cancelUpload2').css("display", "none");
+
+    $('#startRecord').hide() //手动上传的控制按钮
+
+    g_uploading = false
+
+    if (!/\.srt$/.test(filename)) {
+
+
+      //根据文件名获取该视频信息
+      var successFile = CRVideo_GetRecordFileInfo(filename)
+      console.log('成功回调', successFile)
+
+      var getsdkParam = {
+        'tenantId': slideInformation.rentId,
+        'businessNo': slideInformation.contractId,
+        'mobilephone': slideInformation.tel,
+        'customerName': slideInformation.cName,
+        'idCard': slideInformation.idCard,
+        'productName': slideInformation.pName,
+        'businessUserId': slideInformation.userId,
+        'businessUserName': slideInformation.uName,
+        'videoType': ingType,//当前回调的文件名中截取类型，为保持一致
+        'videoName': filename,
+        // 'srtName':filename+'.srt',
+        'videoSize': successFile.size,
+        'videoTime': successFile.duration,
+        'videoCreator': slideInformation.uName,
+        'uploadTime': new Date().getTime(),
+        'videoCreatedTime': new Date(parseToDate(successFile.startTime)).getTime()
+      }
+      //***步骤获取api
+      $.ajax({
+        type: "POST",
+        url: API.uploadCallback,
+        contentType: "application/json",
+        dataType: "json",
+        cache:false,
+        data: JSON.stringify(getsdkParam),
+        success: function (data) {
+          // 成功后本地删除文件
+          if (data.code == '0') {
+            CRVideo_RemoveFromFileMgr(filename);
+          }
+
+        }
+      })
+    }
+
+    //上传成功后退出，节省席位
+
+  } else if (state == 1) {
+    $(".full_page_submit").css("display", "none");
+    $('#upload_status').text("上传中...")
+    $('#upload_status2').text("视频正在上传中，请稍等！");
+
+    $('.full_page_cancle').text("取消上传")
+
+    $('#startRecord').hide()
+
+  } else if (state == 0 && g_uploading) {
+    $('#startRecord').show() //开始录制显示
+    $('#reStart').hide() //重新录制按钮隐藏
+    $("#percent_item2").css("width", "0"); //进度条
+    $("#upload_num_percert2").text("0%"); //百分比数字
+
+
+
+    $(".full_page_submit").css("display", "none");
+    $('#upload_status').text("准备上传...")
+    $('#upload_status2').text("视频已录制完成，准备上传中...");
+
+    // $('.full_page_cancle').text("取消上传")
+    $('#cancelUpload').hide()
+    $("#percent_item").css("width", "0")
+    $("#percent_item2").css("width", "0")
+  }
+  //console.log("CRVideo_NotifyRecordFileStateChanged(filename:"+filename+" state:"+state+")");
+}
+
+// 通知录制文件上传进度
+CRVideo_NotifyRecordFileUploadProgress.callback = function (filename, percent) {
+  //console.log("CRVideo_NotifyRecordFileUploadProgress(filename:"+filename+" percent:"+percent+")");
+  $(".full_page_submit").css("display", "none");
+  $("#percent_item").css("width", percent + "%");
+  $("#percent_item2").css("width", percent + "%");
+  $("#upload_num_percert").text(percent + "%");
+  $("#upload_num_percert2").text(percent + "%");
+
+}
+// 上传文件失败通知
+CRVideo_UploadRecordFileErr.callback = function (fileName, err) {
+  $('#upload_status').text("上传失败")
+  $('#upload_status2').text("视频上传失败")
+
+  $('.full_page_cancle').text("确定")
+
+  g_uploading = false;
+}
+//更新video配置
+function updateVideoCfg(sizeType, fps, qp) {
+  var cfg = {}
+
+
+  cfg.sizeType = sizeType
+
+  var fps = parseInt($("#frame_input").val())
+  if (fps < 5) {
+    fps = 5
+  } else if (fps > 20) {
+    fps = 20
+  }
+  cfg.fps = fps
+  cfg.maxbps = video_size_arr[sizeType][2] * 1000
+
+  //var qp = $("#meet_yx").val()
+  //var qp = $("input[name='meet_yx']:checked").val();
+  if (qp == 1) {
+    cfg.qp_min = 22
+    cfg.qp_max = 36
+  } else if (qp == 0) {
+    cfg.qp_min = 22
+    cfg.qp_max = 25
+  }
+  CRVideo_SetVideoCfg(cfg);
+  CRVideo_SetMediacfg(cfg)
+}
+
+function setSubmit() {
+  $(".full_page").css('display', 'none');
+  $(".full_page_div2").css('display', 'none');
+  if ($(".list_container").css("display") == "block") {} else {
+    //$(".detail_right_video").css('display','block');
+    videoContainerShow();
+    //updateVideo();
+  }
+  g_FURate = $("#fuRate").val() * 1024;
+  g_bitRate = $("#bitRate").val() * 1000;
+  g_frameRate = $("#frameRate").val();
+  g_isUploadOnRecording = $("input[name='recUpType'][checked]").val();
+  var recordWH = $("#recordWH").val();
+  if (recordWH == 1) {
+    g_recordWidth = 640;
+    g_recordHeight = 360;
+  } else if (recordWH == 2) {
+    g_recordWidth = 864;
+    g_recordHeight = 480;
+  } else if (recordWH == 3) {
+    g_recordWidth = 1280;
+    g_recordHeight = 720;
+  } else if (recordWH == 4) {
+    g_recordWidth = 1920;
+    g_recordHeight = 1080;
+  } else if (recordWH == 5) {
+    g_recordWidth = 640;
+    g_recordHeight = 480;
+  }
+  CRVideo_SetFileUploadRate(g_FURate);
+  g_video_size_type = $("#size_select").val();
+  g_video_fps = $("#frame_input").val();
+  g_video_qp = $("input[name='meet_yx']:checked").val();
+  updateVideoCfg(parseInt(g_video_size_type), parseInt(g_video_fps), parseInt(g_video_qp));
+}
+
+function setCancle() {
+  $(".full_page").css('display', 'none');
+  $(".full_page_div2").css('display', 'none');
+  if ($(".list_container").css("display") == "block") {} else {
+    //$(".detail_right_video").css('display','block');
+    videoContainerShow();
+    //updateVideo();
+  }
+
+  $("#fuRate").val(g_FURate / 1024);
+  $("#bitRate").val(g_bitRate / 1000);
+  $("#frameRate").val(g_frameRate);
+  if (g_recordHeight == 360) {
+    var recordWH = $("#recordWH").val(1);
+  } else if (g_recordHeight == 480) {
+    if (g_recordWidth == 640) {
+      var recordWH = $("#recordWH").val(5);
+    } else {
+      var recordWH = $("#recordWH").val(2);
+    }
+
+  } else if (g_recordHeight == 720) {
+    var recordWH = $("#recordWH").val(3);
+  } else if (g_recordHeight == 1080) {
+    var recordWH = $("#recordWH").val(4);
+  }
+}
+// 正在播放的列表
+function showVideoFileList(list) {
+  $("#detail_video_lists li").remove();
+
+  if (list && list != "" && list != null) {
+    var listLength = list.length;
+    var str = "";
+    for (var i = 0; i < listLength; i++) {
+      // var listname = list[i]
+      var listname = list[i].split("Media/")[1];
+      str += "<li id='videoList" + i + "'>" +
+        "<span class='detail_right_voice1_item_name'>" + listname + "</span>" +
+        "<span class='detail_right_voice1_item_img'>" +
+        "<div class='voice1_item_play'>" +
+        "<img src='image/icon_04.png' onclick='video_play(\"" + list[i] + "\"," + i + ")'/>" +
+        "</div>" +
+        "<div class='voice1_item_stop' style='display:none'>" +
+        "<img src='image/icon_02.png' onclick='video_pause_true(" + i + ")'/>" +
+        "<img src='image/icon_03.png' onclick='video_stop(" + i + ")'/>" +
+        "</div>" +
+        "<div class='voice1_item_pause' style='display:none'>" +
+        "<img src='image/icon_04.png' onclick='video_pause_false(" + i + ")'/>" +
+        "<img src='image/icon_03.png' onclick='video_stop(" + i + ")'/>" +
+        "</div>" +
+        "</span>" +
+        "</li>"
+    }
+    str += "<div style='height:0;clear:both;'></div>"
+    $("#detail_video_lists").append(str);
+  }
+}
+// 回放list table中的视频
+function playbackList(i, name, type, rentId) {
+  if (!name) {
+    g_playbacking = false;
+    // 弹出层隐藏 并开始回放
+    var fileName = $("#fileName" + i).text();
+    closelistPage();
+    if (g_playbacking) {
+      CRVideo_StopPlayMedia();
+    }
+    playbackRecord(fileName);
+
+    // if (!name) {
+    //     //没传name，本地列表的播放
+    //     playbackRecord(fileName);
+    // } else {
+    //     //传了name，就是服务器端列表的播放
+    //     //接口取地址
+    //     var getFileParam = {
+    //         'tenantId': rentId,
+    //         'category': slideInformation.contractId,
+    //         'videoType': type,
+    //         'fileName': name,
+    //     }
+    //     //***拉取视频状态
+    //     $.ajax({
+    //         type: "POST",
+    //         url: API.getFile,
+    //         contentType: "application/json",
+    //         dataType: "json",
+    //         cache:false,
+    //         data: JSON.stringify(getFileParam),
+    //         success: function (data) {
+    //             if (data.data) {
+    //                 //开始播放 mp4 需要切换布局(使用demo的video_play)
+    //                 //获取的MP4的地址 data.data
+    //                 //利用C布局播放这个MP4
+    //                 // 如果不是A布局则停止播放
+    //                 if (g_layout != 'layoutA') {
+    //                     CRVideo_StopPlayMedia();
+    //                 }
+    //                 g_playbacking = false;
+    //                 videoContainerHide();
+    //                 layoutC();
+    //                 if (g_uploading == false) {
+    //                     videoContainerShow();
+    //                 }
+    //                 CRVideo_StartPlayMedia(data.data);
+    //             } else {
+    //                 console.log("mp4获取失败！")
+    //             }
+    //
+    //         },
+    //         fail: function () {
+    //             alertLayer('接口报错')
+    //         }
+    //     })
+    // }
+
+  } else {
+    //使用自有弹窗播放
+    var getFileParam = {
+      'tenantId': rentId,
+      'category': slideInformation.contractId,
+      'videoType': type,
+      'fileName': name,
+    }
+    //***拉取视频状态
+    $.ajax({
+      type: "POST",
+      url: API.getFile,
+      contentType: "application/json",
+      dataType: "json",
+      cache:false,
+      data: JSON.stringify(getFileParam),
+      success: function (data) {
+        if (data.data) {
+          //再获取字幕文件
+          var srtParam = {
+            'tenantId': rentId,
+            'category': slideInformation.contractId,
+            'videoType': type,
+            'fileName': name + '.srt',
+          }
+          // ***拉取视频状态
+          $.ajax({
+            type: "POST",
+            url: API.getFile,
+            contentType: "application/json",
+            dataType: "json",
+            cache:false,
+            data: JSON.stringify(srtParam),
+            success: function (srtUrl) {
+              if (srtUrl.data) {
+                var request = new XMLHttpRequest();
+                request.open('GET', srtUrl.data, true);
+                request.onload = function (req) {
+                  if (request.status >= 200 && request.status <
+                    400) {
+                    var o = request.response
+                    if (o) {
+                      window.subtitles = parseSrtSubtitles(o);
+                      console.log('window.subtitles', window
+                        .subtitles)
+                      var videoPlayer = $("#my-video").get(0);
+                      if (typeof (videoPlayer) !=
+                        "undefined") {
+                        var myPlayer = videojs('my-video');
+                        myPlayer.dispose();
+                      }
+                      var id = "my-video";
+                      $('#my-wrap').css('height', '100%')
+                      $("#my-wrap").html("<video id='" + id +
+                        "' class='video-js vjs-defalut-skin vjs-big-play-centered' controls preload='none' style='width:100%;height: 100%;' poster='' ><source id='video-source' src='' type='video/mp4'></video>"
+                      );
+                      //设置资源路径
+                      $("#my-wrap video source").attr("src",
+                        data.data);
+
+                      $('#playVideo,#full_page').show()
+
+
+                      videojs(id, {}, function () { //自动播放
+                        var myPlayer = videojs(id);
+                        myPlayer.markers({
+                          markerStyle: { //标记样式
+                            'width': '5px',
+                            'border-radius': '0%',
+                            'background-color': 'orange'
+                          },
+                          markerTip: { //悬停标记提示对象
+                            display: true, //是否显示markerTips
+                            text: function (
+                              marker
+                            ) {
+                              return marker
+                                .text;
+                            }
+                          },
+                          markers: window
+                            .subtitles
+                        })
+                        videojs(id).ready(
+                          function () {
+                            var myPlayer =
+                              this;
+                            myPlayer.play();
+                          });
+                        videojs(id).on("click",
+                          function () {
+                            if (myPlayer
+                              .paused()) {
+                              $(".vjs-has-started .vjs-big-play-button")
+                                .show();
+                            } else {
+                              $(".vjs-has-started .vjs-big-play-button")
+                                .hide();
+                            }
+                          })
+                      });
+                    }
+                  } else {
+                    // 没获取到字幕文件
+                    if (request.status == 404) {
+                      var videoPlayer = $("#my-video").get(0);
+                      if (typeof (videoPlayer) !=
+                        "undefined") {
+                        var myPlayer = videojs('my-video');
+                        myPlayer.dispose();
+                      }
+                      var id = "my-video";
+                      $('#my-wrap').css('height', '100%');
+                      $("#my-wrap").html("<video id='" + id +
+                        "' class='video-js vjs-defalut-skin vjs-big-play-centered' controls preload='none' style='width:100%;height:100%;' poster='' ><source id='video-source' src='' type='video/mp4'></video>"
+                      );
+                      //设置资源路径
+                      $("#my-wrap video source").attr("src",
+                        data.data);
+
+                      $('#playVideo,#full_page').show()
+
+
+                      videojs(id, {}, function () { //自动播放
+                        var myPlayer = videojs(id);
+                        videojs(id).ready(
+                          function () {
+                            var myPlayer =
+                              this;
+                            myPlayer.play();
+                          });
+                        videojs(id).on("click",
+                          function () {
+                            if (myPlayer
+                              .paused()) {
+                              $(".vjs-has-started .vjs-big-play-button")
+                                .show();
+                            } else {
+                              $(".vjs-has-started .vjs-big-play-button")
+                                .hide();
+                            }
+                          })
+                      });
+                    }
+                  }
+                };
+                request.onerror = function () {
+                  console.log("字幕打点文件请求失败，请检查是否为跨域问题或文件不存在！",
+                    request.status);
+                };
+                request.send();
+
+                //******************
+
+              } else {
+                console.log("srt获取失败！")
+              }
+            }
+          }) //*****srt地址请求结束*************
+        } else {
+          console.log("mp4获取失败！")
+        }
+      }
+    }) //*****mp4地址请求结束*************
+
+  }
+}
+//编译srt字幕文件
+function parseSrtSubtitles(srt) {
+  var subtitles = [];
+  var textSubtitles = srt.split('\r\n\r\n'); // 每条字幕的信息，包含了序号，时间，字幕内容
+  console.log('textSubtitles', textSubtitles)
+  for (var i = 0; i < textSubtitles.length; ++i) {
+    var textSubtitle = textSubtitles[i].split('\n');
+    console.log('textSubtitle', textSubtitle)
+    if (textSubtitle.length >= 2) {
+      var time = toSeconds($.trim(textSubtitle[1].split(' --> ')[0])); // 字幕的开始时间
+      var text = textSubtitle[2]; // 字幕的内容
+
+      // 字幕可能有多行
+      if (textSubtitle.length > 2) {
+        for (var j = 3; j < textSubtitle.length; j++) {
+          text += '\n' + textSubtitle[j];
+        }
+      }
+      // 字幕对象
+      var subtitle = {
+        time: time,
+        text: text
+      };
+      subtitles.push(subtitle);
+    }
+  }
+  return subtitles;
+}
+
+function toSeconds(t) {
+  var s = 0.0;
+
+  if (t) {
+    var p = t.split(':');
+    for (i = 0; i < p.length; i++) {
+      s = s * 60 + parseFloat(p[i].replace(',', '.'));
+    }
+  }
+
+  return s;
+};
+// tableList 中的删除事件
+function deleteFile(i) {
+  if (g_playbacking) {
+    alertLayer("回放状态不能删除");
+    return;
+  }
+  var fileName = $("#fileName" + i).text();
+  console.log('删除', fileName)
+  CRVideo_RemoveFromFileMgr(fileName);
+  CRVideo_RemoveFromFileMgr(fileName + '.srt'); //一起删除打点文件
+
+  //如果最近录制的文件被删除了
+  if (g_record == fileName) {
+    g_record = null;
+  }
+  if ($("#list_item" + i).length > 0) {
+    $("#list_item" + i).remove();
+  }
+}
+
+function uploadFile(i) {
+  //降低'文件管理'弹层的层级到full_page(111)下面
+  if ($("#list_container").css("display") == "block") {
+    $("#list_container").css({
+      "z-index": 110
+    });
+  }
+  var fileName = $("#fileName" + i).text();
+  upload(fileName);
+}
+</script>
+</body>
+</html>

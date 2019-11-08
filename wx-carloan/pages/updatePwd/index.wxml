@@ -1,0 +1,11 @@
+<!--pages/updatePwd/index.wxml-->
+<view class="contentBox">
+  <input placeholder="请输入原密码" password='{{ oldpwdtype }}' class='certificationInput' maxlength="16" placeholder-class="placlass" auto-focus  bindinput="checkOldPWD"/>
+  <span class="toggleEye Oldpwd {{eye1== true ?'openeye':'closeeye'}}"  bindtap="toggleEyeOld" ></span>
+  <input placeholder="请输入新密码" password='{{ newpwdtype }}' class='certificationInput' maxlength="16" placeholder-class="placlass" bindinput="checkNewPWD"  />
+  <span class="toggleEye Newpwd {{eye2== true ?'openeye':'closeeye'}}" bindtap="toggleEyeNew" ></span>
+  <button  size="{{warnSize}}" class='AClinkBtn'  bindtap="updatePwd"  > 提交 </button>
+  <button  size="{{warnSize}}" class='NonelinkBtn'  bindtap="forgetPwd"  > 忘记密码 </button>  
+ 
+  
+</view>

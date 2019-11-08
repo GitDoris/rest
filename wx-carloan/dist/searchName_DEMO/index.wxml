@@ -1,0 +1,4 @@
+<!--dist/searchName_DEMO/index.wxml-->
+
+<input placeholder="输入姓名查询" bindinput="bindButtonTap" auto-focus></input>
+<button bindtap="searchName">查询</button>

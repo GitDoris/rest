@@ -1,0 +1,64 @@
+<!--pages/videoInfo/index.wxml-->
+<view>
+  <import src="../newCreatTitle/index.wxml"/>
+  <template is="newCreatTitle" data="{{...videoInfo}}" />
+  <view class='tab-title'>
+    <scroll-view scroll-x="true" class="tab-h" >
+      <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">必要材料</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">相关材料</view>
+    </scroll-view>
+    <swiper  class="tab-content" style='height:{{scrollHeight}}' current="{{currentTab}}" duration="300" bindchange="switchTab">
+      <swiper-item class="tab-swipter-item">
+        <scroll-view scroll-y class='scrollHeight' style='height:{{scrollHeight}}'>
+          <view class='tab-wrap' wx:for="{{necessaryInfo}}" wx:for-item="items"  wx:key="id">
+            <view class='greyBackground'>
+              <view wx:if="{{items.secondText}}">
+                <view style='display: flex;'>
+                  <view style='width: 22%;margin-top: 14rpx;'>
+                    <text class='blackTitle'>{{items.bigText}}</text>
+                  </view>
+                  <view style='margin: 12rpx;'>
+                    <view class='greyTitle'>{{items.smallText}}</view>
+                    <view class='greyTitle'>{{items.secondText}}</view>
+                  </view>
+                </view>
+              </view>
+              <view wx:else>
+                <view style='padding:4rpx 0 12rpx;'>
+                  <text class='blackTitle'>{{items.bigText}}</text>
+                  <text class='greyTitle'>{{items.smallText}}</text>
+                </view>
+              </view>
+
+              <!-- <text class='greyTitle'>{{items.smallText}}</text> -->
+            </view>
+            <view class='whiteBackground'>
+              <view class="haveImage" wx:for="{{items.imageItems}}" wx:key="index">
+                <image class='deleteStyle' data-index="{{items.id}}" data-indexImage="{{index}}" data-tabName="necessaryInfoTab" catchtap="deleteImage" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/delete.png'></image>
+                <image class="showImage" data-index="{{items.id}}" data-tabName="necessaryInfoTab" src='{{item}}' bindtap="previewImg"></image>
+              </view>
+              <image class='addImageStyle' data-index="{{items.id}}" data-tabName="necessaryInfoTab" bindtap="getImage" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/addImage.png'></image>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item class="tab-swipter-item">
+        <scroll-view scroll-y class='scrollHeight' style='height:{{scrollHeight}}'>
+          <view class='tab-wrap' wx:for="{{correlationInfo}}" wx:for-item="items" wx:key="id">
+            <view class='greyBackground'>
+              <text class='blackTitle'>{{items.bigText}}</text>
+              <text class='greyTitle'>{{items.smallText}}</text>
+            </view>
+            <view class='whiteBackground'>
+              <view class="haveImage" wx:for="{{items.imageItems}}" wx:key="index">
+                <image class='deleteStyle' data-index="{{items.id}}" data-indexImage="{{index}}" data-tabName="correlationInfoTab" catchtap="deleteImage" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/delete.png'></image>
+                <image class="showImage" data-index="{{items.id}}" data-indexImage="{{index}}" data-tabName="correlationInfoTab" src='{{item}}' bindtap="previewImg"></image>
+              </view>
+              <image class='addImageStyle' data-index="{{items.id}}" data-tabName="correlationInfoTab" bindtap="getImage" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/addImage.png'></image>
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

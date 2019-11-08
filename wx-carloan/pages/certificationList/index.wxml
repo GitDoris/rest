@@ -1,0 +1,26 @@
+<!--pages/certificationList/index.wxml-->
+
+
+<view class="contentBox">
+  <view class='cerStateBox cerStateSucc'>
+    <div class='ACline'>
+      <div class="ACtitle">真实姓名</div>{{userName}}</div>
+    <div class='ACline'><span class="ACtitle">身份证号</span>{{idCard}}</div>
+    <div class='ACline'><span class="ACtitle">车架号</span>{{cardNumber}}</div>
+    <div class='ACline'><span class="ACtitle">认证时间</span>{{ACtime}}</div>
+    <div class='ACline'><span class="ACtitle">认证结果</span>{{ACresult}}</div>
+
+    <navigator url="/pages/acSttateList/index" class="ACLink">
+      <image style="width: 34rpx; height: 34rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/index_pic408.png'></image>
+    </navigator>
+  </view>
+  <view class='cerStateBox cerStateError mt25'>
+    <div class='ACline'>
+      <div class="ACtitle">真实姓名</div>{{userName}}</div>
+    <div class='ACline'><span class="ACtitle">身份证号</span>{{idCard}}</div>
+    <div class='ACline'><span class="ACtitle">车架号</span>{{cardNumber}}</div>
+    <div class='ACline'><span class="ACtitle">认证时间</span>{{ACtime}}</div>
+    <div class='ACline'><span class="ACtitle">认证结果</span>{{ACresult}}</div>
+  </view>
+
+</view>

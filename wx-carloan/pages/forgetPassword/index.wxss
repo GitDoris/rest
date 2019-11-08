@@ -1,0 +1,13 @@
+/* pages/forgetPassword/index.wxss #F75858 */
+.sendSMS{
+  position: absolute;
+  top: 243rpx;
+  right: 42rpx;
+  
+  width: 120rpx;
+  height: 24rpx;
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #F75858;
+  z-index: 999999;
+}

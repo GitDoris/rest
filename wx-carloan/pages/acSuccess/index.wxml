@@ -1,0 +1,10 @@
+<!--pages/acSuccess/index.wxml-->
+<view class='contentBox'>
+  <div class="ACstatePic">
+    <image style="width: 500rpx; height: 350rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/indexpic11.png'></image>
+  </div>
+  <text class='ACstatetitle'>{{ACstatetitle}}</text>
+  <navigator url="/pages/vehicleEvaluation/index?title=navigate">
+    <button class="AClinkBtn">车辆评估</button>
+  </navigator>
+</view>

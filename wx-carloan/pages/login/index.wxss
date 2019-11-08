@@ -1,0 +1,24 @@
+/* pages/login/index.wxss */
+.loginBig{
+  height: 360rpx;
+  width: 750rpx;
+  display: inline-block;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 750rpx 360rpx;
+  background-image: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/login4.png");
+  text-align: center;
+  vertical-align: middle;
+}
+.loginImage{
+  display: inline-block;
+  height: 140rpx;
+  width: 140rpx;
+  margin:0 auto;
+  margin-top: 120rpx;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 140rpx 140rpx;
+  background-image: url("http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/login8.png");
+}

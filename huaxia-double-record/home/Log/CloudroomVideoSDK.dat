@@ -1,0 +1,334 @@
+[2019-05-21 17:15:28.500][INF][Login:10760:217]login success! termid:1, nikename:663DB62FC11243E610317AA142131095, pcid:31fd94e4-614f-4a29-9a2a-1c73ede36b56, svrTime:2019-05-21 17:15:29, wifi:0, locIP:192.168.8.98, mac:54:EE:75:CA:AF:74, pubIP:27.115.29.219, appLang:zh_CN, OSVer:10.0.17763(Microsoft  (build 17763), 64-bit), OSLang:0x804 Chinese (PRC), CPU:4(2304MHz, Intel(R) Core(TM) i5-6300HQ CPU @ 2.30GHz), Mem:16178(used:18%)
+[2019-05-21 17:15:28.500][DBG][Login:10760:218]GetAllDiskInfo:C:\: total:104259MB, free:57976MBE:\: total:476810MB, free:164729MB
+
+[2019-05-21 17:15:28.500][DBG][Login:10760:219]start handShake2Ctl, timeout:30000!
+[2019-05-21 17:15:28.501][DBG][LogReport:6312:220]save_logSegment(type=0, index=0, total=1, position=20)
+[2019-05-21 17:15:28.504][DBG][LogReport:6312:221]save_logSegment(type=1, index=0, total=2, position=311)
+[2019-05-21 17:15:28.504][DBG][LogReport:6312:222]slot_runReport: reportErrlog(index=0, total=2, pos=20)
+[2019-05-21 17:15:28.537][DBG][LogReport:6324:223]report log success! (cmd:reportLog)
+[2019-05-21 17:15:28.537][DBG][LogReport:6312:224]slot_runReport: reportDetail(index=1, total=2, pos=311)
+[2019-05-21 17:15:28.565][ERR][Main:4368:225]mod:CR_VIDEO, cmd:REQOPENVIDEO, msg(OutgoingAsync.cpp:714: Ice::UnknownException:unknown exception:exceptions.KeyError: 0)
+[2019-05-21 17:15:28.571][DBG][LogReport:6324:226]report log success! (cmd:reportDetail)
+[2019-05-21 17:15:28.575][DBG][Media:4368:227]getMediaInfoResp, operID:0
+[2019-05-21 17:15:28.575][DBG][ScreenShr:4368:228]getScreenShareInfoRsp, state:0, sharer:0, controller:0, proxy:
+[2019-05-21 17:15:28.575][DBG][RollCall:4368:229]Rsp: getRollCallInfo(bRollcall:0, rollcaller:0, passedTime:0)
+[2019-05-21 17:15:28.575][DBG][AnsQues:4368:230]Rsp: getQuesType success.
+[2019-05-21 17:15:28.575][DBG][AnsQues:4368:231]Rsp: getQuesList success.
+[2019-05-21 17:15:28.576][INF][Audio:4368:232]getRecordState:0
+[2019-05-21 17:15:28.586][DBG][ScreenShr:10760:233]getScreenShareInfo rsp, (state:0, sharer:0)->(state:0, sharer:0)
+[2019-05-21 17:15:28.587][DBG][MeetingSDK:10760:234]open video(BC120E6D0EA21837ABF5BA400823F1EA)
+[2019-05-21 17:15:28.587][DBG][Video:10760:235]open video task
+[2019-05-21 17:15:28.587][INF][MS:4368:236]MSClientI::AudioAllocRaw_async in
+[2019-05-21 17:15:28.587][INF][MS:4368:237]codecType:4, transType:0, ioMode:2
+[2019-05-21 17:15:28.587][INF][MS:4368:238]MSClientI::AudioAllocRaw_async out
+[2019-05-21 17:15:28.587][INF][MS:4276:239]set g_localSourceAudioMSID: 26547
+[2019-05-21 17:15:28.587][INF][MS:4276:240]AudioAllocRawAsync codecType:4, transType:0, ioMode:2, resp msid:26547
+[2019-05-21 17:15:28.588][DBG][Video:10760:241]setMultiCamera:1
+[2019-05-21 17:15:28.590][DBG][Video:10760:242]ss_openCamChanged(oldOpen:2, newOpen:2)
+[2019-05-21 17:15:28.592][DBG][Video:10760:243]setVideoAttr videoID:1, disabled:1,streamId:0, size:0x0, fps:-1, bps:-1, qp:-1--1; 
+[2019-05-21 17:15:28.592][DBG][Video:10760:244]deviceChanged(newCount:1)
+[2019-05-21 17:15:28.592][DBG][Video:10760:245]ss_openCamChanged(oldOpen:2, newOpen:1)
+[2019-05-21 17:15:28.592][DBG][Video:10760:246]setCurrentDev:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global
+[2019-05-21 17:15:28.596][DBG][MeetingSDK:10760:247]videoDefCamChanged, userID:BC120E6D0EA21837ABF5BA400823F1EA(camID:2)
+[2019-05-21 17:15:28.597][DBG][MeetingSDK:10760:248]cb_videoDevChanged, userID:BC120E6D0EA21837ABF5BA400823F1EA
+[2019-05-21 17:15:28.600][DBG][MeetingSDK:10760:249]open mic(id:BC120E6D0EA21837ABF5BA400823F1EA)
+[2019-05-21 17:15:28.600][INF][Audio:10760:250]askForMic(termid=1, state:2->4)
+[2019-05-21 17:15:28.600][DBG][MeetingSDK:10760:251]user audio status changed, userID:BC120E6D0EA21837ABF5BA400823F1EA, old:2, new:4
+[2019-05-21 17:15:28.601][DBG][Video:10760:252]LockVideoCfg: size:640x360,fps:15,maxbps:350000,qp:22-25
+[2019-05-21 17:15:28.602][DBG][Video:10760:253]setMediaCfg: size:640x360,fps:15,maxbps:350000,minQP:22,maxQP:25
+[2019-05-21 17:15:28.603][DBG][RateControl:10760:254]up start(Bps:102400)...
+[2019-05-21 17:15:28.604][DBG][MRecord:10760:255]get all record files(return 0)
+[2019-05-21 17:15:28.612][DBG][MeetingSDK:10760:0]initAllBoardList, count:0
+[2019-05-21 17:15:28.613][DBG][FileTranConf:10760:1]ShareFile start, companyID:, meetID:51422064
+[2019-05-21 17:15:28.613][DBG][FTAccess:10760:2]startAccessConector(FileTranConf)...
+[2019-05-21 17:15:28.613][DBG][FTAccess:10760:3]already started, cur state is:3
+[2019-05-21 17:15:28.613][DBG][FileTranConf:10760:4]NddMgr start(id:51422064)
+[2019-05-21 17:15:28.614][DBG][FileTranUser:10760:5]ShareFile start, companyID:, meetID:51422064
+[2019-05-21 17:15:28.614][DBG][FTAccess:10760:6]startAccessConector(FileTranUser)...
+[2019-05-21 17:15:28.614][DBG][FTAccess:10760:7]already started, cur state is:3
+[2019-05-21 17:15:28.614][DBG][FileTranUser:10760:8]NddMgr start(id:0)
+[2019-05-21 17:15:28.665][DBG][Video:10760:9]ss_updateStatus: 1, vs:2(Closed)->3(Open), opr:1
+[2019-05-21 17:15:28.665][DBG][MeetingSDK:10760:10]user video status changed, userID:BC120E6D0EA21837ABF5BA400823F1EA, old:2, new:3
+[2019-05-21 17:15:28.666][DBG][MeetingSDK:10760:11]open video(BC120E6D0EA21837ABF5BA400823F1EA)
+[2019-05-21 17:15:28.666][DBG][Video:10760:12]open video task
+[2019-05-21 17:15:28.668][DBG][Video:4368:13]notify Update AllCameraInfos, termid:1, infos:2;Doccamera;2;0;0;0
+
+[2019-05-21 17:15:28.669][DBG][Video:4368:14]notifySetOpenedCameraNumber: termid:1, Cams:2;2;
+[2019-05-21 17:15:28.718][DBG][Video:7492:15]slot_startCap! (camID:2, dev:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global)
+[2019-05-21 17:15:28.742][DBG][Video:7492:16]get IAMStreamConfig from:g_PIN_CATEGORY[0], g_MediaType[0]
+[2019-05-21 17:15:28.750][DBG][Video:7492:17]Get isSupportPTZ failed! (HRESULT: 0x80070490)
+[2019-05-21 17:15:28.764][DBG][Video:10760:18]ss_updateStatus: 1, vs:3(Open)->3(Open), opr:1
+[2019-05-21 17:15:28.778][INF][MS:4368:19]MSClientI::ModifyPeerAddr_async in
+[2019-05-21 17:15:28.778][INF][MS:4368:20]msid:26547, peerMSID:293900, peerIP:101.64.182.60, peerPort:3304
+[2019-05-21 17:15:28.778][INF][MS:4368:21]MSClientI::ModifyPeerAddr_async out
+[2019-05-21 17:15:28.783][DBG][Video:7492:22]Get isSupportPTZ failed! (HRESULT: 0x80070490)
+[2019-05-21 17:15:28.783][DBG][Video:7492:23]getVideoFrameByDstSize 640x360, fps:15
+[2019-05-21 17:15:28.783][DBG][Video:7492:24]Start Capture Frame(camID:2): vinfo:12; size:640x480; fps:15; fmt:1(YUY2{32595559-0000-0010-8000-00AA00389B71}); interlaced:0;, FrameInfoID:12, realfps:15 capSz:640x360
+[2019-05-21 17:15:28.826][INF][Audio:10760:25]Mic On_StatusUpdate(operId=1, id=1, state:4(Opening)->2(Closed))
+[2019-05-21 17:15:28.826][DBG][MeetingSDK:10760:26]user audio status changed, userID:BC120E6D0EA21837ABF5BA400823F1EA, old:4, new:2
+[2019-05-21 17:15:28.827][INF][Audio:10760:27]slot_delayTryOpenMyMic...
+[2019-05-21 17:15:28.827][INF][Audio:10760:28]local voiceEng nochange
+[2019-05-21 17:15:28.953][DBG][Video:7492:29]RenderStream:g_PIN_CATEGORY[0], g_MediaType[0]
+[2019-05-21 17:15:28.956][DBG][Video:7492:30]StreamConfig SetFormat, index:12
+[2019-05-21 17:15:28.956][DBG][Video:7492:31]MediaControl::Run...
+[2019-05-21 17:15:29.115][DBG][MeetingSDK:10760:32]CloudroomMediaUI(0xCC9C5B8)
+[2019-05-21 17:15:29.118][DBG][MeetingSDK:10760:33]CloudroomMediaUI(0xCC9C5B8).setToolBarSize(26)
+[2019-05-21 17:15:29.162][DBG][MeetingSDK:10760:34]CloudroomVideoUI(0x169C7438)
+[2019-05-21 17:15:29.175][DBG][MeetingSDK:10760:35]CloudroomVideoUI(0x169C7908)
+[2019-05-21 17:15:29.209][DBG][Video:7492:36]MediaControl(camID:2) running!
+[2019-05-21 17:15:29.221][DBG][Login:10760:37]reportNetState(10)
+[2019-05-21 17:15:29.239][INF][Video:10760:38]CPU usage: 0%->75%, app usage:5%
+[2019-05-21 17:15:29.327][INF][Audio:10760:39]askForMic(termid=1, state:2->4)
+[2019-05-21 17:15:29.327][DBG][MeetingSDK:10760:40]user audio status changed, userID:BC120E6D0EA21837ABF5BA400823F1EA, old:2, new:4
+[2019-05-21 17:15:29.396][DBG][Video:7492:41]Video StartFinished! camID:2
+[2019-05-21 17:15:29.396][DBG][MeetingSDK:10760:42]open video result:1, devID:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global
+[2019-05-21 17:15:29.469][INF][MS:4368:43]MSClientI::AudioAllocRaw_async in
+[2019-05-21 17:15:29.469][INF][MS:4368:44]codecType:4, transType:0, ioMode:3
+[2019-05-21 17:15:29.469][INF][MS:4368:45]MSClientI::AudioAllocRaw_async out
+[2019-05-21 17:15:29.469][INF][MS:4276:46]AudioAllocRawAsync codecType:4, transType:0, ioMode:3, resp msid:26548
+[2019-05-21 17:15:29.513][INF][MS:4368:47]MSClientI::ModifyPeerAddr_async in
+[2019-05-21 17:15:29.513][INF][MS:4368:48]msid:26548, peerMSID:293902, peerIP:101.64.182.60, peerPort:3304
+[2019-05-21 17:15:29.513][INF][MS:4368:49]MSClientI::ModifyPeerAddr_async out
+[2019-05-21 17:15:29.560][INF][Audio:10760:50]Mic On_StatusUpdate(operId=1, id=1, state:4(Opening)->3(Open))
+[2019-05-21 17:15:29.560][DBG][MeetingSDK:10760:51]user audio status changed, userID:BC120E6D0EA21837ABF5BA400823F1EA, old:4, new:3
+[2019-05-21 17:15:29.560][INF][Audio:10760:52]SetMicState(1)
+[2019-05-21 17:15:29.560][INF][Audio:10760:53]SetMicMute(0)
+[2019-05-21 17:15:29.560][DBG][Audio:10760:54]AudioPrint level:0x1000, CRVE_SetInputMute in
+
+[2019-05-21 17:15:29.561][DBG][Audio:10760:55]AudioPrint level:0x1000, CRVE_SetInputMute out
+
+[2019-05-21 17:15:29.595][INF][MS:4276:56]msid 26547 udp stream packet received from 101.64.182.60:3304
+[2019-05-21 17:15:29.595][DBG][MSCLient:4276:57]OnNetStateValue: -1->5
+[2019-05-21 17:15:29.595][DBG][MSCLient:4276:58]OnVocStateValue: -1->5
+[2019-05-21 17:15:29.613][DBG][FileTranUser:10760:59]begin_createUserSession(UserID:0)
+[2019-05-21 17:15:29.613][DBG][FileTranConf:10760:60]begin_createConfSession(meetid:51422064)
+[2019-05-21 17:15:29.664][WAR][FileTranUser:5740:61]begin_createUserSession failed! (NetDiskService::InvalidUserId)
+[2019-05-21 17:15:29.664][DBG][FileTranUser:10760:62]slot_createUserSessionEx!
+[2019-05-21 17:15:29.664][DBG][FileTranUser:10760:63]no need to retry, stop it!
+[2019-05-21 17:15:29.664][DBG][FileTranUser:10760:64]NddMgr Stop
+[2019-05-21 17:15:29.664][DBG][FileTranUser:10760:65]NddMgr disconnect
+[2019-05-21 17:15:29.764][DBG][FileTranConf:10760:66]slot_createConfSessionRsp(NDConfSession/3537AD0F-3956-447C-BC12-4BCCE6951294 -t -e 1.0:tcp -h 59.110.14.207 -p 53063 -t 60000)!
+[2019-05-21 17:15:29.764][DBG][MeetingSDK:10760:67]MeetingDisckConnected
+[2019-05-21 17:15:29.998][INF][MS:4276:68]set g_localSourceAudioMSID: 26548
+[2019-05-21 17:15:30.197][INF][MeetingSDK:10760:69]setVideo(BC120E6D0EA21837ABF5BA400823F1EA.2.1)
+[2019-05-21 17:15:30.198][INF][MeetingSDK:10760:70]setVisibleNickName(0)!
+[2019-05-21 17:15:30.199][INF][MeetingSDK:10760:71]setVideo(BC120E6D0EA21837ABF5BA400823F1EA.2.1)
+[2019-05-21 17:15:30.200][INF][MeetingSDK:10760:72]setVisibleNickName(0)!
+[2019-05-21 17:15:30.247][DBG][Video:10760:73]org batSubVideo: 1.2(663DB62FC11243E610317AA142131095).0;
+[2019-05-21 17:15:30.247][DBG][Video:10760:74]rslt batSubVideo: 1.2(663DB62FC11243E610317AA142131095).0;
+[2019-05-21 17:15:30.247][DBG][Video:10760:75]finallly batSubVideo: 1.2(663DB62FC11243E610317AA142131095):0;
+[2019-05-21 17:15:30.309][DBG][VFilter:7492:76][Cam2]filterStr:hqdn3d=5)
+
+[2019-05-21 17:15:30.480][INF][MS:4276:77]msid 26548 udp stream packet received from 101.64.182.60:3304
+[2019-05-21 17:15:32.239][INF][Video:10760:78]CPU usage: 81%->94%, app usage:2%
+[2019-05-21 17:15:34.238][INF][Video:10760:79]CPU usage: 100%->89%, app usage:4%
+[2019-05-21 17:15:34.325][WAR][Video:7492:80]No input data count:1! (hr:0x8000000a, camID:2)
+[2019-05-21 17:15:34.481][INF][MS:4368:81]MSClientI::Free_async in
+[2019-05-21 17:15:34.481][INF][MS:4368:82]msid:26547
+[2019-05-21 17:15:34.481][INF][MS:4368:83]MSClientI::Free_async out
+[2019-05-21 17:15:34.481][INF][MS:4276:84]msid 26547 sendSeq:0, recvSeq:259, singleLost:0, continLost2Cnt:0, continLost5Cnt:0, continLost10Cnt:0, continLostPkt:0
+[2019-05-21 17:15:35.150][DBG][Audio:10760:85]On_UpdateVoiceEnergy: 1:0->3;
+[2019-05-21 17:15:35.239][INF][Video:10760:86]CPU usage: 89%->95%, app usage:2%
+[2019-05-21 17:15:37.152][DBG][Audio:10760:87]On_UpdateVoiceEnergy: 1:0->0;
+[2019-05-21 17:15:37.238][INF][Video:10760:88]CPU usage: 90%->83%, app usage:3%
+[2019-05-21 17:15:37.787][DBG][Login:10760:89]handShake2Access...
+[2019-05-21 17:15:37.799][DBG][Login:10760:90]handShake2Access success! (delay:0)
+[2019-05-21 17:15:38.012][DBG][Video:10760:91]org batSubVideo: 1.2(663DB62FC11243E610317AA142131095).0;
+[2019-05-21 17:15:38.012][DBG][Video:10760:92]rslt batSubVideo: 1.2(663DB62FC11243E610317AA142131095).0;
+[2019-05-21 17:15:38.012][DBG][Video:10760:93]finallly batSubVideo: 1.2(663DB62FC11243E610317AA142131095):0;
+[2019-05-21 17:15:39.239][INF][Video:10760:94]CPU usage: 76%->48%, app usage:4%
+[2019-05-21 17:15:41.690][DBG][MeetingSDK:10760:95]CloudroomVideoSDK::uninit...
+[2019-05-21 17:15:41.690][DBG][MeetingSDK:10760:96]CloudroomMeetingSDK uninit...
+[2019-05-21 17:15:41.690][DBG][MeetingSDK:10760:97]CloudroomMeetingSDK slot_unInit...
+[2019-05-21 17:15:41.690][DBG][Main:10760:98]sdk uninit...
+[2019-05-21 17:15:41.691][DBG][Main:10760:99]UnitAllModels...
+[2019-05-21 17:15:41.691][DBG][Main:10760:100]unInit  model:CR_BROADCAST
+[2019-05-21 17:15:41.691][DBG][Main:10760:101]unInit  model:CR_RECORD
+[2019-05-21 17:15:41.691][DBG][Main:10760:102]unInit  model:CR_NRTCOMM
+[2019-05-21 17:15:41.691][DBG][Main:10760:103]unInit  model:CR_IM
+[2019-05-21 17:15:41.691][DBG][Main:10760:104]unInit  model:CR_ROLLCALL
+[2019-05-21 17:15:41.691][DBG][Main:10760:105]unInit  model:CR_NOTICE
+[2019-05-21 17:15:41.691][DBG][Main:10760:106]unInit  model:CR_SCREEN_SHARE
+[2019-05-21 17:15:41.691][DBG][Main:10760:107]unInit  model:CR_WHITE_BOARD
+[2019-05-21 17:15:41.691][DBG][Main:10760:108]unInit  model:CR_FILE_TRANS_NOTIFY
+[2019-05-21 17:15:41.691][DBG][Main:10760:109]unInit  model:CR_MEDIA
+[2019-05-21 17:15:41.691][DBG][Media:10760:110]MediaMgr destory...
+[2019-05-21 17:15:41.691][INF][MS:10760:111]MSCSetFilmCallback in
+[2019-05-21 17:15:41.691][INF][MS:10760:112]pHandler?null: no
+[2019-05-21 17:15:41.691][INF][MS:10760:113]MSCSetFilmCallback out
+[2019-05-21 17:15:41.692][DBG][Media:10760:114]stopMediaFileDecode...
+[2019-05-21 17:15:41.692][DBG][Media:10760:115]stopMediaFileDecode finished!
+[2019-05-21 17:15:41.692][DBG][Main:10760:116]unInit  model:CR_AUDIO
+[2019-05-21 17:15:41.692][DBG][Audio:10760:117]stopVoice....
+[2019-05-21 17:15:41.692][DBG][Audio:10760:118]AudioPrint level:0x1000, CRVE_StopReceive in
+
+[2019-05-21 17:15:41.692][DBG][Audio:10760:119]AudioPrint level:0x1000, CRVE_StopReceive out
+
+[2019-05-21 17:15:41.692][DBG][Audio:10760:120]AudioPrint level:0x1000, CRVE_StopPlayout in
+
+[2019-05-21 17:15:41.722][DBG][Audio:10760:121]AudioPrint level:0x1000, CRVE_StopPlayout out
+
+[2019-05-21 17:15:41.722][DBG][Audio:10760:122]AudioPrint level:0x1000, CRVE_StopSend in
+
+[2019-05-21 17:15:41.742][DBG][Audio:10760:123]AudioPrint level:0x1000, CRVE_StopSend out
+
+[2019-05-21 17:15:41.742][DBG][Main:10760:124]unInit  model:CR_VIDEO
+[2019-05-21 17:15:41.742][INF][MS:10760:125]MSCSetVideoCallback in
+[2019-05-21 17:15:41.742][INF][MS:10760:126]pHandler?null: no
+[2019-05-21 17:15:41.742][INF][MS:10760:127]MSCSetVideoCallback out
+[2019-05-21 17:15:41.742][DBG][Video:10760:128]DeleteAllDecoder...
+[2019-05-21 17:15:41.742][DBG][Video:10760:129]DeleteAllDecoder... quitingDecoders size:0
+[2019-05-21 17:15:41.742][DBG][Video:10760:130]DeleteAllDecoder...finished
+[2019-05-21 17:15:41.742][DBG][Video:10760:131]Stop all cameras...
+[2019-05-21 17:15:41.742][DBG][Video:10760:132]KCapTask stopCap
+[2019-05-21 17:15:41.742][DBG][Video:7492:133]slot_stopCap! (camID:2, dev:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global)
+[2019-05-21 17:15:41.742][DBG][Video:7492:134]inner_stopCap(camID:2)
+[2019-05-21 17:15:41.742][DBG][Video:7492:135]StopCap(camID:2)...
+[2019-05-21 17:15:41.742][DBG][Video:7492:136]StopCap(camID:2)...1
+[2019-05-21 17:15:41.993][DBG][Video:7492:137]StopCap(camID:2)...2
+[2019-05-21 17:15:41.993][DBG][Video:7492:138]StopCap(camID:2)...3
+[2019-05-21 17:15:41.993][DBG][Video:7492:139]StopCap(camID:2)...4
+[2019-05-21 17:15:41.993][DBG][Video:7492:140]StopCap(camID:2)...5
+[2019-05-21 17:15:41.993][DBG][Video:7492:141]StopCap(camID:2)...6
+[2019-05-21 17:15:41.993][DBG][Video:7492:142]StopCap(camID:2)...7
+[2019-05-21 17:15:41.993][DBG][Video:7492:143]StopCap(camID:2)...8
+[2019-05-21 17:15:42.003][DBG][Video:7492:144]StopCap(camID:2)...end
+[2019-05-21 17:15:42.003][DBG][Video:7492:145]KVideoInputDevice_DS(camID:2) close...
+[2019-05-21 17:15:42.003][DBG][Video:7492:146]KVideoInputDevice_DS(camID:2) closed!
+[2019-05-21 17:15:42.012][DBG][Video:7492:147]slot_stopCap finished! (camID:2, dev:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global)
+[2019-05-21 17:15:42.012][DBG][Video:7492:148]KCapTask ThreadUninit
+[2019-05-21 17:15:42.012][DBG][Video:10760:149]KCapTask destroy! (camID:2, dev:\\?\usb#vid_2b19&pid_0200&mi_02#6&38bdb212&1&0002#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global)
+[2019-05-21 17:15:42.012][DBG][Main:10760:150]unInit  model:CR_BRIDGE
+[2019-05-21 17:15:42.012][DBG][Main:10760:151]unInit  model:CR_SYNC
+[2019-05-21 17:15:42.012][DBG][Main:10760:152]unInit  model:CR_MSClient
+[2019-05-21 17:15:42.013][INF][MS:10760:153]MSCStop in
+[2019-05-21 17:15:42.013][INF][MS:4276:154]Qos DisConnect.
+[2019-05-21 17:15:42.013][INF][MS:4276:155]clear free msid:26548
+[2019-05-21 17:15:42.013][INF][MS:4276:156]msid 26548 sendSeq:584, recvSeq:629, singleLost:2, continLost2Cnt:0, continLost5Cnt:0, continLost10Cnt:0, continLostPkt:0
+[2019-05-21 17:15:42.013][INF][MS:4276:157]MainService::Reset in
+[2019-05-21 17:15:42.013][INF][MS:4276:158]MainService::Reset out
+[2019-05-21 17:15:42.013][INF][MS:10760:159]MSCStop out
+[2019-05-21 17:15:42.013][DBG][Main:10760:160]unInit  model:CR_INVITE
+[2019-05-21 17:15:42.013][DBG][Main:10760:161]unInit  model:CR_PSTNCTL
+[2019-05-21 17:15:42.013][DBG][Main:10760:162]unInit  model:CR_MEMBER
+[2019-05-21 17:15:42.013][DBG][Main:10760:163]unInit  model:CR_LOGIN
+[2019-05-21 17:15:42.013][DBG][Login:10760:164]AccessConnection destroy!
+[2019-05-21 17:15:42.013][DBG][Login:10760:165]access[1013] destroy callbackAdapter...
+[2019-05-21 17:15:42.013][DBG][Login:10760:166]access[1013] disconnect!
+[2019-05-21 17:15:42.024][DBG][ICE:10760:167]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49849remote address = 127.0.0.1:49810
+[2019-05-21 17:15:42.024][DBG][Login:10760:168]stop handshake to access!
+[2019-05-21 17:15:42.024][INF][SIG:9036:169]session(127.0.0.1:49849) close by client.
+[2019-05-21 17:15:42.024][INF][SIG:9036:170]session(127.0.0.1:49849) send close msg.
+[2019-05-21 17:15:42.024][INF][SIG:9036:171]session(127.0.0.1:49849) destroy
+[2019-05-21 17:15:42.024][DBG][Main:10760:172]destory  model:CR_BROADCAST
+[2019-05-21 17:15:42.024][DBG][Main:10760:173]destory  model:CR_RECORD
+[2019-05-21 17:15:42.024][DBG][Main:10760:174]destory  model:CR_NRTCOMM
+[2019-05-21 17:15:42.024][DBG][Main:10760:175]destory  model:CR_IM
+[2019-05-21 17:15:42.024][DBG][Main:10760:176]destory  model:CR_ROLLCALL
+[2019-05-21 17:15:42.024][DBG][Main:10760:177]destory  model:CR_NOTICE
+[2019-05-21 17:15:42.024][DBG][Main:10760:178]destory  model:CR_SCREEN_SHARE
+[2019-05-21 17:15:42.024][DBG][Main:10760:179]destory  model:CR_WHITE_BOARD
+[2019-05-21 17:15:42.024][DBG][Main:10760:180]destory  model:CR_FILE_TRANS_NOTIFY
+[2019-05-21 17:15:42.024][DBG][Main:10760:181]destory  model:CR_MEDIA
+[2019-05-21 17:15:42.024][DBG][Main:10760:182]destory  model:CR_AUDIO
+[2019-05-21 17:15:42.024][INF][MS:10760:183]MSCSetAudioCallback in
+[2019-05-21 17:15:42.024][INF][MS:10760:184]pHandler?null: no
+[2019-05-21 17:15:42.024][INF][MS:10760:185]MSCSetAudioCallback out
+[2019-05-21 17:15:42.024][DBG][Main:10760:186]destory  model:CR_VIDEO
+[2019-05-21 17:15:42.024][DBG][Main:10760:187]destory  model:CR_BRIDGE
+[2019-05-21 17:15:42.024][DBG][Main:10760:188]destory  model:CR_SYNC
+[2019-05-21 17:15:42.024][DBG][Main:10760:189]destory  model:CR_MSClient
+[2019-05-21 17:15:42.024][INF][MS:10760:190]MSCStop in
+[2019-05-21 17:15:42.024][INF][MS:10760:191]MSCStop out
+[2019-05-21 17:15:42.024][INF][MS:10760:192]MSCClean in
+[2019-05-21 17:15:42.123][INF][MS:4276:193]transsock closed.
+[2019-05-21 17:15:42.123][INF][MS:4276:194]Qos DisConnect.
+[2019-05-21 17:15:42.126][INF][MS:10760:195]MSCClean out
+[2019-05-21 17:15:42.126][DBG][Main:10760:196]destory  model:CR_INVITE
+[2019-05-21 17:15:42.126][DBG][Main:10760:197]destory  model:CR_PSTNCTL
+[2019-05-21 17:15:42.126][DBG][Main:10760:198]destory  model:CR_MEMBER
+[2019-05-21 17:15:42.126][DBG][Main:10760:199]destory  model:CR_LOGIN
+[2019-05-21 17:15:42.126][DBG][Main:10760:200]UnitAllModels end!
+[2019-05-21 17:15:42.126][DBG][Audio:10760:201]UninitVoiceEng...
+[2019-05-21 17:15:42.126][DBG][Audio:10760:202]AudioPrint level:0x1000, CRVE_DeleteChannel in
+
+[2019-05-21 17:15:42.126][DBG][Audio:10760:203]AudioPrint level:0x1000, CRVE_DeleteChannel out
+
+[2019-05-21 17:15:42.126][DBG][Audio:10760:204]AudioPrint level:0x1000, CRVE_UnInit in
+
+[2019-05-21 17:15:42.126][DBG][Audio:10760:205]AudioPrint level:0x1000, CRVE_UnInit out
+
+[2019-05-21 17:15:42.126][DBG][Audio:10760:206]UninitVoiceEng...finished
+[2019-05-21 17:15:42.126][DBG][ICE:10760:207]shutdown communicator for MeetingSDK
+[2019-05-21 17:15:42.126][DBG][ICE:10760:208]destroy communicator for MeetingSDK...
+[2019-05-21 17:15:42.126][DBG][ICE:10760:209]reset communicator to null...
+[2019-05-21 17:15:42.126][DBG][ICE:10760:210]uninit communicator for MeetingSDK...end
+[2019-05-21 17:15:42.126][DBG][FileTran:10760:211]FileTransferMgrLib::uninit
+[2019-05-21 17:15:42.126][DBG][FileTranConf:10760:212]NddMgr Stop
+[2019-05-21 17:15:42.126][DBG][FileTranConf:10760:213]NddMgr disconnect
+[2019-05-21 17:15:42.126][DBG][ICE:10760:214]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49814remote address = 127.0.0.1:49809
+[2019-05-21 17:15:42.127][DBG][FTAccess:10760:215]stopAccessConctor(FileTranConf)...
+[2019-05-21 17:15:42.127][DBG][FileTranCom:10760:216]NddMgr Stop
+[2019-05-21 17:15:42.127][DBG][FileTranCom:10760:217]NddMgr disconnect
+[2019-05-21 17:15:42.127][INF][SIG:9036:218]session(127.0.0.1:49814) close by client.
+[2019-05-21 17:15:42.127][INF][SIG:9036:219]session(127.0.0.1:49814) send close msg.
+[2019-05-21 17:15:42.127][DBG][ICE:10760:220]category=Network, msg=trying to establish tcp connection to 127.0.0.1:49809
+[2019-05-21 17:15:42.127][INF][SIG:9036:221]session(127.0.0.1:49814) destroy
+[2019-05-21 17:15:42.127][DBG][FTAccess:10760:222]stopAccessConctor(FileTranCom)...
+[2019-05-21 17:15:42.127][DBG][FileTranUser:10760:223]NddMgr Stop
+[2019-05-21 17:15:42.127][DBG][FileTranUser:10760:224]NddMgr disconnect
+[2019-05-21 17:15:42.127][DBG][FTAccess:10760:225]stopAccessConctor(FileTranUser)...
+[2019-05-21 17:15:42.127][DBG][FTAccess:10760:226]innerStop...
+[2019-05-21 17:15:42.127][DBG][FTAccess:10760:227]access[0] disconnect!
+[2019-05-21 17:15:42.127][DBG][HttpFileMgr:10760:228]HttpTransferMgrLib stop...
+[2019-05-21 17:15:42.127][DBG][HttpFileMgr:10760:229]HttpTransferMgrLib clear...
+[2019-05-21 17:15:42.127][DBG][ICE:10760:230]shutdown communicator for fileTransferLib
+[2019-05-21 17:15:42.127][DBG][ICE:10760:231]destroy communicator for fileTransferLib...
+[2019-05-21 17:15:42.127][DBG][ICE:5740:232]category=Network, msg=tcp connection establishedlocal address = 127.0.0.1:49917remote address = 127.0.0.1:49809
+[2019-05-21 17:15:42.127][DBG][ICE:10760:233]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49917remote address = 127.0.0.1:49809
+[2019-05-21 17:15:42.127][INF][SIG:9036:234]proxy channel(127.0.0.1:49809--222.186.61.92:2063) accept new session 127.0.0.1:49917
+[2019-05-21 17:15:42.127][INF][SIG:9036:235]session(127.0.0.1:49917) connect to 222.186.61.92:2728
+[2019-05-21 17:15:42.127][INF][SIG:9036:236]open tcp ipv4 connection, localAddr 0.0.0.0:49918, remoteAddr 222.186.61.92:2728
+[2019-05-21 17:15:42.127][INF][SIG:9036:237]session(127.0.0.1:49917) close by client.
+[2019-05-21 17:15:42.127][INF][SIG:9036:238]session(127.0.0.1:49917) destroy
+[2019-05-21 17:15:42.142][INF][SIG:9036:239]session(127.0.0.1:49820) recv close msg, reason:connection closed by server 60.190.243.250:2063, tcp ipv4 socket receive error(2):End of file! localAddr 60.190.243.250:43506
+[2019-05-21 17:15:42.142][INF][SIG:9036:240]session(127.0.0.1:49820) destroy
+[2019-05-21 17:15:42.142][DBG][ICE:5740:241]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49820remote address = 127.0.0.1:49807
+[2019-05-21 17:15:42.148][INF][SIG:9036:242]session(127.0.0.1:49815) recv close msg, reason:connection closed by server 47.104.128.57:2063, tcp ipv4 socket receive error(2):End of file! localAddr 172.31.232.87:35300
+[2019-05-21 17:15:42.148][INF][SIG:9036:243]session(127.0.0.1:49815) destroy
+[2019-05-21 17:15:42.149][DBG][ICE:5740:244]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49815remote address = 127.0.0.1:49805
+[2019-05-21 17:15:42.153][INF][SIG:9036:245]session(127.0.0.1:49812) recv close msg, reason:connection closed by server 112.29.177.139:2063, tcp ipv4 socket receive error(2):End of file! localAddr 112.29.177.139:43294
+[2019-05-21 17:15:42.153][INF][SIG:9036:246]session(127.0.0.1:49812) destroy
+[2019-05-21 17:15:42.153][DBG][ICE:5740:247]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49812remote address = 127.0.0.1:49804
+[2019-05-21 17:15:42.159][INF][SIG:9036:248]session(127.0.0.1:49818) recv close msg, reason:connection closed by server 47.94.21.6:2063, tcp ipv4 socket receive error(2):End of file! localAddr 172.17.58.205:35012
+[2019-05-21 17:15:42.159][INF][SIG:9036:249]session(127.0.0.1:49818) destroy
+[2019-05-21 17:15:42.160][DBG][ICE:5740:250]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49818remote address = 127.0.0.1:49808
+[2019-05-21 17:15:42.160][INF][SIG:9036:251]session(127.0.0.1:49817) recv close msg, reason:connection closed by server 47.93.51.188:2063, tcp ipv4 socket receive error(2):End of file! localAddr 172.17.58.198:41354
+[2019-05-21 17:15:42.160][INF][SIG:9036:252]session(127.0.0.1:49817) destroy
+[2019-05-21 17:15:42.160][DBG][ICE:5740:253]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49817remote address = 127.0.0.1:49806
+[2019-05-21 17:15:42.161][DBG][ICE:10760:254]reset communicator to null...
+[2019-05-21 17:15:42.161][DBG][ICE:10760:255]uninit communicator for fileTransferLib...end
+[2019-05-21 17:15:42.161][DBG][MeetMgr:10760:0]LoginMgr unInit...
+[2019-05-21 17:15:42.161][DBG][MeetMgr:10760:1]begin uninit.
+[2019-05-21 17:15:42.161][DBG][ICE:10760:2]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49798remote address = 127.0.0.1:49797
+[2019-05-21 17:15:42.161][DBG][ICE:10760:3]shutdown communicator for MeetingCallAPI
+[2019-05-21 17:15:42.161][INF][SIG:9036:4]session(127.0.0.1:49798) close by client.
+[2019-05-21 17:15:42.161][DBG][ICE:10760:5]destroy communicator for MeetingCallAPI...
+[2019-05-21 17:15:42.161][INF][SIG:9036:6]session(127.0.0.1:49798) send close msg.
+[2019-05-21 17:15:42.161][INF][SIG:9036:7]session(127.0.0.1:49798) destroy
+[2019-05-21 17:15:42.162][DBG][ICE:10760:8]reset communicator to null...
+[2019-05-21 17:15:42.162][DBG][ICE:10760:9]uninit communicator for MeetingCallAPI...end
+[2019-05-21 17:15:42.162][INF][SIG:10760:10]SIGClientStop in
+[2019-05-21 17:15:42.162][INF][SIG:10760:11]MainService::Reset in
+[2019-05-21 17:15:42.162][INF][SIG:10760:12]MainService::Reset out
+[2019-05-21 17:15:42.162][INF][SIG:10760:13]SIGClientStop out
+[2019-05-21 17:15:42.162][INF][SIG:10760:14]SIGClientClean in
+[2019-05-21 17:15:42.162][DBG][ICE:6324:15]category=Network, msg=closing tcp connectionlocal address = 127.0.0.1:49801remote address = 127.0.0.1:49800
+[2019-05-21 17:15:42.164][INF][SIG:10760:16]SIGClientClean out
+[2019-05-21 17:15:42.164][DBG][httpLink:10760:17]cancel all http cmd!
+[2019-05-21 17:15:42.164][DBG][MeetMgr:10760:18]LoginMgr unInit...end
+[2019-05-21 17:15:42.164][DBG][ICE:10760:19]shutdown communicator for logReport
+[2019-05-21 17:15:42.164][DBG][ICE:10760:20]destroy communicator for logReport...
+[2019-05-21 17:15:42.165][DBG][ICE:10760:21]reset communicator to null...
+[2019-05-21 17:15:42.165][DBG][ICE:10760:22]uninit communicator for logReport...end
+[2019-05-21 17:15:42.165][DBG][RateControl:10760:23]up stop...

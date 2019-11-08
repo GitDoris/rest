@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/login/index",
+    
+    "dist/searchName_DEMO/index",
+    "pages/forgetPassword/index",
+    "pages/index/index",
+    "pages/vehicleEvaluation/index",
+    "pages/clientInformation/index",
+    "pages/certification/index",
+    "pages/certificationList/index",
+    "pages/category/category",
+    "pages/logs/logs",
+    "pages/list/index",
+    "template/tabBar",
+    "pages/newCreat/index",
+    "pages/newCreatTitle/index",
+    "pages/videoInfo/index",
+    "pages/acNone/index",
+    "pages/acOnRoad/index",
+    "pages/acPhoneError/index",
+    "pages/acPhoneSuccess/index",
+    "pages/acUpdatePWD/index",
+    "pages/acSuccess/index",
+    "pages/acSttateList/index",
+    "pages/personCenter/index",
+    "pages/updatePwd/index",
+    "pages/myMsg/index",
+    "pages/applyForInfo/index",
+    "pages/carInfo/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "white",
+    "navigationBarTitleText": "车贷APP",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "pages/assets/images/index_pic12.png",
+        "selectedIconPath": "pages/assets/images/index_pic13.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "pages/assets/images/index_pic11.png",
+        "selectedIconPath": "pages/assets/images/index_pic10.png",
+        "text": "进件订单"
+      },
+      {
+        "pagePath": "pages/personCenter/index",
+        "iconPath": "pages/assets/images/index_pic14.png",
+        "selectedIconPath": "pages/assets/images/index_pic15.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

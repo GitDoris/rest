@@ -1,0 +1,10 @@
+<!--pages/acSttateList/index.wxml-->
+<navigator url="/pages/acSuccess/index" class="ACLink">申请认证成功</navigator>
+<navigator url="/pages/acOnRoad/index">该客户有在途件</navigator>
+<navigator url="/pages/acNone/index">当前无相关订单</navigator>
+<navigator url="/pages/acPhoneSuccess/index">手机实名认证通过</navigator>
+<navigator url="/pages/acPhoneError/index">手机实名认证失败</navigator>
+<navigator url="/pages/acUpdatePWD/index">修改密码成功</navigator>
+
+
+ 

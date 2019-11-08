@@ -1,0 +1,129 @@
+<!--index.wxml-->
+<view class="containers">
+  <!-- <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view> -->
+  <view class='DateTimeInfo'>
+    <span class="dti1">{{day}}</span>
+    <span class="dti2">{{gday}}</span>
+    <span class="dti3">{{monthyear}}</span>
+    <span class="dti4" open-type="getUserInfo" bindgetuserinfo="getUserInfo">欢迎回来,<navigator url="/pages/personCenter/index"
+    style="display:inline;"  plain='true'>{{userInfo.nickName}}</navigator>
+    </span>
+  </view>
+  <view class='swiperBox'>
+    <swiper indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" width="355rpx" height="150rpx" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class='carAccessBox'>
+    <navigator url="/pages/vehicleEvaluation/index?title=navigate" style='background-image: url(http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic27.png);' class="carAccBtn" plain='true'>
+      <image style="width: 40rpx; height: 36rpx;" src='https://github.com/zhoupeihuang/markdownPic/blob/master/images/index_pic19.png?raw=true'></image>
+      车辆评估
+    </navigator>
+    <navigator url="/pages/certification/index" style='background-image: url(http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic26.png);' class="authBtn" plain='true'>
+      <image style="width: 34rpx; height: 36rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic20.png'></image>
+      申请认证 
+    </navigator>
+  </view>
+  <view class='noticeBox'>
+    <image style="width: 48rpx; height: 48rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic17.png'></image>
+    <text>{{notice}}</text>
+  </view>
+  <view class='createOrder'>
+  <navigator url="/pages/newCreat/index" >
+    <image style="width: 238rpx; height: 176rpx;" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic29.png'></image>
+    <span class="cotitle">创建新订单</span>
+    <button style='background-image: url(http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/images/index_pic21.png);' class='creOrderBtn'>+ 新建</button>
+    </navigator>
+  </view>
+  <view class='productList'>
+    <view class="swiper-tab">
+      <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">长期产品</view>
+      <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">短期产品</view>
+    </view>
+    <swiper class='proSwiper' current="{{currentTab}}" duration="300" bindchange="swiperTab">
+      <swiper-item>
+        <view>
+          <ul class="productList">
+           <li wx:for="{{productLongList}}" wx:key="index">
+              <span class="proTitle">{{item.prodName}}</span>
+              <span class="proText">{{item.loanTermList+"期 融资金融范围："+(item.applyScopeStart/10000)+"-"+(item.applyScopeEnd /10000)+"万"}}</span>
+              <div  class="proType">
+                    <view wx:if="{{item.capitalChannel == 'BANK'}}">
+                      <span>银行</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'TRUST'}}">
+                      <span>信托</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'FUND'}}">
+                      <span>基金</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'P2P'}}">
+                      <span>P2P</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'OWN'}}">
+                      <span>自有</span>
+                    </view>
+                <!-- <span wx:for="{{item.proType}}" wx:key="index" >{{item}}</span> -->
+              </div>              
+           </li>
+          </ul>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view> <ul class="productList">
+           <li wx:for="{{productLongList}}" wx:key="index">
+              <span class="proTitle">{{item.prodName}}</span>
+               <span class="proText">{{item.loanTermList+"期 融资金融范围："+(item.applyScopeStart/10000)+"-"+(item.applyScopeEnd /10000)+"万"}}</span>
+              <div  class="proType">
+                     <view wx:if="{{item.capitalChannel == 'BANK'}}">
+                      <span>银行</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'TRUST'}}">
+                      <span>信托</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'FUND'}}">
+                      <span>基金</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'P2P'}}">
+                      <span>P2P</span>
+                    </view>
+                    <view wx:if="{{item.capitalChannel == 'OWN'}}">
+                      <span>自有</span>
+                    </view>
+                <!-- <span wx:for="{{item.proType}}" wx:key="index" >{{item}}</span> -->
+              </div>               
+           </li>
+          </ul></view>
+      </swiper-item>
+    </swiper>
+
+
+  </view>
+ <!-- <view class='tabBarBox'>
+    <import src="../../template/tabBar.wxml"/>
+  <template is="tabBar" data="{{tabBar:bindData.tabBar}}"/>  
+  </view> -->
+
+
+  <!-- <view class="usermotto">
+  <navigator url="/pages/list/index" > 
+    <text class="user-motto">{{motto}}</text>    </navigator>
+      <p class="ppline" wx:for="{{list}}" wx:key="index">
+      {{index}}-{{item.text}}
+      </p>
+    
+  </view> -->
+ 
+
+</view>

@@ -1,0 +1,574 @@
+<view class="container">
+  <!-- tab栏切换 -->
+  <view class="tabs">
+    <view class="item {{ currentTab==0?'active':'' }}" bindtap="tabsHandler" data-current="0">
+      <text>车辆信息</text>
+      <image wx:if='{{carInfoDone}}' src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/done.png"></image>
+      <image wx:else src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/tip.png"></image>
+    </view>
+    <view class="item {{ currentTab==1?'active':'' }}" bindtap="tabsHandler" data-current="1">
+      <text>时间信息</text>
+      <image wx:if='{{dataInfoDone}}' src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/done.png"></image>
+      <image wx:else src="http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/tip.png"></image>
+    </view>
+  </view>
+
+  <view class="swiper">
+    <swiper current="{{currentTab}}" bindchange="swiperTab">
+      <swiper-item>
+        <!-- input 列表 -->
+        <view class='inputList'>
+          <view>
+            <view class='left'>车架号
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class='input'>
+                <input class="uppercase" placeholder="请输入借款人17位车架号" bindinput="vinHandler" value='{{vin}}' />
+              </view>
+              <view class='btn'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_btn.png'></image>
+                <text catchtap='matchCarBrand'>匹配</text>
+              </view>
+            </view>
+          </view>
+          <view class='vehicleSeries' bindtap='modelShowHandler'>
+            <view class='left'>车型
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class="input {{ wrap ? 'twoLine' : ''}} {{ modelCheck ? 'darkcolor' : '' }}">
+                {{modelName}}
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left'>车牌号
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class='input'>
+                <input placeholder="请输入车牌号" value='{{plateNumber}}' bindinput="plateNumberHandler" type='text'/>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left'>过户次数
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class='input'>
+                <input placeholder="请输入过户次数" value='{{ transferCount }}' bindinput="transferCountHandler" type='number' />
+              </view>
+              <view class='meters'>
+                <text>次</text>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left long'>车牌归属地
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right' bindtap="addressShowHandler">
+              <view class="input  {{ regionCheck ? 'darkcolor' : '' }}">
+                {{region}}
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left'>车身颜色
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class="input  {{ carColourCheck ? 'darkcolor' : '' }}">
+                <picker bindchange="carColourHandler" value="{{carColour}}" range="{{carColourList}}" mode='selector' range-key='name'>
+                  <view class="picker">
+                    {{carColour}}
+                  </view>
+                </picker>
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left'>车辆保险
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class="input  {{ carInsuranceCheck ? 'darkcolor' : '' }}">
+                 <picker bindchange="carInsuranceHandler" value="{{carInsurance}}" range="{{carInsuranceList}}" mode='selector' range-key='name'>
+                  <view class="picker">
+                    {{carInsurance}}
+                  </view>
+                </picker>
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left long'>车辆评估方式
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class="input  {{ carAssessCheck ? 'darkcolor' : '' }}">
+                 <picker bindchange="carAssessHandler" value="{{carAssess}}" range="{{carAssessList}}" mode='selector' range-key='name'>
+                  <view class="picker">
+                    {{carAssess}}
+                  </view>
+                </picker>
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+            </view>
+          </view>
+          <view>
+            <view class='left long'>门店是否有评估师
+              <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+            </view>
+            <view class='right'>
+              <view class="input  {{ appraiserCheck ? 'darkcolor' : '' }}">
+                <picker bindchange="appraiserHandler" value="{{appraiser}}" range="{{appraiserList}}" mode='selector' range-key='name'>
+                  <view class="picker"> 
+                    {{appraiser}}
+                  </view>
+                </picker>
+              </view>
+              <view class='arrow'>
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+              </view>
+
+            </view>
+          </view>
+
+
+
+        </view>
+        <view class='error' wx:if='{{errorTip}}'><icon type="warn" size="15"/>{{errorTip}}</view>
+        <!-- 保存车辆信息按钮 -->
+        <view class="eval_btn {{ carInfoDisabled ? 'disabled' : '' }}" bindtap='saveCarInfo'>
+          保存
+        </view> 
+      </swiper-item>
+      <swiper-item>
+        <view class='inputList'>
+           <view>
+              <view class='left long'>
+                车辆出厂时间 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carLeaveDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carLeaveDate}}" bindchange="carLeaveDateHandler">
+                      <view class="picker">
+                        {{carLeaveDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+           <view>
+              <view class='left long'>
+                车辆初次登记时间 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carFirstRegisterDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carFirstRegisterDate}}" bindchange="carFirstRegisterDateHandler">
+                      <view class="picker">
+                        {{carFirstRegisterDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+           <view>
+              <view class='left long'>
+                首次上牌时间 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carLicenseDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carLicenseDate}}" bindchange="carLicenseDateHandler">
+                      <view class="picker">
+                        {{carLicenseDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+           <view>
+              <view class='left long'>
+                年检有效期 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carPeriodDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carPeriodDate}}" bindchange="carPeriodDateHandler">
+                      <view class="picker">
+                        {{carPeriodDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+           <view>
+              <view class='left long'>
+                交强险有效期 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carCompulsoryDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carCompulsoryDate}}" bindchange="carCompulsoryDateHandler">
+                      <view class="picker">
+                        {{carCompulsoryDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+           <view>
+              <view class='left long'>
+                商业险有效期 
+                <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_icon1.png'></image>
+              </view>
+              <view class='right'>
+                <view class="input  {{ carCommercialDateCheck ? 'darkcolor' : '' }}" >
+                   <picker mode="date" value="{{carCommercialDate}}" bindchange="carCommercialDateHandler">
+                      <view class="picker">
+                        {{carCommercialDate}}
+                      </view>
+                    </picker>
+                  </view>
+                  <view class='arrow'>
+                    <image style="" src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vehicle_arrow.png'></image>
+                  </view>
+                </view>
+            </view> 
+        </view>
+         <view class='error' wx:if='{{errorTip}}'><icon type="warn" size="15"/>{{errorTip}}</view>
+        <!-- 保存时间信息按钮 -->
+        <view class="eval_btn {{ dataInfoDisabled ? 'disabled' : '' }}" bindtap='saveDataInfo'>
+          保存
+        </view> 
+        <view class="next_step {{submit?'done':''}}" bindtap="submitCarInfo">提交</view>
+        
+      </swiper-item>
+    </swiper>
+<i-toast id="toast" />
+  </view>
+  
+
+
+
+  <!-- 车型弹出框 -->
+  <view class='modelNameCoverBG' wx:if='{{modelShow}}'>
+    <!--  -->
+    <view class='modelNameCover' animation="{{animation}}">
+
+      <text>选择车型</text>
+      <view class='img' catchtap='modelHideHandler'>
+        <image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vel_close.png'></image>
+      </view>
+
+
+      <view class='modelNameList' wx:if='{{brandsShow}}'>
+
+        <!-- 热门品牌 -->
+        <view class='hot_model'>
+          <text>热门品牌</text>
+
+          <!-- 热门品牌列表 -->
+          <view class='hot_model_list'>
+            <view class='hot_model_item' wx:for='{{hot_model_list}}' wx:key="{{item.bandId}}" bindtap='chooseHotBrandHandler' data-index='{{index}}'>
+              <image src='{{item.bandUrl}}'></image>
+              <text>{{item.bandName}}</text>
+            </view>
+          </view>
+
+        </view>
+
+        <!-- 选择品牌 -->
+        <view class='choose_model'>
+          <text>选择品牌</text>
+
+          <!-- 选择品牌列表 -->
+          <scroll-view class='choose_model_list' scroll-y>
+            <view class='choose_model_item' wx:for='{{choose_model_list}}' wx:key="{{item.bandId}}">
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.carInfoList}}' wx:key='{{index}}' bindtap='chooseBrandHandler' data-index='{{index}}' data-initial='{{item.initial}}'>
+                  <image src='{{item.bandUrl}}'></image>
+                  <text>{{item.bandName}}</text>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+
+
+      </view>
+
+
+      <block >
+      <!-- wx:if='{{hot}}' -->
+        <view class='chooseSeries' wx:if='{{seriesShow}}'>
+          <!-- 步骤条  -->
+          <view class='step'>
+            <view class='line'>
+              <text></text>
+              <text></text>
+              <text></text>
+            </view>
+            <view class='title'>
+              <text>{{brandName}}</text>
+              <text>请选择车系</text>
+            </view>
+          </view>
+
+          <view class='series'>
+            <text>选择车系</text>
+
+            <scroll-view class='carSeriesDivideList' scroll-y>
+              <view wx:for='{{carSeriesDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+                <text>{{item.titleName}}</text>
+                <view>
+                  <view wx:for='{{item.carSeriesList}}' wx:key='{{item.seriesName}}' bindtap='chooseHotSeriesHandler' data-index='{{index}}' data-seriesGroupName='{{item.seriesGroupName}}' data-seriesName='{{item.seriesName}}'>
+                    {{item.seriesName}}
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+
+          </view>
+
+
+        </view>
+
+
+        <view class='chooseSeries chooseType' wx:if='{{typeShow}}'>
+          <!-- 步骤条  -->
+          <view class='step'>
+            <view class='line'>
+              <text></text>
+              <text class='line_line'></text>
+              <text></text>
+              <text class='line_line'></text>
+              <text></text>
+            </view>
+            <view class='title'>
+              <text>{{brandName}}</text>
+              <text>{{seriesName}}</text>
+              <text>请选择车型</text>
+            </view>
+          </view>
+
+          <view class='series'>
+            <text>选择车型</text>
+
+            <scroll-view class='carSeriesDivideList' scroll-y>
+              <view wx:for='{{carTypeDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+                <text>{{item.titleName}}</text>
+                <view>
+                  <view wx:for='{{item.carTypeList}}' wx:key='{{item.modelSeriesId}}' bindtap='chooseHotTypeHandler' data-modelName='{{item.modelName}}' data-modelId='{{item.modelId}}'>
+
+                    {{item.modelName}}
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+
+          </view>
+
+
+        </view>
+      </block>
+
+
+      <block wx:if='{{my_choose}}'>
+        <view class='chooseSeries' wx:if='{{my_seriesShow}}'>
+          <!-- 步骤条  -->
+          <view class='step'>
+            <view class='line'>
+              <text></text>
+              <text></text>
+              <text></text>
+            </view>
+            <view class='title'>
+              <text>{{my_brandName}}</text>
+              <text>请选择车系</text>
+            </view>
+          </view>
+
+          <view class='series'>
+            <text>选择车系</text>
+
+            <scroll-view class='carSeriesDivideList' scroll-y>
+              <view wx:for='{{my_carSeriesDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+                <text>{{item.titleName}}</text>
+                <view>
+                  <view wx:for='{{item.carSeriesList}}' wx:key='{{item.seriesName}}' bindtap='chooseSeriesHandler' data-index='{{index}}' data-seriesGroupName='{{item.seriesGroupName}}' data-seriesName='{{item.seriesName}}'>
+                    {{item.seriesName}}
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+
+          </view>
+
+
+        </view>
+
+
+        <view class='chooseSeries chooseType' wx:if='{{my_typeShow}}'>
+          <!-- 步骤条  -->
+          <view class='step'>
+            <view class='line'>
+              <text></text>
+              <text class='line_line'></text>
+              <text></text>
+              <text class='line_line'></text>
+              <text></text>
+            </view>
+            <view class='title'>
+              <text>{{my_brandName}}</text>
+              <text>{{my_seriesName}}</text>
+              <text>请选择车型</text>
+            </view>
+          </view>
+
+          <view class='series'>
+            <text>选择车型</text>
+
+            <scroll-view class='carSeriesDivideList' scroll-y>
+              <view wx:for='{{my_carTypeDivideList}}' wx:key='{{item.titleName}}' class='carSeriesDivideList_item'>
+                <text>{{item.titleName}}</text>
+                <view>
+                  <view wx:for='{{item.carTypeList}}' wx:key='{{item.modelSeriesId}}' bindtap='chooseTypeHandler' data-modelName='{{item.modelName}}' data-modelId='{{item.modelId}}'>
+
+                    {{item.modelName}}
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+
+          </view>
+
+
+        </view>
+      </block>
+
+
+    </view>
+  </view>
+
+  <!-- 地区弹出框 -->
+  <view class='modelNameCoverBG regionCoverBG' wx:if='{{addressShow}}'>
+    <view class='modelNameCover' animation="{{animationAddress}}">
+
+      <text>选择地区</text>
+      <view class='img' catchtap='addressHideHandler'>
+        <image src='http://creditsit.huaxiafinance.com/huaxiapuhui/markdownPic/vel_close.png'></image>
+      </view>
+
+
+      <view class='modelNameList' wx:if='{{proShow}}'>
+
+        <!-- 热门城市 -->
+        <view class='hot_model'>
+          <text>热门城市</text>
+
+          <!-- 热门城市列表 -->
+          <view class='hot_model_list'>
+            <view class='hot_model_item' wx:for='{{hotCityList}}' wx:key="{{index}}" bindtap='HotCityHandler' data-cityCode="{{item.cityCode}}" data-cityName="{{item.cityName}}" data-provinceName="{{item.provinceName}}" data-provinceCode="{{item.provinceCode}}">
+              <text class='fontSize28'>{{item.cityName}}</text>
+            </view>
+          </view>
+
+        </view>
+
+        <!-- 选择省份/地区 -->
+        <view class='choose_model'>
+          <text>选择省份/地区</text>
+
+          <!-- 选择省份/地区 -->
+          <scroll-view class='choose_model_list' scroll-y>
+            <view class='choose_model_item' wx:for='{{allAddressList}}' wx:key="{{index}}">
+              <text>{{item.titleName}}</text>
+              <view>
+                <view wx:for='{{item.provinceInfoList}}' wx:key='{{index}}' bindtap='allProHandler' data-index='{{index}}' data-provInitial='{{item.provInitial}}' data-provName='{{item.provName}}' data-provCode='{{item.provCode}}'>
+                  <text class='fontSize28'>{{item.provName}}</text>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+
+
+      </view>
+      <view class='chooseSeries' wx:if='{{cityShow}}'>
+        <!-- 步骤条  -->
+        <view class='step'>
+          <view class='line'>
+            <text></text>
+            <text></text>
+            <text></text>
+          </view>
+          <view class='title'>
+            <text>{{proName}}</text>
+            <text>请选择城市</text>
+          </view>
+        </view>
+
+        <view class='series'>
+          <text>选择城市</text>
+
+          <scroll-view class='carSeriesDivideList' scroll-y>
+            <view class='carSeriesDivideList_item' wx:for='{{cityList.cityInfoList}}' wx:key='item.cityCode'>
+              <text style='width:30rpx;'></text>
+              <!-- {{item.provInitial}} -->
+              <view>
+                <view bindtap='allCityHandler' data-index='{{index}}' data-cityCode='{{item.cityCode}}' data-cityName='{{item.cityName}}'>
+                  {{item.cityName}}
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+
+        </view>
+
+
+      </view>
+    </view>
+  </view>
+
+
+
+</view>
