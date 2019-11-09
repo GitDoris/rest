@@ -1,0 +1,227 @@
+
+/*按钮样式*/
+.btn {
+    /*默认按钮样式 深蓝色*/
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 18px;
+    background-color: #3C8DBC;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-indent: 0;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.btn.primary {
+    /*普通按钮*/
+    background-color: #fff;
+    border: 1px solid #1890ff;
+    color: #1890ff;
+    padding: 0 17px;
+    height: 32px;
+    line-height: 30px;
+}
+
+.btn.primary:hover {
+    /*普通按钮*/
+    background-color: #e8f4ff;
+    border: 1px solid #1890ff;
+    color: #1890ff
+}
+
+.btn.reset {
+    /*重置按钮*/
+    background-color: #fff;
+    border: 1px solid #bcbcbc;
+    color: #333
+}
+
+.btn.submit {
+    /*提交*/
+    background-color: #1890ff;
+}
+
+.btn.submit:hover {
+    /*提交*/
+    background-color: #1165b3;
+    color: #fff
+}
+
+.btn.pass {
+    /*通过按钮*/
+    background-color: #62b531;
+}
+
+.btn.pass:hover {
+    /*通过*/
+    background-color: #4e9127;
+    color: #fff
+}
+
+.btn.refuse{
+    /*拒绝*/
+    background-color: #ff4d5e;
+}
+
+.btn.refuse:hover {
+    /*拒绝*/
+    background-color: #cc3e4b;
+    color: #fff
+}
+
+.btn.return {
+    /*回退*/
+    background-color: #eaa934;
+}
+
+.btn.return:hover {
+    /*回退*/
+    background-color: #bb872a;
+    color: #fff
+}
+
+.btn.cancel {
+    /*取消*/
+    background-color: #3d3d6d;
+}
+
+.btn.cancel:hover {
+    /*取消*/
+    background-color: #313157;
+    color: #fff
+}
+
+.btn.save {
+    /*保存*/
+    background-color: #466d19;
+}
+
+.btn.save:hover {
+    /*保存*/
+    background-color: #385714;
+    color: #fff
+}
+
+.btn.back {
+    /*返回*/
+    background-color: #666666;
+}
+
+.btn.back:hover {
+    /*返回*/
+    background-color: #525252;
+    color: #fff
+}
+
+.btn.urgent  {
+    /*加急*/
+    background-color: #9261e0;
+}
+
+.btn.urgent:hover {
+    /*加急*/
+    background-color: #754eb3;
+    color: #fff
+}
+
+/* 弹出框添加一个类名
+customClass:'error', */
+.error.el-message-box {
+    background-color: #fff1f0;
+    padding: 15px 27px 20px;
+    width: auto;
+    min-width: 30%
+}
+
+.error .el-message-box__header {
+    background: none;
+    padding: 0;
+}
+
+.error .el-message-box__header .el-message-box__headerbtn {
+    top: 0;
+    right: 0;
+}
+
+.error .el-message-box__title {
+    color: #333;
+    font-weight: bold
+}
+
+.error .el-message-box__title span {
+    font-size: 16px;
+}
+
+.error .el-message-box__title span::before {
+    content: "\E609";
+    font-family: element-icons!important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    color: #f5232e;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.error .el-message-box__content {
+    background: none;
+}
+
+.error .el-message-box__content {
+    color: #666666;
+    padding-left: 30px;
+}
+
+.error.el-message-box .el-message-box__btns {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.error.el-message-box .el-button--primary {
+    background: none;
+    color: #1890ff;
+    border: none;
+    padding: 0;
+}
+
+
+/* 点击备注弹出 */
+.el-popover {
+    background: #ffffe1;
+}
+
+.el-popover span {
+    font-size: 12px;
+    display: block;
+    line-height: 20px;
+}
+
+.el-popover>div {
+    word-break: break-all;
+}
+
+.el-popover p {
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 10px;
+    word-break: break-all
+}
+
+.el-popper[x-placement^=top] .popper__arrow::after,
+.el-popper[x-placement^=top] .popper__arrow {
+    border-top-color: #ffffe1;
+}
+
