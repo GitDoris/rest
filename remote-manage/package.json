@@ -15,7 +15,7 @@
     "bonzo": "^2.0.0",
     "domready": "^1.0.8",
     "element-ui": "^2.6.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "qwery": "^4.0.0",
     "qwery-mobile": "^1.0.14",
     "register-service-worker": "^1.6.2",
